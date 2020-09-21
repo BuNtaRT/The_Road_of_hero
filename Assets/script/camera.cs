@@ -11,14 +11,14 @@ public class camera : MonoBehaviour
 
     void Start()
     {
-
+        fix_camera_from_screen();
 
         cam = gameObject.transform;
     }
 
     //меняем размер от соотношения
     void fix_camera_from_screen() {
-    
+        Debug.Log(Camera.main.aspect);
     }
 
 
