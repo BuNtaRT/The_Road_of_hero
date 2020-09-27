@@ -4,17 +4,38 @@ using UnityEngine;
 
 public class MusicManeger : MonoBehaviour
 {
-    // Start is called before the first frame update
+    bool audio = true;
+
+    Coroutine music;
+
     void Start()
     {
-        StartCoroutine(Controll_music());
+        //audio = System.Convert.ToBoolean(PlayerPrefs.GetInt("sound"));
+        if (audio)
+        {
+            music = StartCoroutine(Controll_music());
+        }
+
+    }
+
+    public void On(bool on) {
+
+        if (on && audio != on)
+        {
+            audio = on;
+            StartCoroutine(Controll_music());
+        }
+        else if (!on && audio != on) {
+            StopCoroutine(music);
+            audio = on;
+        }
 
     }
 
     IEnumerator Controll_music() {
-
-        while (true)
+        while (audio)
         {
+
             int rand = Random.Range(0, 23);
             yield return new WaitForSeconds(GameObject.Find("script").GetComponent<AudioCore>().CreateMusic(rand.ToString()));
         

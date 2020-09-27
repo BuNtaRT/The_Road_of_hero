@@ -4,10 +4,14 @@ using UnityEngine;
 
 public class enemy_controll : MonoBehaviour
 {
-   
+
+    public bool paused = false;
 
     private void FixedUpdate()
     {
-        transform.localPosition = Vector3.Lerp(transform.localPosition, new Vector3(transform.localPosition.x - 1f, transform.localPosition.y, transform.localPosition.z), Time.deltaTime);
+        if (!paused)
+        {
+            transform.localPosition = Vector3.Lerp(transform.localPosition, new Vector3(transform.localPosition.x - 1f, transform.localPosition.y, transform.localPosition.z), Time.deltaTime);
+        }
     }
 }

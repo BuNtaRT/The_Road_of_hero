@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 9214742335427913732}
   - component: {fileID: 3490489990047307396}
   m_Layer: 0
-  m_Name: explosion-2_0
+  m_Name: explosion_car
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -70,7 +70,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 11
+  m_SortingOrder: 20
   m_Sprite: {fileID: -6213477892412391994, guid: fb31c2b297806dd48b050d083313293c,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

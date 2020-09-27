@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class Generate : MonoBehaviour
 {
-    public void generate(string path, float posX, float posY ) {
+    public GameObject generate(string path, float posX, float posY ) {
 
-        GameObject gameObject = Instantiate<GameObject>(Resources.Load<GameObject>(path));
-        gameObject.transform.position = new Vector3(posX,posY,0);
+        GameObject temp = Instantiate<GameObject>(Resources.Load<GameObject>(path));
+        temp.transform.position = new Vector3(posX,posY,0);
+        return temp;
     }
 }
 

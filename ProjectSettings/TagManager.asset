@@ -9,6 +9,11 @@ TagManager:
   - road
   - enemy
   - rocket
+  - enemy_interactive
+  - bonus
+  - audio
+  - bomb_zone
+  - bomb
   layers:
   - Default
   - TransparentFX

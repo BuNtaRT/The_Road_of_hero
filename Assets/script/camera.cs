@@ -18,13 +18,13 @@ public class camera : MonoBehaviour
 
     //меняем размер от соотношения
     void fix_camera_from_screen() {
-        Debug.Log(Camera.main.aspect);
+
     }
 
 
 
     private void FixedUpdate()
     {
-        cam.position = Vector3.Lerp(cam.position, new Vector3(target.position.x , target.position.y, -10), Time.deltaTime * camera_speed);
+        cam.position = Vector3.Lerp(cam.position, new Vector3(target.position.x , cam.position.y, -10), Time.deltaTime * camera_speed);
     }
 }
