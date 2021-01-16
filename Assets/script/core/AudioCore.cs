@@ -8,14 +8,14 @@ public class AudioCore : MonoBehaviour
 
     public float CreateMusic(string name)
     {
-        return Create("music/" + name, 0.25f , 128); // PlayerPrefs.LoadFloat("vol_music");
+        return Create("music/" + name, 0.7f , 128); // PlayerPrefs.LoadFloat("vol_music");
     }
 
 
 
     public float Create_audio_eff(string name)
     {
-        return Create("audio_effect/" + name, 0.25f , 200); // PlayerPrefs.LoadFloat("vol_eff");
+        return Create("audio_effect/" + name, 1f , 250); // PlayerPrefs.LoadFloat("vol_eff");
     }
 
     public float Create_audio_eff(int name)
@@ -36,7 +36,7 @@ public class AudioCore : MonoBehaviour
     private float Create(string path, float vol, int priority) {
 
 
-        if (on)
+        if (on && (GameObject.FindGameObjectWithTag("audio") == null || path.Contains("audio_effect")))
         {
             GameObject temp = new GameObject();
             temp.AddComponent<AudioSource>();
@@ -47,8 +47,9 @@ public class AudioCore : MonoBehaviour
             temp.GetComponent<AudioSource>().volume = vol;
             temp.GetComponent<AudioSource>().priority = priority;
             temp.name = path + "-vol(" + vol + ")";
-            temp.tag = "audio";
-
+            
+            if(path.Contains("music"))
+                temp.tag = "audio";
             Destroy(temp, temp.GetComponent<AudioSource>().clip.length);
 
             return temp.GetComponent<AudioSource>().clip.length;

@@ -28,6 +28,7 @@ public class car_event : MonoBehaviour
 
     public void Die_pit() {
         Die_flag();
+
     }
 
     public int Bonus(float hard) {
@@ -38,7 +39,9 @@ public class car_event : MonoBehaviour
 
     void Die_flag() {
         _die = true;
+        
         GameObject.Find("script").GetComponent<controll>()._die = true;
+        GameObject.Find("script").GetComponent<UI_game>().Die();
 
     }
 

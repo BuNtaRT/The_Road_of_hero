@@ -37,8 +37,10 @@ public class MusicManeger : MonoBehaviour
         {
 
             int rand = Random.Range(0, 23);
-            yield return new WaitForSeconds(GameObject.Find("script").GetComponent<AudioCore>().CreateMusic(rand.ToString()));
-        
+            yield return new WaitForSeconds(GameObject.Find("script").GetComponent<AudioCore>().CreateMusic(rand.ToString()) + 0.1f);
+            
+
+
         }
     }
 }

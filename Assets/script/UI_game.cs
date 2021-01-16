@@ -74,8 +74,21 @@ public class UI_game : MonoBehaviour
         menu_UI_animator.Play("hide_ui_menu");
         in_game_ui.SetActive(true);
         in_game_ui.GetComponent<Animator>().enabled = true;
-        Camera.main.GetComponent<lat_controller>().enabled = true;
+        //Camera.main.GetComponent<lat_controller>().enabled = true;
         StartCoroutine(Destroy_menu());
+    }
+
+    public void Die() {
+        in_game_ui.GetComponent<Animator>().Play("in_game_ui_lose");
+    }
+
+    public void Go_State2() {
+        in_game_ui.GetComponent<Animator>().Play("in_game_ui_state2");
+
+    }
+
+    public void Restart() {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
     IEnumerator Destroy_menu() {
@@ -98,6 +111,7 @@ public class UI_game : MonoBehaviour
             temp.GetComponent<Animator>().enabled = false;
         }
 
+        Camera.main.GetComponent<lat_controller>()._paused = true;
         //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
@@ -108,6 +122,7 @@ public class UI_game : MonoBehaviour
         StopCoroutine(text_P);
         GameObject.Find("Car").GetComponent<Car_controller>().pause = false;
         GameObject[] enemy = GameObject.FindGameObjectsWithTag("enemy_interactive");
+        Camera.main.GetComponent<lat_controller>()._paused = false;
 
         foreach (GameObject temp in enemy)
         {

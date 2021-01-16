@@ -36,18 +36,20 @@ public class interaction_car : MonoBehaviour
             }
             gameObject.GetComponent<Animator>().speed = hard;
             gameObject.GetComponent<Animator>().enabled = true;
+            GameObject.Find("script").GetComponent<car_event>().Die_pit();
 
 
 
         }
 
-        else if (collision.gameObject.tag == "enemy")
+        else if (collision.gameObject.tag == "enemy" || collision.gameObject.tag == "orda")
         {
             collision.gameObject.GetComponent<BoxCollider2D>().enabled = false;
             GameObject.Find("script").GetComponent<car_event>().Die_enemy(gameObject);
 
         }
-        else if (collision.gameObject.tag == "bomb") {
+        else if (collision.gameObject.tag == "bomb_zone") {
+            Destroy(collision.gameObject.transform.parent.gameObject);
             collision.gameObject.GetComponent<BoxCollider2D>().enabled = false;
             GameObject.Find("script").GetComponent<car_event>().Die_bomb(gameObject);
 

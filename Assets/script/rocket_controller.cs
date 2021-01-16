@@ -50,18 +50,39 @@ public class rocket_controller : MonoBehaviour
         if (collision.tag == "enemy") {
 
             collision.gameObject.GetComponent<BoxCollider2D>().enabled = false;
-
             GameObject.Find("script").GetComponent<effect_Core>().Effect_die(collision.gameObject.transform.parent.gameObject, "expl");
-            GameObject.Find("script").GetComponent<effect_Core>().Create_effect("explosion_enemy",0,1.63f,collision.gameObject.transform.parent);
-            GameObject.Find("script").GetComponent<effect_Core>().Create_effect("Blod", -0.04f, -0.43f, collision.gameObject.transform.parent,true);
-
-            //GameObject.Find("script").GetComponent<effect_Core>().Effect_die(gameObject, "expl");
-
-            gameObject.transform.Find("Particle System").GetComponent<ParticleSystem>().Stop();
-            gameObject.GetComponent<SpriteRenderer>().enabled = false;
+            GameObject.Find("script").GetComponent<effect_Core>().Create_effect("explosion_enemy", 0, 1.63f, collision.gameObject.transform.parent);
+            GameObject.Find("script").GetComponent<effect_Core>().Create_effect("Blod", -0.04f, -0.43f, collision.gameObject.transform.parent, true);
             GameObject.Find("script").GetComponent<AudioCore>().Create_audio_eff("expl");
-            gameObject.GetComponent<BoxCollider2D>().enabled = false;
-            Destroy(gameObject,3);
+            Deactivate_rocket();
         }
+        else if (collision.tag == "orda") {
+            Deactivate_rocket();
+
+            StartCoroutine(orda(collision.gameObject));
+            collision.gameObject.GetComponent<BoxCollider2D>().enabled = false;
+            GameObject.Find("script").GetComponent<effect_Core>().Create_effect("explosion_enemy", 0, -1.77f, collision.gameObject.transform,true);
+            GameObject.Find("script").GetComponent<effect_Core>().Create_effect("explosion", -0.05f, -4.29f, collision.gameObject.transform, true);
+            GameObject.Find("script").GetComponent<effect_Core>().Create_effect("explosion", -0.54f, -2.25f, collision.gameObject.transform, true);
+            GameObject.Find("script").GetComponent<effect_Core>().Create_effect("explosion", 1.1f, -2.57f, collision.gameObject.transform, true);
+
+        }
+    }
+
+    void Deactivate_rocket() {
+        gameObject.GetComponent<BoxCollider2D>().enabled = false;
+        gameObject.GetComponent<SpriteRenderer>().enabled = false;
+        gameObject.transform.Find("Particle System").GetComponent<ParticleSystem>().Stop();
+        Destroy(gameObject, 3);
+    }
+
+
+    IEnumerator orda(GameObject orda) {
+        GameObject.Find("script").GetComponent<AudioCore>().Create_audio_eff("expl");
+        yield return new WaitForSeconds(0.15f);
+        Destroy(orda);
+        GameObject.Find("script").GetComponent<AudioCore>().Create_audio_eff("expl");
+        yield return new WaitForSeconds(0.15f);
+        GameObject.Find("script").GetComponent<AudioCore>().Create_audio_eff("expl");
     }
 }
