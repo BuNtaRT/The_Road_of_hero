@@ -6,7 +6,7 @@ public class camera : MonoBehaviour
 {
     Transform cam;
 
-    float camera_speed = 15f;
+
     public Transform target;
 
     void Start()
@@ -23,8 +23,9 @@ public class camera : MonoBehaviour
 
 
 
-    private void FixedUpdate()
+    private void Update()
     {
-        cam.position = Vector3.Lerp(cam.position, new Vector3(target.position.x , cam.position.y, -10), Time.deltaTime * camera_speed);
+        //cam.position = Vector3.Lerp(cam.position, new Vector3(target.position.x , cam.position.y, -10), Time.deltaTime * camera_speed);
+        cam.position = new Vector3(target.position.x , cam.position.y, -10);
     }
 }

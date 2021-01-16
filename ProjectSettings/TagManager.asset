@@ -15,6 +15,7 @@ TagManager:
   - bomb_zone
   - bomb
   - orda
+  - Background
   layers:
   - Default
   - TransparentFX

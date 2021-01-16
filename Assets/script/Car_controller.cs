@@ -12,20 +12,6 @@ public class Car_controller : MonoBehaviour
 
     public bool pause = false; 
 
-    //public void Up_speed_car() {
-
-    //    if (car_speed >= 12)
-    //    {
-    //        car_speed += 0.1f;
-    //    }
-    //    else if (car_speed >= 8)
-    //    {
-    //        car_speed += 0.2f;
-    //    }
-    //    else {
-    //        car_speed += 0.5f;
-    //    }
-    //}
 
     private void FixedUpdate()
     {

@@ -69,7 +69,7 @@ public class UI_game : MonoBehaviour
 
         GameObject.Find("Car").transform.GetChild(0).Find("Exhaust").GetComponent<ParticleSystem>().Play();
         GameObject.Find("Car").GetComponent<Car_controller>().enabled = true;
-        GameObject.Find("script").GetComponent<controll>()._die = false;
+        //GameObject.Find("script").GetComponent<controll>()._die = false;
         menu_UI_animator.enabled = true;
         menu_UI_animator.Play("hide_ui_menu");
         in_game_ui.SetActive(true);

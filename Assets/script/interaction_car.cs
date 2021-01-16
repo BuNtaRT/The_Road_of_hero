@@ -11,7 +11,7 @@ public class interaction_car : MonoBehaviour
     private void Start()
     {
         GameObject.Find("script").GetComponent<car_event>().curret_car = transform;
-        GameObject.Find("script").GetComponent<controll>().curret_car = transform;
+        //GameObject.Find("script").GetComponent<controll>().curret_car = transform;
         //Time.timeScale = 0.001f;
     }
 

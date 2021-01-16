@@ -40,7 +40,7 @@ public class hadr_controller : MonoBehaviour
         gameObject.GetComponent<Car_controller>().hard = hard;      // скорость
         Camera.main.GetComponent<lat_controller>().hard = hard;     // препятствия 
         car.hard = hard;
-        GameObject.Find("script").GetComponent<controll>().hard = hard;
+        //GameObject.Find("script").GetComponent<controll>().hard = hard;
 
 
         Debug.Log("Hard++");

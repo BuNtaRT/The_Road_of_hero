@@ -40,7 +40,7 @@ public class car_event : MonoBehaviour
     void Die_flag() {
         _die = true;
         
-        GameObject.Find("script").GetComponent<controll>()._die = true;
+        //GameObject.Find("script").GetComponent<controll>()._die = true;
         GameObject.Find("script").GetComponent<UI_game>().Die();
 
     }
