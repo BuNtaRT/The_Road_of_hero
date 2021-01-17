@@ -63,7 +63,7 @@ public class UI : MonoBehaviour
     public void B_StartGame(GameObject gameObject) {
         SetPause(false);
         gameObject.GetComponent<Animator>().enabled = true;
-        GameObject.Find("Car").GetComponent<Transform>().GetChild(0).GetChild(0).GetComponent<ParticleSystem>().Play();
+        GameObject.Find("Car").transform.GetChild(0).GetComponent<Car>().Start_play();
         Destroy(gameObject,0.4f);
     }
 

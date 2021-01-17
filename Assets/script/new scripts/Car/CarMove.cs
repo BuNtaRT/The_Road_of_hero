@@ -22,7 +22,7 @@ public class CarMove : MonoBehaviour
     #endregion
 
     #region Car speed
-    private float car_speed = 3f;
+    private float car_speed = 0.2f;
     private void Speed(float val)
     {
         car_speed = val;
