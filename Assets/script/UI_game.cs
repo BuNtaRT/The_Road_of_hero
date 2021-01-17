@@ -107,7 +107,7 @@ public class UI_game : MonoBehaviour
         GameObject[] enemy = GameObject.FindGameObjectsWithTag("enemy_interactive");
 
         foreach (GameObject temp in enemy) {
-            temp.GetComponent<enemy_controll>().paused = true;
+            //temp.GetComponent<enemy_controll>().paused = true;
             temp.GetComponent<Animator>().enabled = false;
         }
 
@@ -126,7 +126,7 @@ public class UI_game : MonoBehaviour
 
         foreach (GameObject temp in enemy)
         {
-            temp.GetComponent<enemy_controll>().paused = false;
+            //temp.GetComponent<enemy_controll>().paused = false;
             temp.GetComponent<Animator>().enabled = true;
         }
 

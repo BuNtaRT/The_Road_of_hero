@@ -1,11 +1,27 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class enemy_controll : MonoBehaviour
 {
 
-    public bool paused = false;
+    private bool paused = false;
+
+
+    private void Start()
+    {
+        UI.singleton.onPaused += onPause;
+    }
+
+    private void onPause(bool pause)
+    {
+        paused = pause;
+    }
+
+    public void Unsub() {
+        UI.singleton.onPaused -= onPause;
+    }
 
     private void FixedUpdate()
     {
