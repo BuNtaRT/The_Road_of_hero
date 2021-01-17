@@ -30,9 +30,12 @@ public class UI : MonoBehaviour
 
     private void Start()
     {
-        PlayerPrefs.DeleteAll();
+        PlayerPrefs.DeleteAll();    ///////////////////////////////////////////////////////////////////////// убрать!!!!!!!!
+
         B_Audio(Convert.ToBoolean(PlayerPrefs.GetInt("Music")));
-        car = GameObject.Find("Car").transform;
+        car = GameObject.Find("Car").transform;                                                 // ссылка на трансформ обьекта car для позиции и как следствие score
+        lvl_car = GameObject.FindGameObjectWithTag("Player").GetComponent<Car>().lvl;           // получаем уровень машины
+
     }
 
 
@@ -69,13 +72,76 @@ public class UI : MonoBehaviour
     }
 
     #region Score
+    float speed = 1.5f;         // скорость анимаций 
+    float lvl_car;
     int score = 0;
     public Text score_text;
     Transform car;
+    bool scale_on = false;
+    bool rotat_on = false;
+    float steap;
+
     string ScoreText() {
-        score = (int)car.position.x;
-        return score.ToString();
+
+        score = (int)(car.position.x * lvl_car);
+
+        if (!scale_on && score >= lvl_car * 150)        // включаем увеличение текста
+        {      
+            scale_on = true;
+            steap = lvl_car * 155;
+            StartCoroutine(Scale_score());              // но только по разу
+        }
+        if (!rotat_on && score >= lvl_car * 250)        // вклдючаем повороты текста 
+        {
+            rotat_on = true;
+            speed += 0.05f;
+            StartCoroutine(Rotation_score());
+        }
+
+        if (scale_on && steap <= score && speed >= 0.3)
+        {
+            steap =  score + ((speed / score)+100f);
+            speed -= 0.1f;
+            Debug.Log("steap = "+ steap + "  speed  =" + speed);
+
+        }
+
+        return score.ToString()+"m";
+        
     }
+
+    IEnumerator Rotation_score()
+    {
+        Vector3 start = new Vector3(0f, 0f, 6.8f);
+        Vector3 end = new Vector3(0f, 0f, -7.6f);
+
+        while (true)
+        {
+            for (float time = 0; time < (speed+0.2f) * 2; time += Time.deltaTime)
+            {
+                float progress = Mathf.PingPong(time, speed+0.2f) / (speed+0.2f);
+                score_text.transform.localEulerAngles = Vector3.Lerp(start, end, progress);
+                yield return null;
+            }
+        }
+    }
+
+    IEnumerator Scale_score() {
+
+        Vector3 start = new Vector3(0.86936f, 0.86936f, 0.86936f);
+        Vector3 end = new Vector3(1.151f, 1.151f, 1.151f);
+
+        while (true)
+        {
+            for (float time = 0; time < speed * 2; time += Time.deltaTime)
+            {
+                float progress = Mathf.PingPong(time, speed) / speed;
+                score_text.transform.localScale = Vector3.Lerp(start, end, progress);
+                yield return null;
+            }
+        }
+    }
+
     #endregion
 
 

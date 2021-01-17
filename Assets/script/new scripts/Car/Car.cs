@@ -9,6 +9,8 @@ public class Car : MonoBehaviour
 
     public event Action OnDie;
 
+    public float lvl;       // коэффицент для умножения счета со стороны машины 
+
 
 
     [System.Obsolete]

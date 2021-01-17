@@ -550,7 +550,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u041F\u0440\u0438\u043E\u0441\u0442\u0430\u043D\u043E\u0432\u043B\u0435\u043D\u043D\u043E"
+  m_Text: "\u041F\u0440\u0438\u043E\u0441\u0442\u0430\u043D\u043E\u0432\u043B\u0435\u043D\u043E"
 --- !u!222 &134291911
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -4371,6 +4371,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   B_SoundOn: {fileID: 1603000379}
   B_SoundOff: {fileID: 1741305744}
+  score_text: {fileID: 531071156}
 --- !u!1 &1489473489
 GameObject:
   m_ObjectHideFlags: 0
@@ -4598,25 +4599,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1531004284}
   m_CullTransparentMesh: 0
---- !u!1 &1541212725 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5042542680340244462, guid: 712badde503b177428ac5828d7759f6f,
-    type: 3}
-  m_PrefabInstance: {fileID: 1793752396}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1541212730
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1541212725}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2c664bbc5fc7ac9449e6fbe18442ff67, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  num_car: 0
 --- !u!1 &1545705970
 GameObject:
   m_ObjectHideFlags: 0
@@ -5116,17 +5098,17 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 2099455446}
         m_MethodName: Play
-        m_Mode: 3
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: show_in_game_ui
           m_BoolArgument: 1
         m_CallState: 2
       - m_Target: {fileID: 33004930}
-        m_MethodName: 
+        m_MethodName: SetActive
         m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5135,6 +5117,28 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 245576274}
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1474999583}
+        m_MethodName: B_Pause
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &1713708096
 MonoBehaviour:
@@ -5747,6 +5751,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6988162773757547579, guid: 712badde503b177428ac5828d7759f6f,
+        type: 3}
+      propertyPath: lvl
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 712badde503b177428ac5828d7759f6f, type: 3}

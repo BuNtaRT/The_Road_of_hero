@@ -12,6 +12,7 @@ public class CarMove : MonoBehaviour
         GameObject.Find("Scripts").GetComponent<Hard_controller>().OnUpSpead += Speed;
     }
 
+
      
     #region Pause
     private bool pause = true;
@@ -21,7 +22,7 @@ public class CarMove : MonoBehaviour
     #endregion
 
     #region Car speed
-    private float car_speed = 0.2f;
+    private float car_speed = 3f;
     private void Speed(float val)
     {
         car_speed = val;
