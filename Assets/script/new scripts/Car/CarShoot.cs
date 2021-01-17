@@ -29,13 +29,13 @@ public class CarShoot : MonoBehaviour
         var tuple = StartupFirst.singleton.GetRandomFromList();         // tuple get
         GameObject gameObject = Instantiate(Resources.Load<GameObject>("weapon/"+ tuple.Item1));
         gameObject.GetComponent<Transform>().SetParent(GameObject.Find("Car").transform);
-        StartCoroutine(Wait(tuple.Item2));
+        StartCoroutine(Wait(tuple.Item2,gameObject));
     }
 
-    IEnumerator Wait(float wait)        // wait cooldown
+    IEnumerator Wait(float wait, GameObject createt_weapon)        // wait cooldown
     {
         yield return new WaitForSecondsRealtime(wait);
         locked = false;
-
+        Destroy(createt_weapon,5f);
     }
 }
