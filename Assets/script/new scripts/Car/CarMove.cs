@@ -8,7 +8,7 @@ public class CarMove : MonoBehaviour
 
     void Start()
     {
-        Menu_UI.singleton.onPaused += PauseCar;       // singleton - крутая штука что бы не искать обьекты а находить единственный Static-же и обращаться к нему
+        UI.singleton.onPaused += PauseCar;       // singleton - крутая штука что бы не искать обьекты а находить единственный Static-же и обращаться к нему
         GameObject.Find("Scripts").GetComponent<Hard_controller>().OnUpSpead += Speed;
     }
 

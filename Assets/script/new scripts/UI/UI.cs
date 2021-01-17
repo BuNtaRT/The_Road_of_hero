@@ -2,12 +2,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class Menu_UI : MonoBehaviour
+public class UI : MonoBehaviour
 {
     #region Singleton
     // Singleton - пока что патерн, который поможет по многу не искать, не создавать экземпляр если нужен именно этот
-    public static Menu_UI singleton { get; private set; }
+    public static UI singleton { get; private set; }
     private void Awake()
     {
         singleton = this;   //инициализация на awake (до создания сцены)
@@ -31,6 +32,7 @@ public class Menu_UI : MonoBehaviour
     {
         PlayerPrefs.DeleteAll();
         B_Audio(Convert.ToBoolean(PlayerPrefs.GetInt("Music")));
+        car = GameObject.Find("Car").transform;
     }
 
 
@@ -55,17 +57,30 @@ public class Menu_UI : MonoBehaviour
         PlayerPrefs.Save();
     }
 
-    public void B_StartGame() {
+    public void B_StartGame(GameObject gameObject) {
         SetPause(false);
         gameObject.GetComponent<Animator>().enabled = true;
         GameObject.Find("Car").GetComponent<Transform>().GetChild(0).GetChild(0).GetComponent<ParticleSystem>().Play();
+        Destroy(gameObject,0.4f);
     }
 
+    public void B_Pause(bool pause) {
+        SetPause(pause);
+    }
+
+    #region Score
+    int score = 0;
+    public Text score_text;
+    Transform car;
+    string ScoreText() {
+        score = (int)car.position.x;
+        return score.ToString();
+    }
+    #endregion
 
 
-    // Update is called once per frame
     void Update()
     {
-        
+        score_text.text = ScoreText();
     }
 }

@@ -865,7 +865,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.42260742, y: 56}
+  m_AnchoredPosition: {x: 0.42285156, y: 56}
   m_SizeDelta: {x: -201.68332, y: -201.68198}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &282416767
@@ -2504,19 +2504,19 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: Pause
-        m_Mode: 1
+      - m_Target: {fileID: 2099455446}
+        m_MethodName: Play
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: Paused
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 245576274}
-        m_MethodName: SetActive
+      - m_Target: {fileID: 1474999583}
+        m_MethodName: B_Pause
         m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3382,7 +3382,6 @@ GameObject:
   - component: {fileID: 1130510785}
   - component: {fileID: 1130510784}
   - component: {fileID: 1130510783}
-  - component: {fileID: 1130510782}
   m_Layer: 5
   m_Name: Menu_UI
   m_TagString: Untagged
@@ -3390,20 +3389,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1130510782
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1130510781}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0e7cab623ae5d2449ab0cae56e3f8e0a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  B_SoundOn: {fileID: 1603000379}
-  B_SoundOff: {fileID: 1741305744}
 --- !u!95 &1130510783
 Animator:
   serializedVersion: 3
@@ -4264,6 +4249,7 @@ GameObject:
   - component: {fileID: 1474999580}
   - component: {fileID: 1474999581}
   - component: {fileID: 1474999582}
+  - component: {fileID: 1474999583}
   m_Layer: 0
   m_Name: Scripts
   m_TagString: Untagged
@@ -4371,6 +4357,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 737e9348fcc69f14d92db51d57114e29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1474999583
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1474999576}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e7cab623ae5d2449ab0cae56e3f8e0a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  B_SoundOn: {fileID: 1603000379}
+  B_SoundOff: {fileID: 1741305744}
 --- !u!1 &1489473489
 GameObject:
   m_ObjectHideFlags: 0
@@ -4405,7 +4405,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.42260742, y: 56}
+  m_AnchoredPosition: {x: 0.42285156, y: 56}
   m_SizeDelta: {x: -201.68332, y: -201.68198}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1489473491
@@ -4942,7 +4942,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1130510782}
+      - m_Target: {fileID: 1474999583}
         m_MethodName: B_Audio
         m_Mode: 6
         m_Arguments:
@@ -5114,19 +5114,19 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: Unpause
-        m_Mode: 1
+      - m_Target: {fileID: 2099455446}
+        m_MethodName: Play
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
-          m_BoolArgument: 0
+          m_BoolArgument: 1
         m_CallState: 2
-      - m_Target: {fileID: 245576274}
-        m_MethodName: SetActive
+      - m_Target: {fileID: 33004930}
+        m_MethodName: 
         m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5134,7 +5134,7 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
-          m_BoolArgument: 0
+          m_BoolArgument: 1
         m_CallState: 2
 --- !u!114 &1713708096
 MonoBehaviour:
@@ -5363,7 +5363,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1130510782}
+      - m_Target: {fileID: 1474999583}
         m_MethodName: B_Audio
         m_Mode: 6
         m_Arguments:
@@ -5570,12 +5570,12 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1130510782}
+      - m_Target: {fileID: 1474999583}
         m_MethodName: B_StartGame
-        m_Mode: 1
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgument: {fileID: 1130510781}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -6341,7 +6341,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!95 &2099455446
 Animator:
   serializedVersion: 3

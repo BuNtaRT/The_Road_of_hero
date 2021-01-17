@@ -7,7 +7,7 @@ public class ControllCar : MonoBehaviour
     private void Start()
     {
         car = GameObject.Find("Car").GetComponent<Transform>().GetChild(0);
-        Menu_UI.singleton.onPaused += onPaused;
+        UI.singleton.onPaused += onPaused;
     }
 
     #region Pause
