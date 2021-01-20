@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class ControllCar : MonoBehaviour
 {
+    // Тут происходит обработка свайпов на экране и перемешение машины 
+
     private void Start()
     {
         car = GameObject.Find("Car").GetComponent<Transform>().GetChild(0);

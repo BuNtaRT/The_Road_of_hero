@@ -6,10 +6,17 @@ using UnityEngine;
 public class CarMove : MonoBehaviour
 {
 
+    float speed = 0;
+
+    private float invokeTime = 1f;
+
+    // Тут происходит движение автомобиля вперед, а так же его ускорение
+
     void Start()
     {
         UI.singleton.onPaused += PauseCar;       // singleton - крутая штука что бы не искать обьекты а находить единственный Static-же и обращаться к нему
-        GameObject.Find("Scripts").GetComponent<Hard_controller>().OnUpSpead += Speed;
+        Speed();
+        //GameObject.Find("Scripts").GetComponent<Hard_controller>().OnUpSpead += Speed;
     }
 
 
@@ -23,9 +30,23 @@ public class CarMove : MonoBehaviour
 
     #region Car speed
     private float car_speed = 0.2f;
-    private void Speed(float val)
+    private float car_lvl = 1f;
+    
+    private void Speed()
     {
-        car_speed = val;
+        car_lvl = transform.GetChild(0).GetComponent<Car>().lvl;
+        invokeTime = 18 / car_lvl >= 8 ? 18 / car_lvl : 8;
+        Debug.Log(invokeTime);
+        InvokeRepeating("UpSpeed", 5, invokeTime);
+    }
+
+    void UpSpeed()
+    {
+        if (!pause)
+        {
+            car_speed = car_speed + 0.12f <= 1.7f ? car_speed + 0.12f : 1.7f;
+            Debug.Log("speed = " + car_speed);
+        }
     }
     #endregion
 

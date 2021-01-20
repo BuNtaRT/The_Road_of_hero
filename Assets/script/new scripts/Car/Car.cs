@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class Car : MonoBehaviour
 {
+    // Тут описывается автомобиль, его номер, множитель (выше > больше очков)
+
     public int num_car;
 
     public event Action OnDie;

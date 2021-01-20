@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CarShoot : MonoBehaviour
 {
-
+    // тут происходит стрельба по нажатию а так же контроль боезапаса 
 
     #region ammo
     int ammo = 10;

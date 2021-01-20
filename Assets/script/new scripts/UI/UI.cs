@@ -31,7 +31,7 @@ public class UI : MonoBehaviour
     private void Start()
     {
         PlayerPrefs.DeleteAll();    ///////////////////////////////////////////////////////////////////////// убрать!!!!!!!!
-
+        SetPause(true);
         B_Audio(Convert.ToBoolean(PlayerPrefs.GetInt("Music")));
         car = GameObject.Find("Car").transform;                                                 // ссылка на трансформ обьекта car для позиции и как следствие score
         lvl_car = GameObject.FindGameObjectWithTag("Player").GetComponent<Car>().lvl;           // получаем уровень машины
@@ -85,13 +85,13 @@ public class UI : MonoBehaviour
 
         score = (int)(car.position.x * lvl_car);
 
-        if (!scale_on && score >= lvl_car * 150)        // включаем увеличение текста
+        if (!scale_on && score >= lvl_car * 350)        // включаем увеличение текста
         {      
             scale_on = true;
             steap = lvl_car * 155;
             StartCoroutine(Scale_score());              // но только по разу
         }
-        if (!rotat_on && score >= lvl_car * 250)        // вклдючаем повороты текста 
+        if (!rotat_on && score >= lvl_car * 550)        // вклдючаем повороты текста 
         {
             rotat_on = true;
             speed += 0.05f;
@@ -100,9 +100,8 @@ public class UI : MonoBehaviour
 
         if (scale_on && steap <= score && speed >= 0.3)
         {
-            steap =  score + ((speed / score)+100f);
+            steap =  score + ((speed / score)+200f);
             speed -= 0.1f;
-            Debug.Log("steap = "+ steap + "  speed  =" + speed);
 
         }
 

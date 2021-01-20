@@ -33,8 +33,6 @@ public class StartupFirst : MonoBehaviour
             }
         }
 
-        Debug.Log(OpenWeapon.Count);
-        Debug.Log(TimeWeapon[0]);
     }
 
     // добавляем орудие в лист для использований и сохраняем в файл
@@ -52,6 +50,39 @@ public class StartupFirst : MonoBehaviour
     {
         int rand = UnityEngine.Random.Range(0, OpenWeapon.Count);
         return Tuple.Create(OpenWeapon[rand],TimeWeapon[rand]);
+    }
+
+
+
+    int[,] Maps_and_Monsters = new int[,] 
+    {
+        { 0, 13, 5 },
+        { 1, 2, 8 },
+        { 2, 14, 10 },
+        { 3, 6, 2 },
+        { 4, 11, 7 },
+        { 5, 1, 12 },
+        { 6, 9, 4 },
+        { 7, 13, 5 },       //три карты недоделаны !! убрать
+        { 8, 13, 5 },
+        { 9, 13, 5 }
+    };
+
+    public List<int> monsters = new List<int>();
+
+    public void CreateMontersList(List<int> maps_num) 
+    {
+        monsters.Clear();
+
+        foreach (int m in maps_num)
+        {
+            for (int i = 0; i <= Maps_and_Monsters.Length; i++) {
+                if (i == m) {
+                    monsters.Add(Maps_and_Monsters[i,1]);
+                    monsters.Add(Maps_and_Monsters[i,2]);
+                }
+            }
+        }
     }
 
 }

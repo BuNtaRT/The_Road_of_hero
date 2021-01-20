@@ -759,6 +759,7 @@ GameObject:
   m_Component:
   - component: {fileID: 218322082}
   - component: {fileID: 218322083}
+  - component: {fileID: 218322084}
   m_Layer: 0
   m_Name: Car
   m_TagString: Untagged
@@ -791,6 +792,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f2f3b93907f0a0e42919bfecfcd235f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &218322084
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 218322081}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6eccd1cb96c51e04f9c3aee01bbbf5c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &245576274
@@ -5011,6 +5024,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6df12dd862dd85b4c9956af8f3284402, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  monsters: 
 --- !u!4 &1610622703
 Transform:
   m_ObjectHideFlags: 0
