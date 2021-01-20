@@ -4,10 +4,19 @@ using UnityEngine;
 
 public class CarShoot : MonoBehaviour
 {
+    #region singleton
+    public static CarShoot singleton;
+
+    private void Awake()
+    {
+        singleton = this;
+    }
+    #endregion
+
     // тут происходит стрельба по нажатию а так же контроль боезапаса 
 
     #region ammo
-    int ammo = 10;
+    public int ammo = 10;
     public void PlusAmmo() {
         ammo++;
     }
