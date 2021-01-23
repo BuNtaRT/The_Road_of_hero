@@ -16,6 +16,7 @@ TagManager:
   - bomb
   - orda
   - Background
+  - ContentCar
   layers:
   - Default
   - TransparentFX

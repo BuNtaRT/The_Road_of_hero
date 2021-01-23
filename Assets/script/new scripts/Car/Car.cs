@@ -18,7 +18,8 @@ public class Car : MonoBehaviour
     [System.Obsolete]
     void Start()
     {
-        
+        Reload_animation();
+
         //цвет выхлопа
         foreach (Transform chil in transform) {
             if (chil.name.Contains("Exhaust")) 
@@ -35,6 +36,12 @@ public class Car : MonoBehaviour
                 chil.GetComponent<ParticleSystem>().Play();
         }
     }
+
+    public void Reload_animation() 
+    {
+        gameObject.GetComponent<Animator>().runtimeAnimatorController = Resources.Load<RuntimeAnimatorController>("cars/Player_car" + num_car);
+    }
+
 
     void Die() {
         OnDie?.Invoke();

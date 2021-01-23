@@ -21,20 +21,30 @@ public class UI : MonoBehaviour
     public event Pause onPaused;                // наш event по его срабатывании (ниже) все кто подписался на event получат срабатывание подписанных методов
     void SetPause(bool pause)              
     {
+        this.pause = pause;
         onPaused?.Invoke(pause);    // всем кто в делегате, летит значение pause (?. - если они есть)
     }
+    public bool pause;
+
+
 
     #endregion
 
+    public Transform CarContent, MapContent;
+    public Image Ico_car, Ico_Map;
 
 
     private void Start()
     {
-        PlayerPrefs.DeleteAll();    ///////////////////////////////////////////////////////////////////////// убрать!!!!!!!!
+        Vault_data.singleton.Initialized_Car(CarContent);             // инициализируем машины для меню покупки и вообще 
+
+        Set_ico();
+
+        CarShoot.singleton.OnAmmo += OnAmmo;
         SetPause(true);
         B_Audio(Convert.ToBoolean(PlayerPrefs.GetInt("Music")));
         car = GameObject.Find("Car").transform;                                                 // ссылка на трансформ обьекта car для позиции и как следствие score
-        lvl_car = GameObject.FindGameObjectWithTag("Player").GetComponent<Car>().lvl;           // получаем уровень машины
+        lvl_car = GameObject.FindGameObjectWithTag("Player").GetComponent<Car>().lvl;
 
     }
 
@@ -67,10 +77,6 @@ public class UI : MonoBehaviour
         Destroy(gameObject,0.4f);
     }
 
-    public void B_Pause(bool pause) {
-        SetPause(pause);
-    }
-
     #region Score
     float speed = 1.5f;         // скорость анимаций 
     float lvl_car;
@@ -81,7 +87,8 @@ public class UI : MonoBehaviour
     bool rotat_on = false;
     float steap;
 
-    string ScoreText() {
+    string ScoreText() 
+    {
 
         score = (int)(car.position.x * lvl_car);
 
@@ -144,8 +151,57 @@ public class UI : MonoBehaviour
     #endregion
 
 
+
+
+
+    #region In Game
+
+    public Text AmmoText;
+
+    public void B_Pause(bool pause)
+    {
+        SetPause(pause);
+    }
+
+
+    private void OnAmmo(int ammo)
+    {
+        AmmoText.text = ammo.ToString();
+    }
+
+    #endregion
+
+
+
+    #region market
+
+    public void Buy_car() 
+    {
+        //if(Money_maneger.Minus_Money())
+    }
+
+    public void Comlite_car() 
+    {
+        Set_ico();
+    }
+
+
+
+    public void Set_ico() 
+    {
+        Ico_car.sprite = Resources.Load<Sprite>("cars/Sprite/" + PlayerPrefs.GetInt("Cur_car") + "/frame0");
+    }
+
+
+
+    #endregion
+
+
     void Update()
     {
-        score_text.text = ScoreText();
+        if (!pause)
+        {
+            score_text.text = ScoreText();
+        }
     }
 }

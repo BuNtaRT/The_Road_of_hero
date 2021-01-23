@@ -20,7 +20,9 @@ public class CarMove : MonoBehaviour
     }
 
 
-     
+
+
+
     #region Pause
     private bool pause = true;
     void PauseCar(bool value) {
@@ -46,6 +48,8 @@ public class CarMove : MonoBehaviour
         {
             car_speed = car_speed + 0.12f <= 1.7f ? car_speed + 0.12f : 1.7f;
             Debug.Log("speed = " + car_speed);
+            if (car_speed >= 1.7f)
+                CancelInvoke("UpSpeed");
         }
     }
     #endregion

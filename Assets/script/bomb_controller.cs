@@ -19,7 +19,7 @@ public class bomb_controller : MonoBehaviour
         end_sone_SP = zone_end.GetComponent<SpriteRenderer>();
         try
         {
-            car = GameObject.FindGameObjectWithTag("Player").transform.GetChild(0);
+            car = GameObject.FindGameObjectWithTag("Player").transform;
             startPos = car.position.x;
             endPos = zone_end.position.x;
             start_bomb_pos = transform.localPosition;
@@ -54,8 +54,9 @@ public class bomb_controller : MonoBehaviour
 
         if (collision.tag == "bomb_zone") {
             gameObject.GetComponent<BoxCollider2D>().enabled = false;
-            GameObject.Find("script").GetComponent<AudioCore>().Create_audio_eff("expl");
-            GameObject.Find("script").GetComponent<effect_Core>().Create_effect("explosion_enemy", 0, -1.16f, gameObject.transform.parent, true);
+            zone_end.GetComponent<SpriteRenderer>().color = new Color(0, 0, 0, 0);
+            CoreAudio.Create_audio_eff("expl");
+            CoreEffect.Create_effect("explosion_enemy", 0, -1.16f, gameObject.transform.parent, true);
             Destroy(gameObject.transform.parent.gameObject);
         }
 

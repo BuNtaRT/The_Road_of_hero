@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 7098017473509261251}
   - component: {fileID: 3398815966433853369}
   - component: {fileID: 3616447053548786564}
+  - component: {fileID: 1877386469091691694}
   m_Layer: 0
   m_Name: orda
   m_TagString: orda
@@ -79,7 +80,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec09c30374801cc48810e5d0244c57e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  paused: 0
 --- !u!114 &3616447053548786564
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -90,6 +90,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 365997b248f25514a8efaff17765a419, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1877386469091691694
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 652233304036243890}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cbef9405cb1a5254a9b48c6053f8d247, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &652233302105415307
