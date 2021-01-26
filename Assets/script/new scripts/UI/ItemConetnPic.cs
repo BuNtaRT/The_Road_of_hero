@@ -10,5 +10,9 @@ public class ItemConetnPic : MonoBehaviour
         {
             Vault_data.singleton.Pic_car(temp.name.Split('-')[1]);
         }
+        if (temp.name.Contains("map")) 
+        {
+            Vault_data.singleton.Pic_map(temp.name.Split('-')[1]);
+        }
     }
 }

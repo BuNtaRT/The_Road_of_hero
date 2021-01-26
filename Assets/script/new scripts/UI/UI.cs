@@ -15,37 +15,46 @@ public class UI : MonoBehaviour
     }
     #endregion
 
+
     #region Events
 
     public delegate void Pause(bool pause);     // назначение делегата (делегат - ссылка на методы, может содержать много методов), а ну еще задает сигнатуру принимаемых методов
     public event Pause onPaused;                // наш event по его срабатывании (ниже) все кто подписался на event получат срабатывание подписанных методов
-    void SetPause(bool pause)              
+    void SetPause(bool pause)
     {
         this.pause = pause;
         onPaused?.Invoke(pause);    // всем кто в делегате, летит значение pause (?. - если они есть)
     }
     public bool pause;
-
-
-
     #endregion
 
     public Transform CarContent, MapContent;
     public Image Ico_car, Ico_Map;
-
+    public Text Price_car_text, Price_map_text;
 
     private void Start()
     {
-        Vault_data.singleton.Initialized_Car(CarContent);             // инициализируем машины для меню покупки и вообще 
+        //PlayerPrefs.DeleteAll();    ///////////////////////////////////////////////////////////////////////// убрать!!!!!!!!
+        PlayerPrefs.SetInt("money", 1500);
 
-        Set_ico();
+
+
+        Vault_data.singleton.Initialized_Car(CarContent);             // инициализируем машины для меню покупки и вообще 
+        Vault_data.singleton.Initialized_Map(MapContent);             // инициализируем карты для меню покупки и вообще 
+
+        Price_car_text.text = Vault_data.singleton.GetCarCurPrice().ToString();
+        Price_map_text.text = Vault_data.singleton.GetMapCurPrice().ToString();
+        Set_ico_car();
 
         CarShoot.singleton.OnAmmo += OnAmmo;
+
         SetPause(true);
+
         B_Audio(Convert.ToBoolean(PlayerPrefs.GetInt("Music")));
         car = GameObject.Find("Car").transform;                                                 // ссылка на трансформ обьекта car для позиции и как следствие score
-        lvl_car = GameObject.FindGameObjectWithTag("Player").GetComponent<Car>().lvl;
+        lvl_car = GameObject.FindGameObjectWithTag("Player").GetComponent<Car>().lvl + PlayerPrefs.GetFloat("Cur_map_lvl");
 
+        
     }
 
 
@@ -72,9 +81,10 @@ public class UI : MonoBehaviour
 
     public void B_StartGame(GameObject gameObject) {
         SetPause(false);
+        GameObject.FindGameObjectWithTag("Player").GetComponent<Car>().OnDie += DieCar;
         gameObject.GetComponent<Animator>().enabled = true;
         GameObject.Find("Car").transform.GetChild(0).GetComponent<Car>().Start_play();
-        Destroy(gameObject,0.4f);
+        Destroy(gameObject, 0.4f);
     }
 
     #region Score
@@ -87,13 +97,12 @@ public class UI : MonoBehaviour
     bool rotat_on = false;
     float steap;
 
-    string ScoreText() 
+    string ScoreText()
     {
-
         score = (int)(car.position.x * lvl_car);
 
         if (!scale_on && score >= lvl_car * 350)        // включаем увеличение текста
-        {      
+        {
             scale_on = true;
             steap = lvl_car * 155;
             StartCoroutine(Scale_score());              // но только по разу
@@ -107,13 +116,13 @@ public class UI : MonoBehaviour
 
         if (scale_on && steap <= score && speed >= 0.3)
         {
-            steap =  score + ((speed / score)+200f);
+            steap = score + ((speed / score) + 200f);
             speed -= 0.1f;
 
         }
 
-        return score.ToString()+"m";
-        
+        return score.ToString() + "m";
+
     }
 
     IEnumerator Rotation_score()
@@ -123,9 +132,9 @@ public class UI : MonoBehaviour
 
         while (true)
         {
-            for (float time = 0; time < (speed+0.2f) * 2; time += Time.deltaTime)
+            for (float time = 0; time < (speed + 0.2f) * 2; time += Time.deltaTime)
             {
-                float progress = Mathf.PingPong(time, speed+0.2f) / (speed+0.2f);
+                float progress = Mathf.PingPong(time, speed + 0.2f) / (speed + 0.2f);
                 score_text.transform.localEulerAngles = Vector3.Lerp(start, end, progress);
                 yield return null;
             }
@@ -151,9 +160,6 @@ public class UI : MonoBehaviour
     #endregion
 
 
-
-
-
     #region In Game
 
     public Text AmmoText;
@@ -175,24 +181,101 @@ public class UI : MonoBehaviour
 
     #region market
 
-    public void Buy_car() 
+    public GameObject ItemOpen;
+
+    public void Comlite()
     {
-        //if(Money_maneger.Minus_Money())
+        Vault_data.singleton.Constr_car();
+        Set_ico_car();
+        Set_ico_map();
+        Vault_data.singleton.Pic_map(PlayerPrefs.GetInt("Cur_map").ToString());
+    }
+    //////////////////////////////  CAR
+    public void Buy_car()
+    {
+        int price = Convert.ToInt32(Price_car_text.text);
+        if (Money_maneger.Minus_Money(price))
+        {
+            int soult_car = Vault_data.singleton.GetCar();
+            ItemOpen.SetActive(true);
+            ItemOpen.transform.Find("GameObject").transform.Find("car_ico").GetComponent<Image>().sprite = Resources.Load<Sprite>("cars/Sprite/" + soult_car + "/frame0");
+            Vault_data.singleton.Buy_car(soult_car);
+            Price_car_text.text = Vault_data.singleton.GetCarCurPrice().ToString();
+        }
     }
 
-    public void Comlite_car() 
-    {
-        Set_ico();
-    }
-
-
-
-    public void Set_ico() 
+    public void Set_ico_car()
     {
         Ico_car.sprite = Resources.Load<Sprite>("cars/Sprite/" + PlayerPrefs.GetInt("Cur_car") + "/frame0");
     }
 
+    //////////////////////////////  MAP
 
+    public void Buy_map()
+    {
+        int price = Convert.ToInt32(Price_map_text.text);
+        if (Money_maneger.Minus_Money(price))
+        {
+            int map = Vault_data.singleton.GetMap();
+            ItemOpen.SetActive(true);
+            ItemOpen.transform.Find("GameObject").transform.Find("car_ico").GetComponent<Image>().sprite = Resources.Load<Sprite>("map/ico/" + map);
+            Vault_data.singleton.Buy_Map(map);
+            Price_map_text.text = Vault_data.singleton.GetMapCurPrice().ToString();
+        }
+    }
+
+    public void Set_ico_map()
+    {
+        Ico_Map.sprite = Resources.Load<Sprite>("map/ico/" + PlayerPrefs.GetInt("Cur_map"));
+    }
+
+    #endregion
+
+
+    #region End Game
+    public Text MoneyEND,ShootCollectedCoinsEND,ScoreEND,RecordEND;
+
+    private void DieCar()
+    {
+        SetPause(true);
+        GameObject.Find("In_game_ui").GetComponent<Animator>().Play("LoseGameState1");
+        StateOneEndGame();
+    }
+
+    public void StateOneEndGame() 
+    {
+        string forShoot, forCollect,newRekord;
+        if (PlayerPrefs.GetInt("lg") == 0)
+        {
+            forShoot = "For liquidation ";
+            forCollect = "Collected coins ";
+            newRekord = "New Record!";
+        }
+        else 
+        {
+            forShoot = "За устранение ";
+            forCollect = "Собрано монет ";
+            newRekord = "Новый рекорд!";
+        }
+
+
+        Money_maneger.temp_money = (int)(car.position.x / 2) + Money_maneger.money_monster + Money_maneger.money_coll;
+        MoneyEND.text = Money_maneger.temp_money.ToString();
+        ShootCollectedCoinsEND.text = forShoot + " +" + Money_maneger.money_monster + "\n" + forCollect + " +" + Money_maneger.money_coll;
+
+
+        ScoreEND.text = score.ToString() + "m";
+
+        if (score > PlayerPrefs.GetInt("score"))
+        {
+            PlayerPrefs.SetInt("score", score);
+            RecordEND.text = newRekord + "\n" + score.ToString() + "m";
+        }
+        else
+        {
+            RecordEND.text = PlayerPrefs.GetInt("score").ToString() + "m";
+        }
+    }
 
     #endregion
 

@@ -15,16 +15,11 @@ public class Car : MonoBehaviour
 
 
 
-    [System.Obsolete]
+    [Obsolete]
     void Start()
     {
         Reload_animation();
 
-        //цвет выхлопа
-        foreach (Transform chil in transform) {
-            if (chil.name.Contains("Exhaust")) 
-                chil.GetComponent<ParticleSystem>().startColor = GameObject.Find("Scripts").GetComponent<Colors>().color_exthose_car[num_car];
-        }
         //цвет машины от карты
     }
 
@@ -37,20 +32,31 @@ public class Car : MonoBehaviour
         }
     }
 
+    [System.Obsolete]
     public void Reload_animation() 
     {
         gameObject.GetComponent<Animator>().runtimeAnimatorController = Resources.Load<RuntimeAnimatorController>("cars/Player_car" + num_car);
+        //цвет выхлопа
+        foreach (Transform chil in transform)
+        {
+            if (chil.name.Contains("Exhaust"))
+                chil.GetComponent<ParticleSystem>().startColor = GameObject.Find("Scripts").GetComponent<Colors>().color_exthose_car[num_car];
+        }
     }
 
 
     void Die() {
         OnDie?.Invoke();
+
     }
 
-
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter2D(Collider2D other)
     {
-        
+        Debug.Log("OnTriggerEnterCAR  = "+ other.gameObject.tag);
+        if (other.gameObject.tag == "enemy" || other.gameObject.tag == "pit" || other.gameObject.tag == "bomb_zone")
+        {
+            Die();
+        }
     }
 
 

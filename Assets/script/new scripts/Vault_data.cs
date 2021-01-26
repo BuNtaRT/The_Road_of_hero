@@ -14,7 +14,6 @@ public class Vault_data : MonoBehaviour
 
     void Awake()
     {
-        PlayerPrefs.DeleteAll();    ///////////////////////////////////////////////////////////////////////// убрать!!!!!!!!
         singleton = this;
 
         Initialized_Weapon();
@@ -28,21 +27,25 @@ public class Vault_data : MonoBehaviour
     List<float> TimeWeapon = new List<float>();     // его тайминг cooldown
 
 
-    // добавляем орудие в лист для использований и сохраняем в файл
-    public void AddWeapon(int weapon,double time_weap)
-    {
-        using (StreamWriter file = new StreamWriter(Application.persistentDataPath + "/W.is")) {
-            file.WriteLine(weapon.ToString()+"/"+time_weap);
-        }
-        OpenWeapon.Add(weapon);
-    }
+    //// добавляем орудие в лист для использований и сохраняем в файл
+    //public void AddWeapon(int weapon,double time_weap)
+    //{
+    //    using (StreamWriter file = new StreamWriter(Application.persistentDataPath + "/W.is",true)) {
+    //        file.WriteLine(weapon.ToString()+"/"+time_weap);
+    //    }
+    //    OpenWeapon.Add(weapon);
+    //}
 
 
+    // суть проста, записываем первый раз в файл все номера и тайминги оружия, а потом выбираем из них рандомное (чем больше машин тем больше оружия)
+    // почему в файл ?? просто есть уникальный транспорт и когда мы его купим его оружие добавится в общий пул сохраненых, потом можно использовать на лубой машине
     // получаем случайное доступное оружие(его номер, cooldown)
     public Tuple<int,float> GetRandomGunFromList() 
     {
-        int rand = UnityEngine.Random.Range(0, OpenWeapon.Count);
-        return Tuple.Create(OpenWeapon[rand],TimeWeapon[rand]);
+
+        //int rand = UnityEngine.Random.Range(0, PlayerPrefs.GetInt("Car_index"));
+        //return Tuple.Create(OpenWeapon[rand],TimeWeapon[rand]);
+        return Tuple.Create(0, 2f);
     }
 
 
@@ -54,6 +57,10 @@ public class Vault_data : MonoBehaviour
             using (var file = File.CreateText(Application.persistentDataPath + "/W.is"))
             {
                 file.WriteLine(0.ToString() + "/2");
+                file.WriteLine(1.ToString() + "/2");
+                file.WriteLine(2.ToString() + "/2");
+                file.WriteLine(3.ToString() + "/2");
+                file.WriteLine(4.ToString() + "/2");
             }
         }
 
@@ -67,8 +74,6 @@ public class Vault_data : MonoBehaviour
             }
         }
     }
-
-
     #endregion
 
 
@@ -108,7 +113,7 @@ public class Vault_data : MonoBehaviour
     }
 
     public int GetRandomMonster() {
-        return UnityEngine.Random.Range(0, monsters.Count);
+        return monsters[UnityEngine.Random.Range(0, monsters.Count)];
     }
 
     #endregion
@@ -120,11 +125,11 @@ public class Vault_data : MonoBehaviour
     {
         1,
         4,
-        27,
-        27,
-        27,
-        27,
-        27,
+        //27,
+        //27,
+        //27,
+        //27,
+        //27,
         8,
         10,
         12,
@@ -142,60 +147,240 @@ public class Vault_data : MonoBehaviour
         24.8f,
         25.1f,
         25.2f,
-        29
+        29,
+        27,
+        27,
+        27,
+        27,
+        27,
+    };
+    int[] car_price = new int[] 
+    {
+        100,
+        200,
+        350,
+        600,
+        1200,
+        2500,
+        3000,
+        3500,
+        4400,
+        5600,
+        7000,
+        7300,
+        7600,
+        7900,
+        8100,
+        8500,
+        8700,
+        9000,
+        9200,
+        10000
     };
 
-    Transform Curret_car_content;
-
+    List<int> Buyed_car = new List<int>();
 
     // считывание из файла и заполенение horizontal group (scroll) уже полученными машинами
     public void Initialized_Car(Transform Scroll_car_content) 
     {
-        Curret_car_content = Scroll_car_content;
-
-        // создаем наш лист для открытых орудий
-        if (!File.Exists(Application.persistentDataPath + "/C.is"))
-        {
-            PlayerPrefs.SetInt("Cur_car",0);
-            PlayerPrefs.SetInt("Cur_car_lvl",1);
-            PlayerPrefs.Save();
-            using (var file = File.CreateText(Application.persistentDataPath + "/C.is"))
-            {
-                file.WriteLine(0.ToString() + "/1");
-                GameObject temp = Instantiate(Resources.Load<GameObject>("cars/car_scrol_content0"), Scroll_car_content);
-                temp.GetComponent<Image>().sprite = Resources.Load<Sprite>("cars/Sprite/" + 0 + "/frame0");
-            }
-        }
-
-        using (StreamReader file = new StreamReader(Application.persistentDataPath + "/C.is"))
-        {
-            while (file.Peek() >= 0)
-            {
-                GameObject temp = Instantiate(Resources.Load<GameObject>("cars/car_scrol_content"),Scroll_car_content);
-                string line = file.ReadLine();
-                temp.name = "car-" + Convert.ToInt32(line.Split('/')[0]) + "/" + (float)Convert.ToDouble(line.Split('/')[1]);
-                temp.GetComponent<Image>().sprite = Resources.Load<Sprite>("cars/Sprite/" + line.Split('/')[0] + "/frame0");
-            }
-        }
-
+        Initialized(Scroll_car_content, true, "C", "cars/Sprite/");
+        Constr_car();
     }
 
-    void Constr_car()       // собирает машину 
+    public void Constr_car()       // собирает машину 
     {
         Transform car = GameObject.FindGameObjectWithTag("Player").transform;
-        car.GetComponent<Car>().lvl = PlayerPrefs.GetInt("Cur_car_lvl");
+        car.GetComponent<Car>().lvl = PlayerPrefs.GetFloat("Cur_car_lvl");
         car.GetComponent<Car>().num_car = PlayerPrefs.GetInt("Cur_car");
         car.GetComponent<Car>().Reload_animation();
     }
 
+    public void Buy_car(int skinID) 
+    {
+        Buyed_car.Add(skinID);
+        PlayerPrefs.SetInt("Car_index", PlayerPrefs.GetInt("Car_index") + 1);
+        PlayerPrefs.SetFloat("Cur_car_lvl", lvl_car[PlayerPrefs.GetInt("Car_index")]);
+        PlayerPrefs.SetInt("Cur_car", skinID);
+        PlayerPrefs.Save();
+        SaveSkin(skinID,"C", "Market_UI/sc/bg_right/Scroll_car/Viewport/Content","car");
+    }
+
+
     public void Pic_car(string car) 
     {
-        int car_skin = Convert.ToInt32(car.Split('/')[0]);
+        int car_skin = Convert.ToInt32(car);
         PlayerPrefs.SetInt("Cur_car", car_skin);
         PlayerPrefs.Save();
         Constr_car();
-        UI.singleton.Set_ico();
+        UI.singleton.Set_ico_car();
     }
+
+    public int GetCarCurPrice() 
+    {
+        return car_price[PlayerPrefs.GetInt("Car_index")];
+    }
+
+    public int GetCar()
+    {
+        List<int> Mas_aval_car = new List<int>();
+
+        if (PlayerPrefs.GetInt("Car_index") < 2)
+        {
+            return PlayerPrefs.GetInt("Car_index") + 1 ;
+        }
+        else
+        {
+            for (int i = 8; i <= 24; i++)
+            {
+                if (!Buyed_car.Contains(i))
+                    Mas_aval_car.Add(i);
+            }
+            return Mas_aval_car[UnityEngine.Random.Range(0, Mas_aval_car.Count)];
+        }
+    }
+
+    #endregion
+
+
+    #region Map
+
+    List<int> Buyed_map = new List<int>();
+
+    public void Initialized_Map(Transform Scroll_map_content)
+    {
+        Initialized(Scroll_map_content, false, "M", "map/ico/");
+        Pic_map(PlayerPrefs.GetInt("Cur_map").ToString());
+    }
+
+    public void Pic_map(string map)
+    {
+        int map_skin = Convert.ToInt32(map);
+        PlayerPrefs.SetInt("Cur_map", map_skin);
+        PlayerPrefs.Save();
+        Destroy(GameObject.FindGameObjectWithTag("Background"));
+        GameObject temp = Instantiate(Resources.Load<GameObject>("map/"+map));
+        temp.name = map.ToString();
+        UI.singleton.Set_ico_map();
+    }
+
+    public void Buy_Map(int skinID)
+    {
+        Buyed_map.Add(skinID);
+        PlayerPrefs.SetFloat("Cur_map_lvl", PlayerPrefs.GetFloat("Cur_map_lvl") * 1.5f);
+        PlayerPrefs.SetInt("Cur_map", skinID);
+        PlayerPrefs.Save();
+        SaveSkin(skinID, "M", "Market_UI/sc/bg_right/Scroll_map/Viewport/Content", "map");
+    }
+
+    public int GetMap()
+    {
+        List<int> Mas_aval_map = new List<int>();
+        for (int i = 0; i <= 9; i++)
+        {
+            if (!Buyed_map.Contains(i))
+                Mas_aval_map.Add(i);
+        }
+        return Mas_aval_map[UnityEngine.Random.Range(0, Mas_aval_map.Count)];
+
+    }
+
+    public int GetMapCurPrice()
+    {
+        return (int)(PlayerPrefs.GetFloat("Cur_map_lvl") * 125f);
+    }
+
+    #endregion
+
+
+
+    #region MarketCore
+
+    void Initialized(Transform Scroll,bool car, string FIleName, string IcoParh)
+    {
+        string sp,name;
+
+        if (car)
+        {
+            sp = "/frame0";
+            name = "car";
+        }
+        else
+        {
+            sp = "";
+            name = "map";
+        }
+
+        // создаем наш лист для открытых орудий
+        if (!File.Exists(Application.persistentDataPath + "/"+ FIleName + ".is"))
+        {
+            if (car)
+            {
+                Buyed_car.Add(0);
+                PlayerPrefs.SetInt("Cur_car", 0);
+                PlayerPrefs.SetFloat("Cur_car_lvl", 1);
+                PlayerPrefs.SetInt("Car_index", 0);
+                Debug.Log(PlayerPrefs.GetFloat("Cur_car_lvl") + " Initial lvl car");
+            }
+            else
+            {
+                Buyed_map.Add(0);
+                PlayerPrefs.SetInt("Cur_map", 0);
+                PlayerPrefs.SetFloat("Cur_map_lvl", 1);
+            }
+            PlayerPrefs.Save();
+            using (var file = File.CreateText(Application.persistentDataPath + "/" + FIleName + ".is"))
+            {
+                file.WriteLine(0.ToString());
+                GameObject temp = Instantiate(Resources.Load<GameObject>("cars/car_scrol_content"), Scroll);
+                temp.GetComponent<Image>().sprite = Resources.Load<Sprite>(IcoParh + 0 + sp);
+                if (!car) {
+                    temp.transform.localScale = new Vector3(1.3f, 1.3f, 1);
+                }
+                temp.name = name + "-" + 0;
+            }
+        }
+        else
+        {
+            using (StreamReader file = new StreamReader(Application.persistentDataPath + "/" + FIleName + ".is"))
+            {
+                while (file.Peek() >= 0)
+                {
+                    GameObject temp = Instantiate(Resources.Load<GameObject>("cars/car_scrol_content"), Scroll);
+                    string line = file.ReadLine();
+                    if (car)
+                    {
+                        Buyed_car.Add(Convert.ToInt32(line));
+                    }
+                    else
+                    {
+                        temp.transform.localScale = new Vector3(1.3f, 1.3f, 1);
+                        Buyed_map.Add(Convert.ToInt32(line));
+                    }
+                    temp.name = name+ "-" + Convert.ToInt32(line);
+                    temp.GetComponent<Image>().sprite = Resources.Load<Sprite>(IcoParh + line + sp);
+                }
+            }
+        }
+    }
+
+    void SaveSkin(int skin, string FIleName, string scroll,string name) 
+    {
+        using (StreamWriter file = new StreamWriter(Application.persistentDataPath + "/"+ FIleName + ".is", true))
+        {
+            file.WriteLine(skin);
+            GameObject temp = Instantiate(Resources.Load<GameObject>("cars/car_scrol_content"), GameObject.Find(scroll).transform);
+            temp.name = name + "-" + skin;
+            if (name.Contains("car"))
+            {
+                temp.GetComponent<Image>().sprite = Resources.Load<Sprite>("cars/Sprite/" + skin + "/frame0");
+            }
+            else
+            {
+                temp.GetComponent<Image>().sprite = Resources.Load<Sprite>("map/ico/" + skin );
+            }
+        }
+    }
+
 
     #endregion
 

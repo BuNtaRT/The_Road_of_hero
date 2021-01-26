@@ -5,7 +5,9 @@ using UnityEngine;
 public static class Money_maneger 
 {
 
-    static int money = 0;
+    static int money = 1001;
+
+    public static int temp_money, money_monster, money_coll;
 
     public static void Plus_money(int val) 
     {
@@ -44,4 +46,5 @@ public static class Money_maneger
             return false;
         }
     }
+
 }

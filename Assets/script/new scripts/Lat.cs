@@ -6,7 +6,7 @@ using UnityEngine;
 public class Lat : MonoBehaviour
 {
     #region pause
-    bool pause = true;
+    bool pause = false;
     void PauseCar(bool pause) {
         this.pause = pause;
     }
@@ -14,8 +14,10 @@ public class Lat : MonoBehaviour
 
     void Start()
     {
+        Debug.Log("Start Lat (" + GameObject.Find("Car").transform.GetChild(0).GetComponent<Car>().lvl + ")-car (" + PlayerPrefs.GetFloat("Cur_map_lvl") + ")-map");
+
         UI.singleton.onPaused += PauseCar;
-        InvokeTime = 11 - (GameObject.Find("Car").transform.GetChild(0).GetComponent<Car>().lvl / 7);
+        InvokeTime = 11 - ((GameObject.Find("Car").transform.GetChild(0).GetComponent<Car>().lvl + PlayerPrefs.GetFloat("Cur_map_lvl")) / 7);
         Vault_data.singleton.CreateMontersList(new List<int> { Convert.ToInt32(GameObject.FindGameObjectWithTag("Background").name) });   // запрашиваем запитсь монстров ответственных за текущую карту 
         Invoke("SpawnWhat", 5);
     }
@@ -29,6 +31,7 @@ public class Lat : MonoBehaviour
     {
         if (!pause)
         {
+
             Line2_content = 0;          // обнуляем линии
             one_prop = false;                // обнуляем яму
 
@@ -137,7 +140,7 @@ public class Lat : MonoBehaviour
             Line2_content = 1;
             enemy = generate("lat/enemy1", transform.position.x + 17, -3.13f,15);
         }
-
+        
         enemy.GetComponent<Animator>().runtimeAnimatorController = Resources.Load<RuntimeAnimatorController>("enemy_controll/enemy_controll" + GetRandomMonster());
 
     }

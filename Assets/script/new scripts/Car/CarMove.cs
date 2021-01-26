@@ -21,8 +21,6 @@ public class CarMove : MonoBehaviour
 
 
 
-
-
     #region Pause
     private bool pause = true;
     void PauseCar(bool value) {
@@ -36,9 +34,8 @@ public class CarMove : MonoBehaviour
     
     private void Speed()
     {
-        car_lvl = transform.GetChild(0).GetComponent<Car>().lvl;
+        car_lvl = transform.GetChild(0).GetComponent<Car>().lvl + PlayerPrefs.GetFloat("Cur_map_lvl");
         invokeTime = 18 / car_lvl >= 8 ? 18 / car_lvl : 8;
-        Debug.Log(invokeTime);
         InvokeRepeating("UpSpeed", 5, invokeTime);
     }
 
@@ -47,7 +44,7 @@ public class CarMove : MonoBehaviour
         if (!pause)
         {
             car_speed = car_speed + 0.12f <= 1.7f ? car_speed + 0.12f : 1.7f;
-            Debug.Log("speed = " + car_speed);
+            //Debug.Log("speed = " + car_speed);
             if (car_speed >= 1.7f)
                 CancelInvoke("UpSpeed");
         }
