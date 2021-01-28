@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class Music : MonoBehaviour
 {
-    bool audio = true;
+
     Coroutine music;
+    bool audio;
     void Start()
     {
         //audio = System.Convert.ToBoolean(PlayerPrefs.GetInt("sound"));
@@ -16,20 +17,16 @@ public class Music : MonoBehaviour
 
     public void On_Off(bool on)
     {
-        if ((audio == true) && (on != audio))       //если музыка включена и мы хотим выключить её
+        audio = on;
+        if (!on)       //если музыка включена и мы хотим выключить её
         {
-            audio = on;
             if(music != null)
                 StopCoroutine(music);
         }
-        else if ((audio == false) && (on != audio)) // или же выключена и мы хотим включить
+        else  // или же выключена и мы хотим включить
         {
-            audio = on;
             music = StartCoroutine(Controll_music());
         }
-
-
-
     }
 
     IEnumerator Controll_music()

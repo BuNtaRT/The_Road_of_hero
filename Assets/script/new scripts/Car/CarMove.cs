@@ -15,6 +15,7 @@ public class CarMove : MonoBehaviour
     void Start()
     {
         UI.singleton.onPaused += PauseCar;       // singleton - крутая штука что бы не искать обьекты а находить единственный Static-же и обращаться к нему
+
         Speed();
         //GameObject.Find("Scripts").GetComponent<Hard_controller>().OnUpSpead += Speed;
     }
@@ -23,13 +24,15 @@ public class CarMove : MonoBehaviour
 
     #region Pause
     private bool pause = true;
-    void PauseCar(bool value) {
+    void PauseCar(bool value) 
+    {
         pause = value;
     }
+
     #endregion
 
     #region Car speed
-    private float car_speed = 0.2f;
+    public float car_speed = 0.2f;
     private float car_lvl = 1f;
     
     private void Speed()
@@ -48,6 +51,7 @@ public class CarMove : MonoBehaviour
             if (car_speed >= 1.7f)
                 CancelInvoke("UpSpeed");
         }
+        
     }
     #endregion
 

@@ -19,7 +19,8 @@ public class enemy_controll : MonoBehaviour
         paused = pause;
     }
 
-    public void Unsub() {
+    private void OnDestroy()
+    {
         UI.singleton.onPaused -= onPause;
     }
 

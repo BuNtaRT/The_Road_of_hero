@@ -16,15 +16,25 @@ public class Vault_data : MonoBehaviour
     {
         singleton = this;
 
-        Initialized_Weapon();
+        //Initialized_Weapon();
 
     }
 
 
     #region Weapon 
 
-    List<int> OpenWeapon = new List<int>();     // открытое орудие 
-    List<float> TimeWeapon = new List<float>();     // его тайминг cooldown
+    List<int> Weapon = new List<int>() 
+    {
+        0,
+        1,
+        2,
+    };     // открытое орудие 
+    List<float> TimeWeapon = new List<float>() 
+    {
+       2f,
+       0,
+       0,
+    };     // его тайминг cooldown
 
 
     //// добавляем орудие в лист для использований и сохраняем в файл
@@ -44,35 +54,35 @@ public class Vault_data : MonoBehaviour
     {
 
         //int rand = UnityEngine.Random.Range(0, PlayerPrefs.GetInt("Car_index"));
-        //return Tuple.Create(OpenWeapon[rand],TimeWeapon[rand]);
-        return Tuple.Create(0, 2f);
+        //return Tuple.Create(Weapon[rand],TimeWeapon[rand]);
+        return Tuple.Create(0, 2f);     // УБРАТЬ !!!
     }
 
 
     public void Initialized_Weapon() 
     {
-        // создаем наш лист для открытых орудий
-        if (!File.Exists(Application.persistentDataPath + "/W.is"))
-        {
-            using (var file = File.CreateText(Application.persistentDataPath + "/W.is"))
-            {
-                file.WriteLine(0.ToString() + "/2");
-                file.WriteLine(1.ToString() + "/2");
-                file.WriteLine(2.ToString() + "/2");
-                file.WriteLine(3.ToString() + "/2");
-                file.WriteLine(4.ToString() + "/2");
-            }
-        }
+        //// создаем наш лист для открытых орудий
+        //if (!File.Exists(Application.persistentDataPath + "/W.is"))
+        //{
+        //    using (var file = File.CreateText(Application.persistentDataPath + "/W.is"))
+        //    {
+        //        file.WriteLine(0.ToString() + "/2");
+        //        file.WriteLine(1.ToString() + "/2");
+        //        file.WriteLine(2.ToString() + "/2");
+        //        file.WriteLine(3.ToString() + "/2");
+        //        file.WriteLine(4.ToString() + "/2");
+        //    }
+        //}
 
-        using (StreamReader file = new StreamReader(Application.persistentDataPath + "/W.is"))
-        {
-            while (file.Peek() >= 0)
-            {
-                string line = file.ReadLine();
-                OpenWeapon.Add(Convert.ToInt32(line.Split('/')[0]));
-                TimeWeapon.Add((float)Convert.ToDouble(line.Split('/')[1]));
-            }
-        }
+        //using (StreamReader file = new StreamReader(Application.persistentDataPath + "/W.is"))
+        //{
+        //    while (file.Peek() >= 0)
+        //    {
+        //        string line = file.ReadLine();
+        //        OpenWeapon.Add(Convert.ToInt32(line.Split('/')[0]));
+        //        TimeWeapon.Add((float)Convert.ToDouble(line.Split('/')[1]));
+        //    }
+        //}
     }
     #endregion
 
@@ -97,19 +107,11 @@ public class Vault_data : MonoBehaviour
     List<int> monsters = new List<int>();
 
     // составление листа монстров на основе используемых карт (их может быть несколько одновременно)
-    public void CreateMontersList(List<int> maps_num) 
+    public void CreateMontersList(int maps_num) 
     {
         monsters.Clear();
-
-        foreach (int m in maps_num)
-        {
-            for (int i = 0; i <= Maps_and_Monsters.Length; i++) {
-                if (i == m) {
-                    monsters.Add(Maps_and_Monsters[i,1]);
-                    monsters.Add(Maps_and_Monsters[i,2]);
-                }
-            }
-        }
+        monsters.Add(Maps_and_Monsters[maps_num,1]);
+        monsters.Add(Maps_and_Monsters[maps_num,2]);
     }
 
     public int GetRandomMonster() {
@@ -185,6 +187,15 @@ public class Vault_data : MonoBehaviour
     {
         Initialized(Scroll_car_content, true, "C", "cars/Sprite/");
         Constr_car();
+    }
+
+    public bool CheckCar()
+    {
+        if (PlayerPrefs.GetInt("Car_index") >= car_price.Length-1)
+            return true;
+        else
+            return false;
+
     }
 
     public void Constr_car()       // собирает машину 
@@ -263,16 +274,24 @@ public class Vault_data : MonoBehaviour
         UI.singleton.Set_ico_map();
     }
 
+    public bool CheckMap() 
+    {
+        if (Buyed_map.Count >= 9)               // РАСШИРЕНИЕ если добавлять карту надо прибавить +1
+            return true;
+        else
+            return false;
+    }
+
     public void Buy_Map(int skinID)
     {
         Buyed_map.Add(skinID);
-        PlayerPrefs.SetFloat("Cur_map_lvl", PlayerPrefs.GetFloat("Cur_map_lvl") * 1.5f);
+        PlayerPrefs.SetFloat("Cur_map_lvl", PlayerPrefs.GetFloat("Cur_map_lvl") * 1.15f);
         PlayerPrefs.SetInt("Cur_map", skinID);
         PlayerPrefs.Save();
         SaveSkin(skinID, "M", "Market_UI/sc/bg_right/Scroll_map/Viewport/Content", "map");
     }
 
-    public int GetMap()
+    public int GetMap()                 // доступная карта для покупки 
     {
         List<int> Mas_aval_map = new List<int>();
         for (int i = 0; i <= 9; i++)
@@ -284,9 +303,22 @@ public class Vault_data : MonoBehaviour
 
     }
 
+    public int GetBuyedMap() 
+    {
+        return Buyed_map[UnityEngine.Random.Range(0, Buyed_map.Count)];
+    }
+
+    public bool LightOnMap(int numMap) 
+    {
+        if (numMap == 5 || numMap == 6 || numMap == 8)
+            return true;
+        else
+            return false;
+    } 
+
     public int GetMapCurPrice()
     {
-        return (int)(PlayerPrefs.GetFloat("Cur_map_lvl") * 125f);
+        return (int)(PlayerPrefs.GetFloat("Cur_map_lvl") * 220f);
     }
 
     #endregion
@@ -370,6 +402,9 @@ public class Vault_data : MonoBehaviour
             file.WriteLine(skin);
             GameObject temp = Instantiate(Resources.Load<GameObject>("cars/car_scrol_content"), GameObject.Find(scroll).transform);
             temp.name = name + "-" + skin;
+            if (name.Contains("map")) {
+                temp.transform.localScale = new Vector3(1.3f,1.3f,1);
+            }
             if (name.Contains("car"))
             {
                 temp.GetComponent<Image>().sprite = Resources.Load<Sprite>("cars/Sprite/" + skin + "/frame0");

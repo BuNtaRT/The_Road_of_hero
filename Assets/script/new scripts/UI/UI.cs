@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class UI : MonoBehaviour
@@ -31,12 +32,15 @@ public class UI : MonoBehaviour
     public Transform CarContent, MapContent;
     public Image Ico_car, Ico_Map;
     public Text Price_car_text, Price_map_text;
+    public Text Coin_men;
 
     private void Start()
     {
         //PlayerPrefs.DeleteAll();    ///////////////////////////////////////////////////////////////////////// убрать!!!!!!!!
-        PlayerPrefs.SetInt("money", 1500);
+        PlayerPrefs.SetInt("money", 1000000);
 
+
+        GameObject.Find("Scripts").GetComponent<Music>().On_Off(Convert.ToBoolean(PlayerPrefs.GetInt("Music")));
 
 
         Vault_data.singleton.Initialized_Car(CarContent);             // инициализируем машины для меню покупки и вообще 
@@ -54,7 +58,8 @@ public class UI : MonoBehaviour
         car = GameObject.Find("Car").transform;                                                 // ссылка на трансформ обьекта car для позиции и как следствие score
         lvl_car = GameObject.FindGameObjectWithTag("Player").GetComponent<Car>().lvl + PlayerPrefs.GetFloat("Cur_map_lvl");
 
-        
+        CheckButtonBuy();
+        Coin_men.text = Money_maneger.GetMoney().ToString();
     }
 
 
@@ -182,6 +187,27 @@ public class UI : MonoBehaviour
     #region market
 
     public GameObject ItemOpen;
+    public GameObject LightMap;
+
+    public void CheckButtonBuy()
+    {
+        if (Vault_data.singleton.CheckCar()) 
+        {
+            Price_car_text.text = "ALL";
+            Price_car_text.color = new Color(0.3465709f, 0.8490566f, 0.1722143f);
+
+            Price_car_text.transform.parent.parent.Find("icoBox").GetComponent<Image>().color = new Color(0.4366488f, 0.6698113f, 0.2495995f);
+            Price_car_text.transform.parent.parent.Find("icoBox").GetChild(0).GetComponent<Text>().enabled = false; 
+
+        }
+        if (Vault_data.singleton.CheckMap()) {
+            Price_map_text.text = "ALL";
+            Price_map_text.color = new Color(0.3465709f, 0.8490566f, 0.1722143f);
+
+            Price_map_text.transform.parent.parent.Find("icoBox").GetComponent<Image>().color = new Color(0.4366488f, 0.6698113f, 0.2495995f);
+            Price_map_text.transform.parent.parent.Find("icoBox").GetChild(0).GetComponent<Text>().enabled = false; 
+        }
+    }
 
     public void Comlite()
     {
@@ -189,18 +215,23 @@ public class UI : MonoBehaviour
         Set_ico_car();
         Set_ico_map();
         Vault_data.singleton.Pic_map(PlayerPrefs.GetInt("Cur_map").ToString());
+        Coin_men.text = Money_maneger.GetMoney().ToString();
+        CheckButtonBuy();
     }
     //////////////////////////////  CAR
     public void Buy_car()
     {
-        int price = Convert.ToInt32(Price_car_text.text);
-        if (Money_maneger.Minus_Money(price))
+        if (!Price_car_text.text.Contains("ALL"))
         {
-            int soult_car = Vault_data.singleton.GetCar();
-            ItemOpen.SetActive(true);
-            ItemOpen.transform.Find("GameObject").transform.Find("car_ico").GetComponent<Image>().sprite = Resources.Load<Sprite>("cars/Sprite/" + soult_car + "/frame0");
-            Vault_data.singleton.Buy_car(soult_car);
-            Price_car_text.text = Vault_data.singleton.GetCarCurPrice().ToString();
+            int price = Convert.ToInt32(Price_car_text.text);
+            if (Money_maneger.Minus_Money(price))
+            {
+                int soult_car = Vault_data.singleton.GetCar();
+                ItemOpen.SetActive(true);
+                ItemOpen.transform.Find("GameObject").transform.Find("car_ico").GetComponent<Image>().sprite = Resources.Load<Sprite>("cars/Sprite/" + soult_car + "/frame0");
+                Vault_data.singleton.Buy_car(soult_car);
+                Price_car_text.text = Vault_data.singleton.GetCarCurPrice().ToString();
+            }
         }
     }
 
@@ -213,20 +244,24 @@ public class UI : MonoBehaviour
 
     public void Buy_map()
     {
-        int price = Convert.ToInt32(Price_map_text.text);
-        if (Money_maneger.Minus_Money(price))
+        if (!Price_map_text.text.Contains("ALL"))
         {
-            int map = Vault_data.singleton.GetMap();
-            ItemOpen.SetActive(true);
-            ItemOpen.transform.Find("GameObject").transform.Find("car_ico").GetComponent<Image>().sprite = Resources.Load<Sprite>("map/ico/" + map);
-            Vault_data.singleton.Buy_Map(map);
-            Price_map_text.text = Vault_data.singleton.GetMapCurPrice().ToString();
+            int price = Convert.ToInt32(Price_map_text.text);
+            if (Money_maneger.Minus_Money(price))
+            {
+                int map = Vault_data.singleton.GetMap();
+                ItemOpen.SetActive(true);
+                ItemOpen.transform.Find("GameObject").transform.Find("car_ico").GetComponent<Image>().sprite = Resources.Load<Sprite>("map/ico/" + map);
+                Vault_data.singleton.Buy_Map(map);
+                Price_map_text.text = Vault_data.singleton.GetMapCurPrice().ToString();
+            }
         }
     }
 
     public void Set_ico_map()
     {
         Ico_Map.sprite = Resources.Load<Sprite>("map/ico/" + PlayerPrefs.GetInt("Cur_map"));
+        LightMap.SetActive(Vault_data.singleton.LightOnMap(PlayerPrefs.GetInt("Cur_map")));
     }
 
     #endregion
@@ -275,6 +310,11 @@ public class UI : MonoBehaviour
         {
             RecordEND.text = PlayerPrefs.GetInt("score").ToString() + "m";
         }
+    }
+
+    public void End() 
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
     #endregion

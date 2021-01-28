@@ -16,8 +16,6 @@ public class dell_obj : MonoBehaviour
     void Im_outside_camera_checker() {
         if (transform.position.x <= camera.position.x - (camera_size * 4) || transform.position.y <= camera.position.y - (camera_size * 4))
         {
-            if(gameObject.GetComponent<enemy_controll>() != null)
-                gameObject.GetComponent<enemy_controll>().Unsub();
             Destroy(gameObject);
         }
     }

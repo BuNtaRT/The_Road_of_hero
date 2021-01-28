@@ -4,23 +4,28 @@ using UnityEngine;
 
 public static class CoreEffect
 {
-    public static void Create_effect(string path, float x, float y)
+    public static float Create_effect(string path, float x, float y)
     {
-        Create(path, x, y, null, false);
+        return Create(path, x, y, null, false);
     }
 
-    public static void Create_effect(string path, float x, float y, Transform parent)
+    public static float Create_effect(string path, float x, float y, Transform parent)
     {
-        Create(path, x, y, parent, false);
+        return Create(path, x, y, parent, false);
     }
-    public static void Create_effect(string path, float x, float y, Transform parent, bool world)
+    public static float Create_effect(string path, float x, float y, Transform parent, bool world)
     {
-        Create(path, x, y, parent, world);
+        return Create(path, x, y, parent, world);
+    }
+
+    public static float Create_effect(string path, float x, float y, Transform parent, bool world,string audioEff)
+    {
+        CoreAudio.Create_audio_eff(audioEff);
+        return Create(path, x, y, parent, world);
     }
 
 
-
-    private static void Create(string path, float x, float y, Transform parent, bool world)
+    private static float Create(string path, float x, float y, Transform parent, bool world)
     {
 
         GameObject temp = UnityEngine.Object.Instantiate(Resources.Load<GameObject>("effect/" + path));
@@ -42,15 +47,24 @@ public static class CoreEffect
 
         if (temp.GetComponent<Animator>())
         {
+
             UnityEngine.Object.Destroy(temp, temp.GetComponent<Animator>().GetCurrentAnimatorClipInfo(0).Length);
+            return temp.GetComponent<Animator>().GetCurrentAnimatorClipInfo(0).Length;
         }
         else
         {
             UnityEngine.Object.Destroy(temp, 5);
+            return 5;
         }
 
     }
 
+    public static void Effect_die(GameObject obj, string sound,float time_deat) 
+    {
+        obj.AddComponent<die>();
+        UnityEngine.Object.Destroy(obj, time_deat);
+        CoreAudio.Create_audio_eff(sound);
+    }
 
     //public static void Effect_die(GameObject obj, string sound)
     //{

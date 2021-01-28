@@ -47,4 +47,9 @@ public static class Money_maneger
         }
     }
 
+    public static int GetMoney()
+    {
+        return PlayerPrefs.GetInt("money");
+    }
+
 }

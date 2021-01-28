@@ -17,8 +17,9 @@ public class Lat : MonoBehaviour
         Debug.Log("Start Lat (" + GameObject.Find("Car").transform.GetChild(0).GetComponent<Car>().lvl + ")-car (" + PlayerPrefs.GetFloat("Cur_map_lvl") + ")-map");
 
         UI.singleton.onPaused += PauseCar;
-        InvokeTime = 11 - ((GameObject.Find("Car").transform.GetChild(0).GetComponent<Car>().lvl + PlayerPrefs.GetFloat("Cur_map_lvl")) / 7);
-        Vault_data.singleton.CreateMontersList(new List<int> { Convert.ToInt32(GameObject.FindGameObjectWithTag("Background").name) });   // запрашиваем запитсь монстров ответственных за текущую карту 
+        gameObject.GetComponent<CombinateBG>().OnStopLat += PauseCar;
+        InvokeTime = 12.5f - ((GameObject.Find("Car").transform.GetChild(0).GetComponent<Car>().lvl + PlayerPrefs.GetFloat("Cur_map_lvl")) / 7);
+        Vault_data.singleton.CreateMontersList(Convert.ToInt32(GameObject.FindGameObjectWithTag("Background").name));   // запрашиваем запитсь монстров ответственных за текущую карту 
         Invoke("SpawnWhat", 5);
     }
 
@@ -26,6 +27,60 @@ public class Lat : MonoBehaviour
     int chance = 70;
     int Line2_content = 0;     // зжанятость верхней линии 
     bool one_prop = false;           // нельзя две бомбы и два пита
+
+
+    //void SpawnWhat()                    // что спавним ??
+    //{
+    //    if (!pause)
+    //    {
+
+    //        Line2_content = 0;          // обнуляем линии
+    //        one_prop = false;                // обнуляем яму
+
+    //        InvokeTime = InvokeTime - 0.3f >= 1.5f ? InvokeTime - 0.3f : 1.5f;      // уменьшаем частоту вызова 
+    //        chance = chance - 3 >= 10 ? chance - 3 : 10;                      // а так же шанс 
+
+    //        Debug.Log("spawn time =" + InvokeTime + " chace = " + chance);
+
+    //        if (UnityEngine.Random.Range(0, 100) >= chance || TryCount)                     // если повезло заспавнить 
+    //        {
+    //            Invoke(GetSpanwMethodsingle(), 0);
+
+    //            TryCount = false;
+
+    //            if (CarShoot.singleton.ammo >= 1)
+    //            {
+    //                if (UnityEngine.Random.Range(0, 200) >= chance / 4)
+    //                {
+    //                    Invoke(GetSpanwMethodMulti(), 0);
+    //                }
+    //            }
+    //        }
+    //        else if (InvokeTime >= 6)                                       // или же наша частоты вызовов еще не разогналась
+    //        {
+    //            TryCount = false;
+    //            Spawn_pit();
+
+    //            if (UnityEngine.Random.Range(0, 100) >= 50)             // и возможно спавним монстра
+    //            {
+    //                if (CarShoot.singleton.ammo >= 1)
+    //                {
+    //                    if (UnityEngine.Random.Range(0, 200) >= chance / 4)
+    //                    {
+    //                        Spawn_monster();
+    //                    }
+    //                }
+    //            }
+
+    //            //Spawn_monster();
+    //        }
+    //        else
+    //        {
+    //            TryCount = true;
+    //        }
+    //    }
+    //    Invoke("SpawnWhat", InvokeTime);                //invoke repead не поддерживает динамическое значение (((
+    //}
 
     void SpawnWhat()                    // что спавним ??
     {
@@ -35,25 +90,12 @@ public class Lat : MonoBehaviour
             Line2_content = 0;          // обнуляем линии
             one_prop = false;                // обнуляем яму
 
-            InvokeTime = InvokeTime - 0.5f >= 1 ? InvokeTime - 0.5f : 1;      // уменьшаем частоту вызова 
-            chance = chance - 3 >= 10 ? chance - 3 : 10;                        // а так же шанс 
+            InvokeTime = InvokeTime - 1f >= 1.2f ? InvokeTime - 1f : 1.2f;      // уменьшаем частоту вызова 
+            chance = chance - 3 >= 10 ? chance - 3 : 10;                      // а так же шанс 
 
             Debug.Log("spawn time =" + InvokeTime + " chace = " + chance);
 
-            if (UnityEngine.Random.Range(0, 100) >= chance)                     // если повезло заспавнить 
-            {
-
-                Invoke(GetSpanwMethodsingle(),0);
-
-                if (CarShoot.singleton.ammo >= 1)
-                {
-                    if (UnityEngine.Random.Range(0, 200) >= chance / 4)
-                    {
-                        Invoke(GetSpanwMethodMulti(), 0);
-                    }
-                }
-            }
-            else if (InvokeTime >= 6)                                       // или же наша частоты вызовов еще не разогналась
+            if (InvokeTime >= 6)                                       // или же наша частоты вызовов еще не разогналась
             {
                 Spawn_pit();
 
@@ -67,27 +109,31 @@ public class Lat : MonoBehaviour
                         }
                     }
                 }
+            }
+            else
+            {
+                Invoke(GetSpanwMethodsingle(), 0);
 
-                //Spawn_monster();
+                if (CarShoot.singleton.ammo >= 1)
+                {
+                    if (UnityEngine.Random.Range(0, 200) >= chance / 4)
+                    {
+                        Invoke(GetSpanwMethodMulti(), 0);
+                    }
+                }
             }
         }
-        Invoke("SpawnWhat", InvokeTime);                //invoke repead не поддерживает динамическое значение (((
+        Invoke("SpawnWhat", InvokeTime);
     }
-
 
     #region spawn method
     string[] ListMethodMulti = { "Spawn_monster", "Spawn_pit", "Spawn_orda", "Spawn_bomb" };        // лист методов для второй линии 
 
     string[] ListMethodSingle = { "Spawn_monster", "Spawn_pit", "Spawn_bomb" };         // лист методов если занята одна линия 
-    
 
-    string GetSpanwMethod(string[] tempMass) {
-        string method = tempMass[UnityEngine.Random.Range(0, tempMass.Length)];
-
-        //if () {
-        //    method = GetSpanwMethod(tempMass);
-        //}
-        return method;
+    string GetSpanwMethod(string[] tempMass) 
+    {
+        return tempMass[UnityEngine.Random.Range(0, tempMass.Length)];
     }
 
     string GetSpanwMethodsingle()
@@ -170,8 +216,6 @@ public class Lat : MonoBehaviour
     }
 
     #endregion
-
-
 
 
 
