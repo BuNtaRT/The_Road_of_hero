@@ -85,6 +85,7 @@ public class UI : MonoBehaviour
     }
 
     public void B_StartGame(GameObject gameObject) {
+        CoreAudio.Create_audio_eff("play");
         SetPause(false);
         GameObject.FindGameObjectWithTag("Player").GetComponent<Car>().OnDie += DieCar;
         gameObject.GetComponent<Animator>().enabled = true;
@@ -171,6 +172,10 @@ public class UI : MonoBehaviour
 
     public void B_Pause(bool pause)
     {
+        if (pause)
+            CoreAudio.Create_audio_eff("unpause");
+        else
+            CoreAudio.Create_audio_eff("pause");
         SetPause(pause);
     }
 

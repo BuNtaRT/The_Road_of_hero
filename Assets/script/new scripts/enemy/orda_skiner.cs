@@ -8,7 +8,8 @@ public class orda_skiner : MonoBehaviour
     void Start()
     {
         foreach (Transform temp in transform) {
-            temp.GetComponent<Animator>().runtimeAnimatorController = Resources.Load<RuntimeAnimatorController>("enemy_controll/enemy_controll" + Vault_data.singleton.GetRandomMonster()) ;
+            if(temp.GetComponent<Animator>() != null)
+                temp.GetComponent<Animator>().runtimeAnimatorController = Resources.Load<RuntimeAnimatorController>("enemy_controll/enemy_controll" + Vault_data.singleton.GetRandomMonster()) ;
         }
         dell();
     }

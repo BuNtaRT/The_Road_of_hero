@@ -14,11 +14,32 @@ public class Lat : MonoBehaviour
 
     void Start()
     {
-        Debug.Log("Start Lat (" + GameObject.Find("Car").transform.GetChild(0).GetComponent<Car>().lvl + ")-car (" + PlayerPrefs.GetFloat("Cur_map_lvl") + ")-map");
+        //Debug.Log("Start Lat (" + GameObject.Find("Car").transform.GetChild(0).GetComponent<Car>().lvl + ")-car (" + PlayerPrefs.GetFloat("Cur_map_lvl") + ")-map");
 
         UI.singleton.onPaused += PauseCar;
         gameObject.GetComponent<CombinateBG>().OnStopLat += PauseCar;
-        InvokeTime = 12.5f - ((GameObject.Find("Car").transform.GetChild(0).GetComponent<Car>().lvl + PlayerPrefs.GetFloat("Cur_map_lvl")) / 7);
+        if (PlayerPrefs.GetInt("Car_index") <= 3)
+        {
+            switch (PlayerPrefs.GetInt("Car_index"))
+            {
+                case 0:
+                    InvokeTime = 6;
+                    break;
+                case 1:
+                    InvokeTime = 7f;
+                    break;
+                case 2:
+                    InvokeTime = 8f;
+                    break;
+                case 3:
+                    InvokeTime = 9f;
+                    break;
+            }
+        }
+        else
+        {
+            InvokeTime = 12f - ((GameObject.Find("Car").transform.GetChild(0).GetComponent<Car>().lvl + PlayerPrefs.GetFloat("Cur_map_lvl")) / 5.5f);
+        }
         Vault_data.singleton.CreateMontersList(Convert.ToInt32(GameObject.FindGameObjectWithTag("Background").name));   // запрашиваем запитсь монстров ответственных за текущую карту 
         Invoke("SpawnWhat", 5);
     }
@@ -90,7 +111,7 @@ public class Lat : MonoBehaviour
             Line2_content = 0;          // обнуляем линии
             one_prop = false;                // обнуляем яму
 
-            InvokeTime = InvokeTime - 1f >= 1.2f ? InvokeTime - 1f : 1.2f;      // уменьшаем частоту вызова 
+            InvokeTime = InvokeTime - 0.4f >= 1.3f ? InvokeTime - 0.4f : 1.3f;      // уменьшаем частоту вызова 
             chance = chance - 3 >= 10 ? chance - 3 : 10;                      // а так же шанс 
 
             Debug.Log("spawn time =" + InvokeTime + " chace = " + chance);
@@ -123,13 +144,16 @@ public class Lat : MonoBehaviour
                 }
             }
         }
-        Invoke("SpawnWhat", InvokeTime);
+        if (InvokeTime <= 1.31f) 
+            Invoke("SpawnWhat", UnityEngine.Random.Range(1.1f,1.4f));
+        else
+            Invoke("SpawnWhat", InvokeTime);
     }
 
     #region spawn method
     string[] ListMethodMulti = { "Spawn_monster", "Spawn_pit", "Spawn_orda", "Spawn_bomb" };        // лист методов для второй линии 
 
-    string[] ListMethodSingle = { "Spawn_monster", "Spawn_pit", "Spawn_bomb" };         // лист методов если занята одна линия 
+    string[] ListMethodSingle = { "Spawn_monster", "Spawn_pit", "Spawn_bomb"};         // лист методов если занята одна линия 
 
     string GetSpanwMethod(string[] tempMass) 
     {

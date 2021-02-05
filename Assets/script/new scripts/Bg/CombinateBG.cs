@@ -21,7 +21,7 @@ public class CombinateBG : MonoBehaviour
 
     void Start()
     {
-        NextCall = Random.Range(450, 800);
+        NextCall = Random.Range(350, 600);
         car = GameObject.Find("Car").transform;
         if (PlayerPrefs.GetFloat("Cur_map_lvl") > 1.1f)
         {
@@ -82,7 +82,7 @@ public class CombinateBG : MonoBehaviour
 
     void SetNewBg() 
     {
-        int num = Vault_data.singleton.GetBuyedMap();
+        int num = Vault_data.singleton.GetBuyedMap(System.Convert.ToInt32(GameObject.FindGameObjectWithTag("Background").name));
         Destroy(GameObject.FindGameObjectWithTag("Background"));
         GameObject map = Instantiate(Resources.Load<GameObject>("map/"+num));
         map.name = num.ToString();

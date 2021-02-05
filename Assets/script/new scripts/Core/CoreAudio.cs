@@ -10,7 +10,7 @@ public static class CoreAudio
     public static float CreateMusic(string name)
     {
         // PlayerPrefs.LoadFloat("vol_music");
-        return Create("music/" + name, 0.7f, 128); 
+        return Create("music/" + name, 0.3f, 128); 
     }
     public static float CreateMusic(int name)
     {

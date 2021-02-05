@@ -52,10 +52,9 @@ public class Vault_data : MonoBehaviour
     // получаем случайное доступное оружие(его номер, cooldown)
     public Tuple<int,float> GetRandomGunFromList() 
     {
-
         //int rand = UnityEngine.Random.Range(0, PlayerPrefs.GetInt("Car_index"));
         //return Tuple.Create(Weapon[rand],TimeWeapon[rand]);
-        return Tuple.Create(0, 2f);     // УБРАТЬ !!!
+        return Tuple.Create(2, 2f);     // УБРАТЬ !!!
     }
 
 
@@ -303,14 +302,18 @@ public class Vault_data : MonoBehaviour
 
     }
 
-    public int GetBuyedMap() 
+    public int GetBuyedMap(int map_now) 
     {
-        return Buyed_map[UnityEngine.Random.Range(0, Buyed_map.Count)];
+        int map = Buyed_map[UnityEngine.Random.Range(0, Buyed_map.Count)];
+        if (map == map_now)
+            return GetBuyedMap(map_now);
+        else
+            return map;
     }
 
     public bool LightOnMap(int numMap) 
     {
-        if (numMap == 5 || numMap == 6 || numMap == 8)
+        if (numMap == 5 || numMap == 6 || numMap == 8 || numMap == 9)
             return true;
         else
             return false;

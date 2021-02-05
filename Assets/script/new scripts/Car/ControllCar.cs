@@ -39,7 +39,7 @@ public class ControllCar : MonoBehaviour
             {
                 startPos = Input.GetTouch(0).position;
             }
-            else if (Input.GetTouch(0).phase == TouchPhase.Ended)
+            else if (Input.GetTouch(0).phase == TouchPhase.Moved)
             {
 
                 endPos = Input.GetTouch(0).position;
@@ -88,7 +88,7 @@ public class ControllCar : MonoBehaviour
         float timeStep = 0f;
         while (timeStep < 1.0f)
         {
-            timeStep += Time.deltaTime / 0.2f;
+            timeStep += Time.deltaTime / 0.13f;
             car.position = Vector3.Lerp(new Vector3(car.position.x, p1), new Vector3(car.position.x, p2), timeStep);
             yield return null;
         }
@@ -100,7 +100,7 @@ public class ControllCar : MonoBehaviour
         float timeStep = 0f;
         while (timeStep < 1.0f)
         {
-            timeStep += Time.deltaTime / 0.2f;
+            timeStep += Time.deltaTime / 0.13f;
             car.localScale = Vector3.Lerp(new Vector3(S1, S1, S1), new Vector3(S2, S2, S2), timeStep);
             yield return null;
         }
