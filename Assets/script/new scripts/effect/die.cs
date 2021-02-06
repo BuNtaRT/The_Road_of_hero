@@ -23,14 +23,20 @@ public class die : MonoBehaviour
         Startcolor = gameObject.GetComponent<SpriteRenderer>().color;
         Endcolor = new Color(Startcolor.r,Startcolor.g,Startcolor.b,0.2f);
 
-        while (true)
-        {
-            for (float time = 0; time < (speed ) * 2; time += Time.deltaTime)
+        for(int i  = 0;  i < 1; i++) { 
+            for (float time = 0; time < (speed ) * 3; time += Time.deltaTime)
             {
                 float progress = Mathf.PingPong(time, speed) / (speed );
                 gameObject.GetComponent<SpriteRenderer>().color = Color.Lerp(Startcolor,Endcolor,progress);
                 yield return null;
             }
+        }
+
+        for (float time = 0; time < (speed) * 3; time += Time.deltaTime)
+        {
+            float progress = time / speed;
+            gameObject.GetComponent<SpriteRenderer>().color = Color.Lerp(Startcolor, new Color(Startcolor.r, Startcolor.g, Startcolor.b, 0), progress);
+            yield return null;
         }
     }
 }
