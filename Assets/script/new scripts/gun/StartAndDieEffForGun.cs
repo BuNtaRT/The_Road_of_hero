@@ -10,7 +10,9 @@ public static class StartAndDieEffForGun
     {
         {"rocket_gun","Rocket_effect_die","expl"},
         {"lazer_gun","Lazer_effect_die","lazer_die"},
-        {"Napalm_gun","fire_effect_die","FlameDie"}
+        {"Napalm_gun","fire_effect_die","FlameDie"},
+        {"BugTostar","bugtoStar_effect_die","FlameDie"},
+        {"GoToStar","GoToStar_effect_die","FlameDie"}
     };
     public static Tuple<string,string,string> Get_weap_content(string name)
     {

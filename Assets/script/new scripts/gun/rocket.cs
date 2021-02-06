@@ -52,4 +52,14 @@ public class rocket : MonoBehaviour
             Destroy(gameObject,1f);
         }
     }
+
+
+    private void OnDestroy()
+    {
+        foreach (Transform temp in gameObject.transform)
+        {
+            if (temp.GetComponent<ParticleSystem>() != null)
+                temp.gameObject.AddComponent<DestroyParticle>();
+        }
+    }
 }

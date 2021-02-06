@@ -28,9 +28,13 @@ public class Vault_data : MonoBehaviour
         0,
         1,
         2,
+        3,
+        4,
     };     // открытое орудие 
     List<float> TimeWeapon = new List<float>() 
     {
+       2f,
+       0,
        2f,
        0,
        0,
@@ -54,7 +58,7 @@ public class Vault_data : MonoBehaviour
     {
         //int rand = UnityEngine.Random.Range(0, PlayerPrefs.GetInt("Car_index"));
         //return Tuple.Create(Weapon[rand],TimeWeapon[rand]);
-        return Tuple.Create(2, 2f);     // УБРАТЬ !!!
+        return Tuple.Create(4, 0f);     // УБРАТЬ !!!
     }
 
 

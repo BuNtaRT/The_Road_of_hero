@@ -216,7 +216,7 @@ public class Lat : MonoBehaviour
     }
 
     void Spawn_orda() {
-        generate("lat/orda", transform.position.x + 20, 0f,0);
+        generate("lat/orda", transform.position.x + 20, -2.9f,0);
     }
 
     void Spawn_bomb()

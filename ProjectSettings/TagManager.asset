@@ -17,6 +17,8 @@ TagManager:
   - orda
   - Background
   - ContentCar
+  - lazer
+  - CarP
   layers:
   - Default
   - TransparentFX
