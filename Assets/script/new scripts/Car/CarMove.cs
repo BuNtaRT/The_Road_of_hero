@@ -7,7 +7,6 @@ using UnityEngine.UI;
 public class CarMove : MonoBehaviour
 {
 
-    float speed = 0;
 
     private float invokeTime = 1f;
 
@@ -15,10 +14,12 @@ public class CarMove : MonoBehaviour
 
     void Start()
     {
+        Debug.Log("Index = " + PlayerPrefs.GetInt("Car_index"));
+
         UI.singleton.onPaused += PauseCar;       // singleton - крутая штука что бы не искать обьекты а находить единственный Static-же и обращаться к нему
-        if (PlayerPrefs.GetFloat("Car_index") >= 2)
+        if (PlayerPrefs.GetInt("Car_index") >= 2)
         {
-            car_speed = PlayerPrefs.GetInt("Cur_car_lvl") / 22;
+            car_speed = PlayerPrefs.GetFloat("Cur_car_lvl") / 22;
         }
         else
         {
@@ -57,6 +58,7 @@ public class CarMove : MonoBehaviour
     {
         car_lvl = transform.GetChild(0).GetComponent<Car>().lvl + PlayerPrefs.GetFloat("Cur_map_lvl");
         invokeTime = 18 / car_lvl >= 8 ? 18 / car_lvl : 8;
+        Debug.Log("Start speed = " + car_speed);
         InvokeRepeating("UpSpeed", 5, invokeTime);
         Invoke("SuperSpeed", 360);
     }
@@ -66,8 +68,8 @@ public class CarMove : MonoBehaviour
         if (!pause)
         {
             car_speed = car_speed + 0.08f <= 1.7f ? car_speed + 0.08f : 1.7f;
-            GameObject.Find("In_game_ui/Speedometr").GetComponent<Text>().text = car_speed.ToString();
-            //Debug.Log("speed = " + car_speed);
+            GameObject.Find("In_game_ui/Speedometr").GetComponent<Text>().text = car_speed.ToString();      // Убрать
+            Debug.Log("speed = " + car_speed);
             if (car_speed >= 1.65f)
                 CancelInvoke("UpSpeed");
         }

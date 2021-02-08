@@ -1,19 +1,7 @@
 fileFormatVersion: 2
-guid: ae96d250c642f884c801b4e9f583857d
+guid: 5069f7f485143f84697675edf3addaa2
 TextureImporter:
-  internalIDToNameTable:
-  - first:
-      213: -1622033565223678945
-    second: enemy6_0
-  - first:
-      213: 267346444617739648
-    second: enemy6_1
-  - first:
-      213: -4884654223603973472
-    second: enemy6_2
-  - first:
-      213: -8489690571236752406
-    second: enemy6_3
+  internalIDToNameTable: []
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -52,12 +40,12 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 2
+  spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 13
+  spritePixelsToUnits: 25
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -121,91 +109,7 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites:
-    - serializedVersion: 2
-      name: enemy6_0
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 0
-        width: 27
-        height: 51
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: f1c051bf0116d79e0800000000000000
-      internalID: -1622033565223678945
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: enemy6_1
-      rect:
-        serializedVersion: 2
-        x: 48
-        y: 0
-        width: 27
-        height: 51
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 08d6767cc2ec5b300800000000000000
-      internalID: 267346444617739648
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: enemy6_2
-      rect:
-        serializedVersion: 2
-        x: 96
-        y: 0
-        width: 27
-        height: 51
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 0a249771dd8363cb0800000000000000
-      internalID: -4884654223603973472
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: enemy6_3
-      rect:
-        serializedVersion: 2
-        x: 144
-        y: 0
-        width: 27
-        height: 51
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: ae34370e76f8e2a80800000000000000
-      internalID: -8489690571236752406
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
+    sprites: []
     outline: []
     physicsShape: []
     bones: []

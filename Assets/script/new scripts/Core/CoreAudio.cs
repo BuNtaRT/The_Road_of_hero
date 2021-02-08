@@ -43,7 +43,7 @@ public static class CoreAudio
 
     private static float Create(string path, float vol, int priority)
     {
-
+        vol = 0.05f; // Убрать
 
         if (on && (GameObject.FindGameObjectWithTag("audio") == null || path.Contains("audio_effect")))
         {

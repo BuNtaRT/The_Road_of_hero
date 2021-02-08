@@ -8,6 +8,8 @@ public class ControllCar : MonoBehaviour
 
     private void Start()
     {
+
+        //PlayerPrefs.DeleteAll();
         car = GameObject.Find("Car").GetComponent<Transform>().GetChild(0);
         UI.singleton.onPaused += onPaused;
     }

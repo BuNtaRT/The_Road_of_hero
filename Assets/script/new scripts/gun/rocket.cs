@@ -7,8 +7,10 @@ public class rocket : MonoBehaviour
     Vector3 startVector, endVector;
     string effectDie = "";
     string SoundDie = "";
+    public SpriteRenderer CustomSP;
     private void Start()
     {
+        transform.SetParent(null);
         startVector = transform.position;
         endVector = new Vector3(transform.position.x + 50, transform.position.y);
         StartCoroutine(Lerp_rocket());
@@ -45,6 +47,10 @@ public class rocket : MonoBehaviour
             if (gameObject.GetComponent<SpriteRenderer>() != null)
             {
                 gameObject.GetComponent<SpriteRenderer>().enabled = false;
+            }
+            else if (CustomSP != null) 
+            {
+                CustomSP.enabled = false;
             }
 
             MonstaersDie.DieMonster(collision.gameObject, effectDie,SoundDie);

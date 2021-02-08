@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ParticleGetSpaceCar : MonoBehaviour
 {
-    // Start is called before the first frame update
+    // Делает Particle только вертикальными не подвеженными горизонтальным перемещению
     void Start()
     {
         var part = gameObject.GetComponent<ParticleSystem>().main;
