@@ -5068,6 +5068,9 @@ GameObject:
   m_Component:
   - component: {fileID: 4990146642304160103}
   - component: {fileID: 4990146642304160100}
+  - component: {fileID: 4380918008504849872}
+  - component: {fileID: 2640943680170064562}
+  - component: {fileID: 1428508297763465294}
   m_Layer: 0
   m_Name: 2
   m_TagString: Untagged
@@ -5109,6 +5112,52 @@ Animation:
   m_PlayAutomatically: 1
   m_AnimatePhysics: 0
   m_CullingType: 0
+--- !u!114 &4380918008504849872
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4990146642304160102}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a953df7f9b21894fada2b7ce484eae5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!50 &2640943680170064562
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4990146642304160102}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
+--- !u!114 &1428508297763465294
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4990146642304160102}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b252c76bb8d8d74eaae06226f934fe1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Name: Napalm_gun
 --- !u!1 &4990146642607560449
 GameObject:
   m_ObjectHideFlags: 0
@@ -5119,9 +5168,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4990146642607560462}
   - component: {fileID: 4990146642607560463}
-  - component: {fileID: 1337305920083824158}
-  - component: {fileID: 5540494161006129464}
-  - component: {fileID: 36308212509669654}
   m_Layer: 0
   m_Name: Colider
   m_TagString: Untagged
@@ -5169,52 +5215,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 11.311623, y: 0.44381237}
   m_EdgeRadius: 0
---- !u!114 &1337305920083824158
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4990146642607560449}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9a953df7f9b21894fada2b7ce484eae5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &5540494161006129464
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4990146642607560449}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6b252c76bb8d8d74eaae06226f934fe1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Name: Napalm_gun
---- !u!50 &36308212509669654
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4990146642607560449}
-  m_BodyType: 1
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 1
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
 --- !u!1 &6526487680155211756
 GameObject:
   m_ObjectHideFlags: 0

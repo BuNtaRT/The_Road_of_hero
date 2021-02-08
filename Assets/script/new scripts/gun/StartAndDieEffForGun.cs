@@ -11,10 +11,13 @@ public static class StartAndDieEffForGun
         {"rocket_gun","Rocket_effect_die","expl"},
         {"lazer_gun","Lazer_effect_die","lazer_die"},
         {"Napalm_gun","fire_effect_die","FlameDie"},
-        {"BugTostar","bugtoStar_effect_die","FlameDie"},
-        {"GoToStar","GoToStar_effect_die","FlameDie"},
-        {"saw_gun","saw_effect_die","FlameDie"},
+        {"BugTostar","bugtoStar_effect_die","FlameDie"},        //смерть
+        {"GoToStar","GoToStar_effect_die","FlameDie"},          //смерть
+        {"saw_gun","saw_effect_die","FlameDie"},                   //смерть 
         {"unicorn_gun","unicorn_effect_die","unicorn_die"},
+        {"whell_gun","wheel_effect_die","unicorn_die"},             //смерть
+        {"fireball","fireball_effect_die","unicorn_die"},             //смерть
+        {"FreezLazer","frezee_effect_die","frezeeDie"},             //смерть
     };
     public static Tuple<string,string,string> Get_weap_content(string name)
     {

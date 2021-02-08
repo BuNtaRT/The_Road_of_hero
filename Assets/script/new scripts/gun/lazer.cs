@@ -11,8 +11,8 @@ public class lazer : MonoBehaviour
     {
         var gunConf = StartAndDieEffForGun.Get_weap_content(gameObject.GetComponent<GunName>().Name);
         Debug.Log(gameObject.name +  " Name lazer ");
-        gameObject.transform.parent.Find("Audio").GetComponent<AudioSource>().clip = Resources.Load<AudioClip>("audio_effect/" + gunConf.Item1);
-        gameObject.transform.parent.Find("Audio").GetComponent<AudioSource>().Play();
+        gameObject.transform.Find("Audio").GetComponent<AudioSource>().clip = Resources.Load<AudioClip>("audio_effect/" + gunConf.Item1);
+        gameObject.transform.Find("Audio").GetComponent<AudioSource>().Play();
         effectDie = gunConf.Item2;
         soundDie = gunConf.Item3;
     }

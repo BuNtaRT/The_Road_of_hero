@@ -11,9 +11,6 @@ GameObject:
   - component: {fileID: 146729123892692749}
   - component: {fileID: 2306774219670346711}
   - component: {fileID: 8796163634330745602}
-  - component: {fileID: 7877946847150426005}
-  - component: {fileID: 225499242295982085}
-  - component: {fileID: 3543739473471611561}
   m_Layer: 0
   m_Name: Collider
   m_TagString: lazer
@@ -111,52 +108,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.01, y: 0.0372345}
   m_EdgeRadius: 0
---- !u!114 &7877946847150426005
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2709995959582762037}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9a953df7f9b21894fada2b7ce484eae5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!50 &225499242295982085
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2709995959582762037}
-  m_BodyType: 1
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 1
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
---- !u!114 &3543739473471611561
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2709995959582762037}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6b252c76bb8d8d74eaae06226f934fe1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Name: lazer_gun
 --- !u!1 &3853175834162533203
 GameObject:
   m_ObjectHideFlags: 0
@@ -521,6 +472,9 @@ GameObject:
   m_Component:
   - component: {fileID: 4083487344328519797}
   - component: {fileID: 4083487344328519796}
+  - component: {fileID: 6982217648771996785}
+  - component: {fileID: 1119946489256052921}
+  - component: {fileID: 556778949901272446}
   m_Layer: 0
   m_Name: 1
   m_TagString: Untagged
@@ -564,6 +518,52 @@ Animation:
   m_PlayAutomatically: 1
   m_AnimatePhysics: 0
   m_CullingType: 0
+--- !u!50 &6982217648771996785
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4083487344328519786}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
+--- !u!114 &1119946489256052921
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4083487344328519786}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a953df7f9b21894fada2b7ce484eae5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &556778949901272446
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4083487344328519786}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b252c76bb8d8d74eaae06226f934fe1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Name: lazer_gun
 --- !u!1 &4083487344359000679
 GameObject:
   m_ObjectHideFlags: 0

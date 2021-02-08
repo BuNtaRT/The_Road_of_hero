@@ -32,6 +32,9 @@ public class Vault_data : MonoBehaviour
         4,
         5,
         6,
+        7,
+        8,
+        9,
     };     // открытое орудие 
     List<float> TimeWeapon = new List<float>() 
     {
@@ -42,6 +45,10 @@ public class Vault_data : MonoBehaviour
        0,
        2.8f,
        0,
+       0,
+       0,
+       2.4f,
+
     };     // его тайминг cooldown
 
 
@@ -60,9 +67,9 @@ public class Vault_data : MonoBehaviour
     // получаем случайное доступное оружие(его номер, cooldown)
     public Tuple<int,float> GetRandomGunFromList() 
     {
-        int rand = UnityEngine.Random.Range(0, PlayerPrefs.GetInt("Car_index"));
-        return Tuple.Create(Weapon[rand],TimeWeapon[rand]);
-        //return Tuple.Create(6, 0f);     // УБРАТЬ !!!
+        //int rand = UnityEngine.Random.Range(0, PlayerPrefs.GetInt("Car_index"));
+        //return Tuple.Create(Weapon[rand],TimeWeapon[rand]);
+        return Tuple.Create(9, 2.4f);     // УБРАТЬ !!!
     }
 
 
