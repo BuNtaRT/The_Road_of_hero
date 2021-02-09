@@ -20,6 +20,7 @@ TagManager:
   - lazer
   - CarP
   - particle
+  - Scripts
   layers:
   - Default
   - TransparentFX

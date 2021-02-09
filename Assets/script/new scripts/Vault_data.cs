@@ -71,7 +71,8 @@ public class Vault_data : MonoBehaviour
     {
         //int rand = UnityEngine.Random.Range(0, PlayerPrefs.GetInt("Car_index"));
         //return Tuple.Create(Weapon[rand],TimeWeapon[rand]);
-        return Tuple.Create(0, 0f);     // УБРАТЬ !! 4444
+        int rand = UnityEngine.Random.Range(0, 11);
+        return Tuple.Create(Weapon[rand],TimeWeapon[rand]);
     }
 
 

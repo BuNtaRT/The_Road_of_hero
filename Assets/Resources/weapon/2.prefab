@@ -139,6 +139,7 @@ GameObject:
   - component: {fileID: 4990146642001239710}
   - component: {fileID: 4990146642001239697}
   - component: {fileID: 2773574543302815435}
+  - component: {fileID: 8079320465500590479}
   m_Layer: 0
   m_Name: Particle System
   m_TagString: Untagged
@@ -4895,6 +4896,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c408296983c53f498dc5b48572af662, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &8079320465500590479
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4990146642001239699}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68257c161e18e194e84253e17faf9fc9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  custom: 0
+  subscribe: 1
+  overParticle: 1
+  overSprite: 0
 --- !u!1 &4990146642020068075
 GameObject:
   m_ObjectHideFlags: 0
@@ -4986,6 +5003,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4990146642133753958}
   - component: {fileID: 4990146642133753959}
+  - component: {fileID: 3734496714709924016}
   m_Layer: 0
   m_Name: Gun
   m_TagString: Untagged
@@ -5058,6 +5076,22 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &3734496714709924016
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4990146642133753977}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68257c161e18e194e84253e17faf9fc9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  custom: -1
+  subscribe: 1
+  overParticle: 0
+  overSprite: 1
 --- !u!1 &4990146642304160102
 GameObject:
   m_ObjectHideFlags: 0
@@ -5202,7 +5236,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 6.412403, y: -0.13694715}
+  m_Offset: {x: 6.412403, y: -0.26}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -5213,7 +5247,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 11.311623, y: 0.44381237}
+  m_Size: {x: 11.311623, y: 0.32}
   m_EdgeRadius: 0
 --- !u!1 &6526487680155211756
 GameObject:
@@ -5227,6 +5261,7 @@ GameObject:
   - component: {fileID: 8527724006177932509}
   - component: {fileID: 6520375202259994526}
   - component: {fileID: 7124471097297883105}
+  - component: {fileID: 4916169286821031508}
   m_Layer: 0
   m_Name: smoke
   m_TagString: Untagged
@@ -9982,3 +10017,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c408296983c53f498dc5b48572af662, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &4916169286821031508
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6526487680155211756}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68257c161e18e194e84253e17faf9fc9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  custom: 0
+  subscribe: 0
+  overParticle: 1
+  overSprite: 0

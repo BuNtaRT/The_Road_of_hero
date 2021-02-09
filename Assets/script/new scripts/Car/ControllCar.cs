@@ -22,6 +22,13 @@ public class ControllCar : MonoBehaviour
     }
     #endregion
 
+    public delegate void LayoutSub(int lay);
+    public event LayoutSub OnChangeLayout;
+
+    void ChageLayput(int lay) 
+    {
+        OnChangeLayout?.Invoke(lay);
+    }
 
     Transform car;
     private Vector2 startPos;
@@ -72,12 +79,13 @@ public class ControllCar : MonoBehaviour
         {
             StartCoroutine(Switch_car_pos(-4.3f, -3.63f));
             car.GetComponent<SpriteRenderer>().sortingOrder = 12;
-
+            ChageLayput(12);
         }
         else if (mode == 1 ) 
         {
             StartCoroutine(Switch_car_pos(-3.63f, -2.95f));
             car.GetComponent<SpriteRenderer>().sortingOrder = 10;
+            ChageLayput(10);
         }
         mode++;
         StartCoroutine(Scale_car(car.localScale.x, car.localScale.x - 0.11f));
@@ -89,11 +97,13 @@ public class ControllCar : MonoBehaviour
         {
             StartCoroutine(Switch_car_pos(-3.63f, -4.3f));
             car.GetComponent<SpriteRenderer>().sortingOrder = 14;
+            ChageLayput(14);
         }
         else if (mode == 2)
         {
             StartCoroutine(Switch_car_pos(-2.95f, -3.63f));
             car.GetComponent<SpriteRenderer>().sortingOrder = 12;
+            ChageLayput(12);
 
         }
         mode--;

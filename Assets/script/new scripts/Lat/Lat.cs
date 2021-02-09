@@ -293,14 +293,11 @@ public class Lat : MonoBehaviour
         foreach (Methods temp in singleMetods)
             multiMetods.Add(temp);
         multiMetods.Add(Spawn_orda);
-
-
         UI.singleton.onPaused += PauseCar;
         gameObject.GetComponent<CombinateBG>().OnStopLat += PauseCar;       // если происходит событие то отключает спавнер
         Vault_data.singleton.CreateMontersList(Convert.ToInt32(GameObject.FindGameObjectWithTag("Background").name));   // запрашиваем запитсь монстров ответственных за текущую карту 
         steap_spawn = steap_spawn - PlayerPrefs.GetInt("Car_index") >= 9 ? steap_spawn - PlayerPrefs.GetInt("Car_index") : 9;
         chance = chance - PlayerPrefs.GetInt("Car_index") >= 15 ? chance - PlayerPrefs.GetInt("Car_index") : 15;
-        chance = 0;
     }
 
 
@@ -343,7 +340,7 @@ public class Lat : MonoBehaviour
             }
 
             if(steap_spawn >=12)
-                steap_spawn-=0.3f;
+                steap_spawn-=0.5f;
 
             NextGen += UnityEngine.Random.Range(steap_spawn-2,steap_spawn+3);
 
@@ -394,16 +391,6 @@ public class Lat : MonoBehaviour
 
     List<Methods> singleMetods = new List<Methods>();// лист где есть сущесва которые занимают все 
     List<Methods> multiMetods = new List<Methods>();// лист где существа занимают 1 линию 
-
-
-
-
-
-    //string GetSpanwMethod(string[] tempMass)
-    //{
-    //    return tempMass[UnityEngine.Random.Range(0, tempMass.Length)];
-    //}
-
     Methods GetSpanwMethodsingle()
     {
         return singleMetods[UnityEngine.Random.Range(0,singleMetods.Count)];
@@ -421,9 +408,9 @@ public class Lat : MonoBehaviour
     {
         if (ExitPitBombAndTD != line_now)       // если щес линия куда нельзя спавнить такие штуки
         {
-            if (line_now == 1)
+            if (line_now == 0)
                 generate("lat/pit1", NextGen + plus, -3.52f, 0);
-            else if (line_now == 2)
+            else if (line_now == 1)
                 generate("lat/pit1", NextGen + plus, -4.11f, 0);
             else
                 generate("lat/pit1", NextGen + plus, -4.77f, 0);
@@ -433,9 +420,9 @@ public class Lat : MonoBehaviour
     void Spawn_monster( int line_now)
     {
         GameObject enemy;
-        if (line_now == 1)
+        if (line_now == 0)
             enemy = generate("lat/enemy1", NextGen +plus, -1.91f, 10);
-        else if (line_now == 2)
+        else if (line_now == 1)
             enemy = generate("lat/enemy1", NextGen + plus, -2.553f, 12);
         else
             enemy = generate("lat/enemy1", NextGen + plus, -3.249f, 14);
@@ -454,9 +441,9 @@ public class Lat : MonoBehaviour
     {
         if (ExitPitBombAndTD != line_now)
         {
-            if (line_now == 1)
+            if (line_now == 0)
                 generate("lat/Bomb", NextGen + plus, 0.19f, 0);
-            else if (line_now == 2)
+            else if (line_now == 1)
                 generate("lat/Bomb", NextGen + plus, -0.4f, 0);
             else
                 generate("lat/Bomb", NextGen + plus, -1.15f, 0);
