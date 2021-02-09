@@ -8,7 +8,7 @@ public class DestroyParticle : MonoBehaviour
     {
         gameObject.transform.SetParent(null);
         gameObject.GetComponent<ParticleSystem>().Stop();
-        Destroy(gameObject, 2f);
+        Destroy(gameObject, gameObject.GetComponent<ParticleSystem>().time+5);
     }
 
 

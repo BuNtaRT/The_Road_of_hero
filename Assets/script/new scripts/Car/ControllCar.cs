@@ -28,7 +28,9 @@ public class ControllCar : MonoBehaviour
     private Vector2 endPos;
     private Vector2 direction;
 
-    bool mode = false;
+    bool LockMoved = false;
+    int mode = 1;
+
 
     void Update()
     {
@@ -41,47 +43,64 @@ public class ControllCar : MonoBehaviour
             {
                 startPos = Input.GetTouch(0).position;
             }
-            else if (Input.GetTouch(0).phase == TouchPhase.Moved)
+            else if (Input.GetTouch(0).phase == TouchPhase.Moved && !LockMoved)
             {
 
                 endPos = Input.GetTouch(0).position;
                 direction = startPos - endPos;
                 if (direction.magnitude >= 15)
                 {
-                    if (direction.y >= 0 && !mode)
+                    LockMoved = true;
+                    if (direction.y >= 0 && mode > 0)
                     {
-                        mode = true;
-                        Up_Down_car();
+                        DownCar();
                     }
-                    else if (direction.y <= 0 && mode)
+                    else if (direction.y <= 0 && mode < 2)
                     {
-                        mode = false;
-                        Up_Down_car();
+                        UpCar();
                     }
                 }
-
-
             }
+            if (Input.GetTouch(0).phase == TouchPhase.Ended)
+                LockMoved = false;
         }
     }
 
-    void Up_Down_car()
+    void UpCar()
     {
-        if (mode)       // down
+        if (mode == 0)
         {
-            StartCoroutine(Switch_car_pos(-3.288148f, -4.092148f));
-            StartCoroutine(Scale_car(1f, 1.11f));
+            StartCoroutine(Switch_car_pos(-4.3f, -3.63f));
+            car.GetComponent<SpriteRenderer>().sortingOrder = 12;
+
+        }
+        else if (mode == 1 ) 
+        {
+            StartCoroutine(Switch_car_pos(-3.63f, -2.95f));
+            car.GetComponent<SpriteRenderer>().sortingOrder = 10;
+        }
+        mode++;
+        StartCoroutine(Scale_car(car.localScale.x, car.localScale.x - 0.11f));
+
+    }
+    void DownCar() 
+    {
+        if (mode == 1)
+        {
+            StartCoroutine(Switch_car_pos(-3.63f, -4.3f));
             car.GetComponent<SpriteRenderer>().sortingOrder = 14;
         }
-        else
-        {          // up
-            StartCoroutine(Switch_car_pos(-4.092148f, -3.288148f));
-            StartCoroutine(Scale_car(1.11f, 1f));
-            car.GetComponent<SpriteRenderer>().sortingOrder = 10;
-
+        else if (mode == 2)
+        {
+            StartCoroutine(Switch_car_pos(-2.95f, -3.63f));
+            car.GetComponent<SpriteRenderer>().sortingOrder = 12;
 
         }
+        mode--;
+        StartCoroutine(Scale_car(car.localScale.x, car.localScale.x + 0.11f));
+
     }
+
 
 
     IEnumerator Switch_car_pos(float p1, float p2)

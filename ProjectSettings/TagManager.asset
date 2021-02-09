@@ -19,6 +19,7 @@ TagManager:
   - ContentCar
   - lazer
   - CarP
+  - particle
   layers:
   - Default
   - TransparentFX

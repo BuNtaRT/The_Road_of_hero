@@ -10,7 +10,7 @@ public class dell_obj : MonoBehaviour
     {
         camera = Camera.main.transform;
         camera_size = Camera.main.orthographicSize;
-        InvokeRepeating("Im_outside_camera_checker", 10f, 2f);
+        InvokeRepeating("Im_outside_camera_checker", 6f, 2f);
     }
 
     void Im_outside_camera_checker() {

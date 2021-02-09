@@ -36,9 +36,12 @@ public class rocket : MonoBehaviour
     {
         if (TagMonster.Monsters.Contains(collision.tag)) 
         {
-            if (gameObject.transform.Find("Particle System") != null) 
+            foreach (Transform temp in gameObject.transform)
             {
-                gameObject.transform.Find("Particle System").GetComponent<ParticleSystem>().Stop();
+                if (temp.tag == "particle") 
+                {
+                    temp.gameObject.AddComponent<DestroyParticle>();
+                }
             }
             if (gameObject.GetComponent<BoxCollider2D>() != null) 
             {

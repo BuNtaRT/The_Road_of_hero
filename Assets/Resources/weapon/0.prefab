@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 443827500434327034}
   m_Layer: 0
   m_Name: Particle System
-  m_TagString: Untagged
+  m_TagString: particle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4899,6 +4899,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff1dfaeebb9c65a44b180433c6841ffe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CustomSP: {fileID: 0}
 --- !u!114 &-5174970339137024768
 MonoBehaviour:
   m_ObjectHideFlags: 0

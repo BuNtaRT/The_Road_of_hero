@@ -18,6 +18,7 @@ public static class StartAndDieEffForGun
         {"whell_gun","wheel_effect_die","unicorn_die"},             //смерть
         {"fireball","fireball_effect_die","unicorn_die"},             //смерть
         {"FreezLazer","frezee_effect_die","frezeeDie"},             //смерть
+        {"ShadowCarGun","Shadow_effect_die","ShadowCarGun_die"},             //смерть
     };
     public static Tuple<string,string,string> Get_weap_content(string name)
     {
