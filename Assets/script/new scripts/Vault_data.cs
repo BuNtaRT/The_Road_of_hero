@@ -12,10 +12,11 @@ public class Vault_data : MonoBehaviour
     public static Vault_data singleton { get; private set; }
 
 
+
     void Awake()
     {
         singleton = this;
-
+        Application.targetFrameRate = 0;
         //Initialized_Weapon();
 
     }
@@ -37,6 +38,7 @@ public class Vault_data : MonoBehaviour
         9,
         10,
         11,
+        12,
     };     // открытое орудие 
     List<float> TimeWeapon = new List<float>() 
     {
@@ -51,6 +53,7 @@ public class Vault_data : MonoBehaviour
        0,
        2.4f,
        0,
+       2.9f,
        2.9f,
 
     };     // его тайминг cooldown
@@ -75,7 +78,7 @@ public class Vault_data : MonoBehaviour
         //return Tuple.Create(Weapon[rand],TimeWeapon[rand]);
         //int rand = UnityEngine.Random.Range(0, 11);
         //return Tuple.Create(Weapon[rand],TimeWeapon[rand]);
-        return Tuple.Create(11,2.9f);
+        return Tuple.Create(10,0f);
     }
 
 

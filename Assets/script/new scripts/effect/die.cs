@@ -15,7 +15,7 @@ public class die : MonoBehaviour
         StopAllCoroutines();
     }
 
-    float speed = 0.2f;
+    float speed = 0.12f;
     Color Startcolor, Endcolor;
 
     IEnumerator Die()

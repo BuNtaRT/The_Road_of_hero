@@ -28,7 +28,10 @@ public class overrideCarLayout : MonoBehaviour
 
     private void OnDestroy()
     {
-        GameObject.FindGameObjectWithTag("Scripts").GetComponent<ControllCar>().OnChangeLayout -= ChLayout;
+        if (GameObject.FindGameObjectWithTag("Scripts") != null)
+        {
+            GameObject.FindGameObjectWithTag("Scripts").GetComponent<ControllCar>().OnChangeLayout -= ChLayout;
+        }
     }
 
 }

@@ -21,6 +21,7 @@ public static class StartAndDieEffForGun
         {"FreezLazer","frezee_effect_die","frezeeDie"},
         {"ShadowCarGun","Shadow_effect_die","ShadowCarGun_die"},
         {"lazerTobig","LazerToBig_effect_die","lazerTobig_die"},   
+        {"GuitarGun","GuitarGun_effect_die","GuitarGun_die"},   
     };
     public static Tuple<string,string,string> Get_weap_content(string name)
     {

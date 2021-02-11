@@ -15,7 +15,10 @@ public class rocket : MonoBehaviour
         endVector = new Vector3(transform.position.x + 50, transform.position.y);
         StartCoroutine(Lerp_rocket());
         var gunConf = StartAndDieEffForGun.Get_weap_content(gameObject.GetComponent<GunName>().Name);
-        CoreAudio.Create_audio_eff(gunConf.Item1);
+        if (gunConf.Item1 != "GuitarGun")
+        {
+            CoreAudio.Create_audio_eff(gunConf.Item1);
+        }
         effectDie = gunConf.Item2;
         SoundDie = gunConf.Item3;
     }

@@ -10,6 +10,8 @@ public class DevCanvas : MonoBehaviour
     void Start()
     {
         buildNum.text = "Build " + Application.version;
+
+        QualitySettings.vSyncCount = 1;
     }
 
     int countUpdate = 0;
