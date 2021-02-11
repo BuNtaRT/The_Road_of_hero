@@ -5,6 +5,7 @@ using UnityEngine;
 
 public static class StartAndDieEffForGun
 {
+    // Тут перечисления оружия, по имени запрашивается оружие а возвращает звук старта, эффект смери и звук смерти от оружия 
     // звуки и эффекты смерти
     static string[,] Sound_and_eff_dieSound = new string[,]
     {
@@ -17,8 +18,9 @@ public static class StartAndDieEffForGun
         {"unicorn_gun","unicorn_effect_die","unicorn_die"},
         {"whell_gun","wheel_effect_die","unicorn_die"},             //смерть
         {"fireball","fireball_effect_die","unicorn_die"},             //смерть
-        {"FreezLazer","frezee_effect_die","frezeeDie"},             //смерть
-        {"ShadowCarGun","Shadow_effect_die","ShadowCarGun_die"},             //смерть
+        {"FreezLazer","frezee_effect_die","frezeeDie"},
+        {"ShadowCarGun","Shadow_effect_die","ShadowCarGun_die"},
+        {"lazerTobig","LazerToBig_effect_die","lazerTobig_die"},   
     };
     public static Tuple<string,string,string> Get_weap_content(string name)
     {
