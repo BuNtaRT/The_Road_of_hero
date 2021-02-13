@@ -22,6 +22,9 @@ public static class StartAndDieEffForGun
         {"ShadowCarGun","Shadow_effect_die","ShadowCarGun_die"},
         {"lazerTobig","LazerToBig_effect_die","lazerTobig_die"},   
         {"GuitarGun","GuitarGun_effect_die","GuitarGun_die"},   
+        {"SharkGun","Shark_effect_die","shark_die"},   
+        {"lazerToSmal","lazerToSmal_effect_die","lazerToSmal_die"},   
+        {"MegafonGun","MegafonGun_effect_die","ScreamNO"},   
     };
     public static Tuple<string,string,string> Get_weap_content(string name)
     {

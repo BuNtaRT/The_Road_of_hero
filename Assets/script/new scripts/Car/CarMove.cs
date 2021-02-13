@@ -66,6 +66,7 @@ public class CarMove : MonoBehaviour
         }
         Debug.Log("Start speed = " + car_speed);
         InvokeRepeating("UpSpeed", 5, invokeTime);
+        car_speed = 1.6f;
         Invoke("SuperSpeed", 360);
     }
 
@@ -99,7 +100,10 @@ public class CarMove : MonoBehaviour
     {
         if (!pause)
         {
-            transform.position = new Vector3(transform.position.x + (car_speed * 0.25f), transform.position.y);
+            float to = transform.position.x + car_speed * 10;
+            transform.position = Vector3.Lerp(transform.position, new Vector3(to, 0, 0), Time.deltaTime);
+
+            //transform.position = new Vector3(transform.position.x + (car_speed * 0.0025f), transform.position.y);
         }
     }
 }

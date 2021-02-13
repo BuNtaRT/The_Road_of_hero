@@ -55,7 +55,7 @@ public class Car : MonoBehaviour
     public void DieStat1()          // когда мы врезаемся во что то (monster/orda)
     {
         CoreEffect.Create_effect("explosion_car",0,1.4f,gameObject.transform,false, "Die_car");
-
+    
     }
 
 

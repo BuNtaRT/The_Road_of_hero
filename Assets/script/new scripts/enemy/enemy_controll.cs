@@ -9,6 +9,7 @@ public class enemy_controll : MonoBehaviour
     private bool paused = false;
 
 
+
     private void Start()
     {
         UI.singleton.onPaused += onPause;
@@ -28,7 +29,8 @@ public class enemy_controll : MonoBehaviour
     {
         if (!paused && !disable)
         {
-            transform.localPosition = Vector3.Lerp(transform.localPosition, new Vector3(transform.localPosition.x - 1f, transform.localPosition.y, transform.localPosition.z), Time.deltaTime);
+            Vector3 to = new Vector3(transform.localPosition.x - 0.5f, transform.localPosition.y, transform.localPosition.z);
+            transform.localPosition = Vector3.Lerp(transform.localPosition, to, Time.deltaTime);
         }
     }
 

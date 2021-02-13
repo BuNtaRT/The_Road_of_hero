@@ -5,19 +5,24 @@ static class MonstaersDie
     //тута все смерти для всех препятствий
     public static void DieMonster(GameObject Monster, string effect,string sound)
     {
+
         Monster.GetComponent<BoxCollider2D>().enabled = false;
 
-        if (Monster.transform.parent.gameObject.GetComponent<SpriteRenderer>() != null)
+        if (effect != "lazerToSmal_effect_die")
         {
-            Monster.transform.parent.gameObject.AddComponent<die>();
-        }
-        else if (Monster.tag == "orda")
-        {
-            foreach (Transform temp in Monster.transform.parent) 
+
+            if (Monster.transform.parent.gameObject.GetComponent<SpriteRenderer>() != null)
             {
-                if (temp.tag != "orda") 
+                Monster.transform.parent.gameObject.AddComponent<die>();
+            }
+            else if (Monster.tag == "orda")
+            {
+                foreach (Transform temp in Monster.transform.parent)
                 {
-                    temp.gameObject.AddComponent<die>();
+                    if (temp.tag != "orda")
+                    {
+                        temp.gameObject.AddComponent<die>();
+                    }
                 }
             }
         }
@@ -38,7 +43,7 @@ static class MonstaersDie
 
         // тут можно в логику если надо !!
         //{
-    
+
         //}
     }
 

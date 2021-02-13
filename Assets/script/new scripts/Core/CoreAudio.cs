@@ -43,29 +43,38 @@ public static class CoreAudio
 
     private static float Create(string path, float vol, int priority)
     {
-        vol = 0.05f; // Убрать
-
-        if (on && (GameObject.FindGameObjectWithTag("audio") == null || path.Contains("audio_effect")))
+        try
         {
-            GameObject temp = new GameObject();
-            temp.AddComponent<AudioSource>();
-            temp.transform.SetParent(Camera.main.transform);
-            temp.transform.localPosition = new Vector3(1, 0, 0);
-            temp.GetComponent<AudioSource>().clip = Resources.Load<AudioClip>(path);
-            temp.GetComponent<AudioSource>().Play();
-            temp.GetComponent<AudioSource>().volume = vol;
-            temp.GetComponent<AudioSource>().priority = priority;
-            temp.name = path + "-vol(" + vol + ")";
+            vol = 0.05f; // Убрать
 
-            if (path.Contains("music"))
-                temp.tag = "audio";
-            UnityEngine.Object.Destroy(temp, temp.GetComponent<AudioSource>().clip.length);
+            if (on /*&& (GameObject.FindGameObjectWithTag("audio") == null || path.Contains("audio_effect"))*/)
+            {
+                GameObject temp = new GameObject();
+                temp.AddComponent<AudioSource>();
+                temp.transform.SetParent(Camera.main.transform);
+                temp.transform.localPosition = new Vector3(1, 0, 0);
+                temp.GetComponent<AudioSource>().clip = Resources.Load<AudioClip>(path);
+                temp.GetComponent<AudioSource>().Play();
+                temp.GetComponent<AudioSource>().volume = vol;
+                temp.GetComponent<AudioSource>().priority = priority;
+                temp.name = path + "-vol(" + vol + ")";
 
-            return temp.GetComponent<AudioSource>().clip.length;
+                if (path.Contains("music"))
+                    temp.tag = "audio";
+                UnityEngine.Object.Destroy(temp, temp.GetComponent<AudioSource>().clip.length);
+
+                return temp.GetComponent<AudioSource>().clip.length;
+            }
+            else
+            {
+                return 5;
+            }
         }
-        else
+        catch
         {
+            Debug.Log("Audio File 404");
             return 5;
         }
+
     }
 }
