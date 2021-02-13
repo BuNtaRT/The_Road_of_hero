@@ -10,7 +10,7 @@ public static class CoreAudio
     public static float CreateMusic(string name)
     {
         // PlayerPrefs.LoadFloat("vol_music");
-        return Create("music/" + name, 0.3f, 128); 
+        return Create("music/" + name, 0.4f, 128); 
     }
     public static float CreateMusic(int name)
     {
@@ -45,9 +45,9 @@ public static class CoreAudio
     {
         try
         {
-            vol = 0.05f; // Убрать
+            //vol = 0.05f; // Убрать
 
-            if (on /*&& (GameObject.FindGameObjectWithTag("audio") == null || path.Contains("audio_effect"))*/)
+            if (on && (GameObject.FindGameObjectWithTag("audio") == null || path.Contains("audio_effect")))
             {
                 GameObject temp = new GameObject();
                 temp.AddComponent<AudioSource>();

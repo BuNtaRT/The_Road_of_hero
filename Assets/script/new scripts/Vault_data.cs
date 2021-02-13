@@ -81,12 +81,32 @@ public class Vault_data : MonoBehaviour
     // суть проста, записываем первый раз в файл все номера и тайминги оружия, а потом выбираем из них рандомное (чем больше машин тем больше оружия)
     // почему в файл ?? просто есть уникальный транспорт и когда мы его купим его оружие добавится в общий пул сохраненых, потом можно использовать на лубой машине
     // получаем случайное доступное оружие(его номер, cooldown)
+    int TrealerI = -1;
     public Tuple<int,float> GetRandomGunFromList() 
     {
         //int rand = UnityEngine.Random.Range(0, PlayerPrefs.GetInt("Car_index"));
         //return Tuple.Create(Weapon[rand],TimeWeapon[rand]);
         //int rand = UnityEngine.Random.Range(0, 11);
         //return Tuple.Create(Weapon[rand],TimeWeapon[rand]);
+        TrealerI++;
+        switch (TrealerI) 
+        {
+            case 0:
+                return Tuple.Create(2, 0f);
+            case 1:
+                return Tuple.Create(6, 0f);
+            case 2:
+                return Tuple.Create(9, 0f);
+            case 3:
+                return Tuple.Create(12, 0f);
+            case 4:
+                return Tuple.Create(16, 0f);
+            case 5:
+                return Tuple.Create(14, 0f);
+            case 6:
+                return Tuple.Create(13, 0f);
+
+        }
         return Tuple.Create(16,3f);
     }
 
@@ -308,7 +328,7 @@ public class Vault_data : MonoBehaviour
 
     public bool CheckMap() 
     {
-        if (Buyed_map.Count >= 9)               // РАСШИРЕНИЕ если добавлять карту надо прибавить +1
+        if (Buyed_map.Count >= 10)               // РАСШИРЕНИЕ если добавлять карту надо прибавить +1
             return true;
         else
             return false;
