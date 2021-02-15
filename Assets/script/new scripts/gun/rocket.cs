@@ -29,7 +29,7 @@ public class rocket : MonoBehaviour
         while (timeStep < 1.0f)
         {
             timeStep += Time.deltaTime / 1f;
-            gameObject.transform.position = Vector3.Lerp(startVector, endVector /*cubeBezier3(startVector, P1, P2, endVector, timeStep)*/, timeStep);
+            gameObject.transform.position = Vector3.Lerp(startVector, endVector, timeStep);
             yield return null;
         }
         Destroy(gameObject);

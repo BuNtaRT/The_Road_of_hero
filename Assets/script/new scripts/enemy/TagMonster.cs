@@ -6,6 +6,8 @@ static class TagMonster
     public static List<string> Monsters = new List<string>()
     {
         "enemy",
-        "orda"
+        "orda",
     };
+
+    /// сделать структурой УБРАТЬ
 }

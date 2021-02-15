@@ -29,7 +29,7 @@ public class DrawLine : MonoBehaviour
         lr.colorGradient = gradien;
         lr.startWidth = 0.2f;
         lr.endWidth = 0.2f;
-        lr.SetPosition(0, start);
+        lr.SetPosition(0, new Vector3(start.x+1f,start.y,start.z)) ;
         lr.SetPosition(1, end);
         lr.sortingOrder = 20;
         Destroy(myLine, 0.5f);

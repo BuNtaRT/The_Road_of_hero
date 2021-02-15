@@ -9,7 +9,7 @@ public class DiefromLazerSmall : MonoBehaviour
         if (collision.tag == "Player")
         {
             gameObject.transform.GetChild(0).gameObject.SetActive(false);
-            CoreEffect.Create_effect("LazerSmallP",0,-1.32f,gameObject.transform);
+            CoreEffect.Create_effect("LazerSmallP",0,-1.4f,gameObject.transform);
             Destroy(gameObject, 2);
         }
     }

@@ -43,6 +43,8 @@ public class Vault_data : MonoBehaviour
         14,
         15,
         16,
+        17,
+        18,
     };     // открытое орудие 
     List<float> TimeWeapon = new List<float>() 
     {
@@ -63,79 +65,43 @@ public class Vault_data : MonoBehaviour
        2.9f,
        2f,
        3f,
-
+       2.5f,
+       2.9f,
 
     };     // его тайминг cooldown
 
 
-    //// добавляем орудие в лист для использований и сохраняем в файл
-    //public void AddWeapon(int weapon,double time_weap)
-    //{
-    //    using (StreamWriter file = new StreamWriter(Application.persistentDataPath + "/W.is",true)) {
-    //        file.WriteLine(weapon.ToString()+"/"+time_weap);
-    //    }
-    //    OpenWeapon.Add(weapon);
-    //}
-
-
-    // суть проста, записываем первый раз в файл все номера и тайминги оружия, а потом выбираем из них рандомное (чем больше машин тем больше оружия)
-    // почему в файл ?? просто есть уникальный транспорт и когда мы его купим его оружие добавится в общий пул сохраненых, потом можно использовать на лубой машине
-    // получаем случайное доступное оружие(его номер, cooldown)
-    int TrealerI = -1;
+    //int TrealerI = -1;   // для трейлер 
     public Tuple<int,float> GetRandomGunFromList() 
     {
         //int rand = UnityEngine.Random.Range(0, PlayerPrefs.GetInt("Car_index"));
         //return Tuple.Create(Weapon[rand],TimeWeapon[rand]);
+
         //int rand = UnityEngine.Random.Range(0, 11);
         //return Tuple.Create(Weapon[rand],TimeWeapon[rand]);
-        TrealerI++;
-        switch (TrealerI) 
-        {
-            case 0:
-                return Tuple.Create(2, 0f);
-            case 1:
-                return Tuple.Create(6, 0f);
-            case 2:
-                return Tuple.Create(9, 0f);
-            case 3:
-                return Tuple.Create(12, 0f);
-            case 4:
-                return Tuple.Create(16, 0f);
-            case 5:
-                return Tuple.Create(14, 0f);
-            case 6:
-                return Tuple.Create(13, 0f);
 
-        }
-        return Tuple.Create(16,3f);
+        //TrealerI++;
+        //switch (TrealerI) 
+        //{
+        //    case 0:
+        //        return Tuple.Create(2, 0f);
+        //    case 1:
+        //        return Tuple.Create(6, 0f);
+        //    case 2:
+        //        return Tuple.Create(9, 0f);
+        //    case 3:
+        //        return Tuple.Create(12, 0f);
+        //    case 4:
+        //        return Tuple.Create(16, 0f);
+        //    case 5:
+        //        return Tuple.Create(14, 0f);
+        //    case 6:
+        //        return Tuple.Create(13, 0f);
+
+        //}
+        return Tuple.Create(13,0f);
     }
 
-
-    public void Initialized_Weapon() 
-    {
-        //// создаем наш лист для открытых орудий
-        //if (!File.Exists(Application.persistentDataPath + "/W.is"))
-        //{
-        //    using (var file = File.CreateText(Application.persistentDataPath + "/W.is"))
-        //    {
-        //        file.WriteLine(0.ToString() + "/2");
-        //        file.WriteLine(1.ToString() + "/2");
-        //        file.WriteLine(2.ToString() + "/2");
-        //        file.WriteLine(3.ToString() + "/2");
-        //        file.WriteLine(4.ToString() + "/2");
-        //    }
-        //}
-
-        //using (StreamReader file = new StreamReader(Application.persistentDataPath + "/W.is"))
-        //{
-        //    while (file.Peek() >= 0)
-        //    {
-        //        string line = file.ReadLine();
-        //        OpenWeapon.Add(Convert.ToInt32(line.Split('/')[0]));
-        //        TimeWeapon.Add((float)Convert.ToDouble(line.Split('/')[1]));
-        //    }
-        //}
-    }
     #endregion
 
 

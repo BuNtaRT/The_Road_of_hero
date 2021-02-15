@@ -7,13 +7,6 @@ public class Music : MonoBehaviour
 
     Coroutine music;
     bool audio;
-    void Start()
-    {
-        //audio = System.Convert.ToBoolean(PlayerPrefs.GetInt("sound"));
-
-        //music = StartCoroutine(Controll_music());
-
-    }
 
     public void On_Off(bool on)
     {

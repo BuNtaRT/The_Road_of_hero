@@ -36,7 +36,6 @@ public class UI : MonoBehaviour
 
     private void Start()
     {
-        //PlayerPrefs.DeleteAll();    ///////////////////////////////////////////////////////////////////////// убрать!!!!!!!!
         PlayerPrefs.SetInt("money", 1000000);
 
 
