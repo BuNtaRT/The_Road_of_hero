@@ -28,23 +28,9 @@ public static class CoreEffect
 
     private static float Create(string path, float x, float y, Transform parent, bool world)
     {
-
-        GameObject temp = UnityEngine.Object.Instantiate(Resources.Load<GameObject>("effect/" + path));
+        GameObject temp = CoreGenerate.GenerateObj(path, x, y, parent, world);
+            
         temp.name = path;
-
-        if (parent != null)
-        {
-            temp.transform.SetParent(parent);
-            temp.transform.localPosition = new Vector3(x, y, 0);
-        }
-        else
-        {
-            temp.transform.localPosition = new Vector3(x, y, 0);
-        }
-        if (world)
-        {
-            temp.transform.SetParent(null);
-        }
 
         if (temp.GetComponent<Animator>())
         {

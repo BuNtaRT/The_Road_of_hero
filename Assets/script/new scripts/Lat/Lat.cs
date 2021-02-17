@@ -41,6 +41,7 @@ public class Lat : MonoBehaviour
 
     int chance = 70;
     float steap_spawn = 30;
+    public bonus_generate BonusGen;
 
     void SpawnWhat()                    // что спавним ??
     {
@@ -55,7 +56,7 @@ public class Lat : MonoBehaviour
             }
             else                            // или же мы хоть что то заспавним
             {
-
+                BonusGen.MaybeBonus(NextGen);
                 if (CarShoot.singleton.ammo >= 1)
                 {
                     Methods temp = GetSpanwMethodMulti();
@@ -86,6 +87,11 @@ public class Lat : MonoBehaviour
         if (CarShoot.singleton.ammo == 0)   // если припасов 0 то 
         {
             dontSpawnLine = UnityEngine.Random.Range(0, 3);     // то выбираем линию куда спавнится ничего не будет
+            BonusGen.generateLine("bonus/BonusR", dontSpawnLine,NextGen);
+        }
+        else 
+        {
+            BonusGen.MaybeBonus(NextGen);
         }
 
         for (int i = 0; i <= 2; i++)
@@ -190,12 +196,7 @@ public class Lat : MonoBehaviour
 
     GameObject generate(string path, float posX, float posY, int layout)
     {
-        GameObject temp = Instantiate(Resources.Load<GameObject>(path));
-        temp.transform.position = new Vector3(posX+10, posY, 0);
-        if (layout != 0)
-            temp.GetComponent<SpriteRenderer>().sortingOrder = layout;      // нужно что бы поставить например монстра вверх или вниз 
-        return temp;
-
+        return CoreGenerate.GenerateObj(path,posX,posY,layout);
     }
 
 
