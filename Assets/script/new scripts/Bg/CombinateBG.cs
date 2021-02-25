@@ -7,6 +7,7 @@ public class CombinateBG : MonoBehaviour
     Transform car;
     float NextCall = 30;
     public Transform lightGroupRoad;
+    Music mus;
 
     #region Event 
     public delegate void StopLat(bool val);
@@ -21,25 +22,38 @@ public class CombinateBG : MonoBehaviour
 
     void Start()
     {
+        mus=  GameObject.FindGameObjectWithTag("Scripts").GetComponent<Music>();
         NextCall = Random.Range(350, 600);
+        NextCall = 0; // УБРАТЬ
         car = GameObject.Find("Car").transform;
         if (PlayerPrefs.GetFloat("Cur_map_lvl") > 1.1f)
         {
-            InvokeRepeating("CombinCheck", 10, 5);
+            InvokeRepeating("CombinCheck", 5, 5);
         }
+        PlayerPrefs.SetInt("Boss1", PlayerPrefs.GetInt("Boss1") + 1);
+        PlayerPrefs.SetInt("Boss2", PlayerPrefs.GetInt("Boss2") + 1);
+        PlayerPrefs.SetInt("Boss3", PlayerPrefs.GetInt("Boss3") + 1);
     }
 
 
     void CombinCheck() 
     {
-        if (car.position.x >= NextCall)
+        if (car.position.x >= NextCall && !bossFightOne)
         {
-
             NextCall = (NextCall * 2.5f)+100;
             StartCoroutine(StartEventChangeBg());
         }
+    }
 
+    public BossChoise BossC;
 
+    bool bossFightOne = false;
+    public void BossEND() 
+    {
+        NextCall = (car.position.x * 1.5f) + 100;
+        mus.SwitchToBoss(false);
+
+        StartCoroutine(StartEventChangeBg());
     }
 
 
@@ -67,11 +81,23 @@ public class CombinateBG : MonoBehaviour
         SpriteRenderer sp = bg_Ivent.transform.Find("Flash").GetComponent<SpriteRenderer>();
         sp.color = new Color(0.574f, 0.574f, 0.574f,1);
 
-        SetNewBg();
-        yield return new WaitForSeconds(0.2f);
-        sp.color = new Color(0.574f, 0.574f, 0.574f, 0);
-
-        stopLat(false);
+        if (Boss() && !bossFightOne)
+        {
+            mus.SwitchToBoss(true);
+            bossFightOne = true;
+            Debug.Log("BOSS EVENT SUKA num = " + boss);
+            SetNewBg(10);
+            yield return new WaitForSeconds(0.2f);
+            sp.color = new Color(0.574f, 0.574f, 0.574f, 0);
+            BossC.BossFightStart(boss);
+        }
+        else
+        {
+            SetNewBg(-1);
+            yield return new WaitForSeconds(0.2f);
+            sp.color = new Color(0.574f, 0.574f, 0.574f, 0);
+            stopLat(false);
+        }
 
         yield return new WaitForSeconds(5f);
         bg_Ivent.GetComponent<Animator>().Play("EndEvent");
@@ -80,9 +106,17 @@ public class CombinateBG : MonoBehaviour
 
     }
 
-    void SetNewBg() 
+    void SetNewBg(int LoadMap) 
     {
-        int num = Vault_data.singleton.GetBuyedMap(System.Convert.ToInt32(GameObject.FindGameObjectWithTag("Background").name));
+        int num = 0;
+        if (LoadMap != -1)
+        {
+            num = LoadMap;
+        }
+        else
+        {
+            num = Vault_data.singleton.GetBuyedMap(System.Convert.ToInt32(GameObject.FindGameObjectWithTag("Background").name));
+        }
         Destroy(GameObject.FindGameObjectWithTag("Background"));
         GameObject map = Instantiate(Resources.Load<GameObject>("map/"+num));
         map.name = num.ToString();
@@ -91,6 +125,41 @@ public class CombinateBG : MonoBehaviour
     }
 
 
+
+    int boss = 1;   // если выбирается бос то вот его номер 
+    bool bbbb = false;
+    bool Boss() 
+    {
+        if (!bbbb)
+        {
+            bbbb = true;
+            boss = 2;
+            return true;
+        }
+        if (Random.Range(0, 201) >= 150)
+        {
+            if (PlayerPrefs.GetInt("Boss1") >= 8)
+            {
+                boss = 1;
+                return true;
+            }
+            else if (PlayerPrefs.GetInt("Boss2") >= 10)
+            {
+                boss = 2;
+                return true;
+            }
+            else if (PlayerPrefs.GetInt("Boss3") >= 13)
+            {
+                boss = 3;
+                return true;
+            }
+            return false;
+        }
+        else 
+        {
+            return false;
+        }
+    }
 
 
 }

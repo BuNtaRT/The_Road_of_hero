@@ -36,8 +36,8 @@ public class UI : MonoBehaviour
 
     private void Start()
     {
-        PlayerPrefs.SetInt("money", 1000000);
-
+        //PlayerPrefs.SetInt("money", 1000000);
+        //PlayerPrefs.DeleteAll();
 
         GameObject.Find("Scripts").GetComponent<Music>().On_Off(Convert.ToBoolean(PlayerPrefs.GetInt("Music")));
 
@@ -59,6 +59,9 @@ public class UI : MonoBehaviour
 
         CheckButtonBuy();
         Coin_men.text = Money_maneger.GetMoney().ToString();
+        CoinInmarket.text = Money_maneger.GetMoney().ToString();    
+        Money_maneger.ResetTempMoney();
+
     }
 
 
@@ -192,6 +195,7 @@ public class UI : MonoBehaviour
 
     public GameObject ItemOpen;
     public GameObject LightMap;
+    public Text CoinInmarket;
 
     public void CheckButtonBuy()
     {
@@ -215,6 +219,8 @@ public class UI : MonoBehaviour
 
     public void Comlite()
     {
+        CoinInmarket.text = Money_maneger.GetMoney().ToString();
+        Coin_men.text = Money_maneger.GetMoney().ToString();
         Vault_data.singleton.Constr_car();
         Set_ico_car();
         Set_ico_map();
@@ -283,23 +289,25 @@ public class UI : MonoBehaviour
 
     public void StateOneEndGame() 
     {
-        string forShoot, forCollect,newRekord;
+        string forShoot, forCollect,newRekord,allcoin;
         if (PlayerPrefs.GetInt("lg") == 0)
         {
             forShoot = "For liquidation ";
             forCollect = "Collected coins ";
             newRekord = "New Record!";
+            allcoin = "Total coins +";
         }
         else 
         {
             forShoot = "За устранение ";
             forCollect = "Собрано монет ";
             newRekord = "Новый рекорд!";
+            allcoin = "Всего монет +";
+
         }
 
-
-        Money_maneger.temp_money = (int)(car.position.x / 2) + Money_maneger.money_monster + Money_maneger.money_coll;
-        MoneyEND.text = Money_maneger.temp_money.ToString();
+        Money_maneger.temp_money = (int)(car.position.x / 2) + Money_maneger.money_monster ;
+        MoneyEND.text = allcoin + (Money_maneger.temp_money + Money_maneger.money_coll).ToString();
         ShootCollectedCoinsEND.text = forShoot + " +" + Money_maneger.money_monster + "\n" + forCollect + " +" + Money_maneger.money_coll;
 
 
@@ -318,7 +326,30 @@ public class UI : MonoBehaviour
 
     public void End() 
     {
+        Money_maneger.SaveEndGame();
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    public void reburnCar()
+    {
+        SetPause(false);
+
+        foreach (GameObject temp in GameObject.FindGameObjectsWithTag("prep"))
+        {
+            Destroy(temp);
+        }
+        foreach (GameObject temp in GameObject.FindGameObjectsWithTag("pit"))
+        {
+            Destroy(temp);
+        }
+
+        Transform player = GameObject.FindGameObjectWithTag("Player").transform;
+        CoreGenerate.GenerateObj("bonus/Sheld", 0, 0, player);
+        SetPause(false);
+        GameObject.Find("In_game_ui").GetComponent<Animator>().enabled = false;
+        GameObject.Find("In_game_ui").GetComponent<Animator>().Play("show_in_game_ui");
+        GameObject.Find("In_game_ui").GetComponent<Animator>().enabled = true;
+
     }
 
     #endregion

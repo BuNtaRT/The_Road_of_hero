@@ -39,29 +39,40 @@ public class rocket : MonoBehaviour
     {
         if (TagMonster.Monsters.Contains(collision.tag)) 
         {
-            foreach (Transform temp in gameObject.transform)
-            {
-                if (temp.tag == "particle") 
-                {
-                    temp.gameObject.AddComponent<DestroyParticle>();
-                }
-            }
-            if (gameObject.GetComponent<BoxCollider2D>() != null) 
-            {
-                gameObject.GetComponent<BoxCollider2D>().enabled = false;
-            }
-            if (gameObject.GetComponent<SpriteRenderer>() != null)
-            {
-                gameObject.GetComponent<SpriteRenderer>().enabled = false;
-            }
-            else if (CustomSP != null) 
-            {
-                CustomSP.enabled = false;
-            }
-
+            DeactivR();
             MonstaersDie.DieMonster(collision.gameObject, effectDie,SoundDie);
             StopAllCoroutines();
             Destroy(gameObject,1f);
+        }
+        else if (collision.gameObject.tag == "Boss")
+        {
+            DeactivR();
+            collision.gameObject.transform.parent.GetComponent<Bee>().minusHP();
+            StopAllCoroutines();
+            Destroy(gameObject, 1f);
+        }
+    }
+
+    void DeactivR() 
+    {
+        foreach (Transform temp in gameObject.transform)
+        {
+            if (temp.tag == "particle")
+            {
+                temp.gameObject.AddComponent<DestroyParticle>();
+            }
+        }
+        if (gameObject.GetComponent<BoxCollider2D>() != null)
+        {
+            gameObject.GetComponent<BoxCollider2D>().enabled = false;
+        }
+        if (gameObject.GetComponent<SpriteRenderer>() != null)
+        {
+            gameObject.GetComponent<SpriteRenderer>().enabled = false;
+        }
+        else if (CustomSP != null)
+        {
+            CustomSP.enabled = false;
         }
     }
 

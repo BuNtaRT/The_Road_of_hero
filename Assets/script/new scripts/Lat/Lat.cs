@@ -13,6 +13,14 @@ public class Lat : MonoBehaviour
         if (pause == false)
             NextGen = transform.position.x + steap_spawn - 1;
     }
+
+    bool eventMap = false;
+    void EventChange(bool val) 
+    {
+        eventMap = val;
+        PauseCar(val);
+    }
+
     #endregion
     private void Start()
     {
@@ -23,10 +31,11 @@ public class Lat : MonoBehaviour
             multiMetods.Add(temp);
         multiMetods.Add(Spawn_orda);
         UI.singleton.onPaused += PauseCar;
-        gameObject.GetComponent<CombinateBG>().OnStopLat += PauseCar;       // если происходит событие то отключает спавнер
+        gameObject.GetComponent<CombinateBG>().OnStopLat += EventChange;       // если происходит событие то отключает спавнер
         Vault_data.singleton.CreateMontersList(Convert.ToInt32(GameObject.FindGameObjectWithTag("Background").name));   // запрашиваем запитсь монстров ответственных за текущую карту 
-        steap_spawn = steap_spawn - PlayerPrefs.GetInt("Car_index") >= 9 ? steap_spawn - PlayerPrefs.GetInt("Car_index") : 9;
+        steap_spawn = steap_spawn - PlayerPrefs.GetInt("Car_index") >= 12 ? steap_spawn - PlayerPrefs.GetInt("Car_index") : 12;
         chance = chance - PlayerPrefs.GetInt("Car_index") >= 15 ? chance - PlayerPrefs.GetInt("Car_index") : 15;
+        BonusGen = gameObject.GetComponent<bonus_generate>();
     }
 
 
@@ -41,11 +50,11 @@ public class Lat : MonoBehaviour
 
     int chance = 70;
     float steap_spawn = 30;
-    public bonus_generate BonusGen;
+    bonus_generate BonusGen;
 
     void SpawnWhat()                    // что спавним ??
     {
-        if (!pause)
+        if (!pause && !eventMap)
         {
             MultiTrue = false;
             chance = chance - 3 >= 10 ? chance - 3 : 10; // а так же шанс коректируем
@@ -70,10 +79,10 @@ public class Lat : MonoBehaviour
             }
 
             if(steap_spawn >=12)
-                steap_spawn-=0.5f;
+                steap_spawn-=0.1f;
 
             NextGen += UnityEngine.Random.Range(steap_spawn-2,steap_spawn+3);
-
+            Debug.Log(steap_spawn + " chance = " + chance);
         }
     }
 
@@ -196,7 +205,7 @@ public class Lat : MonoBehaviour
 
     GameObject generate(string path, float posX, float posY, int layout)
     {
-        return CoreGenerate.GenerateObj(path,posX,posY,layout);
+        return CoreGenerate.GenerateObj(path,posX+10,posY,layout);
     }
 
 

@@ -16,6 +16,7 @@ public class CarMove : MonoBehaviour
     {
         Debug.Log("Index = " + PlayerPrefs.GetInt("Car_index"));
 
+
         UI.singleton.onPaused += PauseCar;       // singleton - крутая штука что бы не искать обьекты а находить единственный Static-же и обращаться к нему
         if (PlayerPrefs.GetInt("Car_index") > 2)
         {
@@ -37,6 +38,7 @@ public class CarMove : MonoBehaviour
             }
         }
         Speed();
+        Debug.Log("car speed  = " + car_speed);
     }
 
 
@@ -66,7 +68,6 @@ public class CarMove : MonoBehaviour
         }
         Debug.Log("Start speed = " + car_speed);
         InvokeRepeating("UpSpeed", 5, invokeTime);
-        car_speed = 0.6f;
         Invoke("SuperSpeed", 360);
     }
 

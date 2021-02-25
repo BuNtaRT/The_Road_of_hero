@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2306774219670346711}
   - component: {fileID: 8796163634330745602}
   m_Layer: 0
-  m_Name: Collider
+  m_Name: Colider
   m_TagString: lazer
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

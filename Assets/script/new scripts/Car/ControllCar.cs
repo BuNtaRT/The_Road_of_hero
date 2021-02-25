@@ -22,6 +22,7 @@ public class ControllCar : MonoBehaviour
     }
     #endregion
 
+    #region EVENTS
     public delegate void LayoutSub(int lay);
     public event LayoutSub OnChangeLayout;
 
@@ -29,6 +30,9 @@ public class ControllCar : MonoBehaviour
     {
         OnChangeLayout?.Invoke(lay);
     }
+    #endregion
+
+    public int GetLine() => mode; 
 
     Transform car;
     private Vector2 startPos;

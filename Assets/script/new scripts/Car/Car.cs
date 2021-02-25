@@ -13,7 +13,7 @@ public class Car : MonoBehaviour
 
     public float lvl;       // коэффицент для умножения счета со стороны машины 
 
-
+    public bool DevUndie = true;
 
     [Obsolete]
     void Start()
@@ -47,7 +47,6 @@ public class Car : MonoBehaviour
 
     void Die() {
         OnDie?.Invoke();
-
     }
 
 
@@ -55,22 +54,37 @@ public class Car : MonoBehaviour
     public void DieStat1()          // когда мы врезаемся во что то (monster/orda)
     {
         CoreEffect.Create_effect("explosion_car",0,1.4f,gameObject.transform,false, "Die_car");
-    
     }
 
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.tag == "enemy" || other.gameObject.tag == "pit" || other.gameObject.tag == "bomb_zone" || other.gameObject.tag =="orda")
+        if (other.gameObject.tag == "enemy" || other.gameObject.tag == "pit" || other.gameObject.tag == "bomb_zone" || other.gameObject.tag =="orda" || other.gameObject.tag == "Boss"  )
         {
-            string tag = other.gameObject.tag;
-            if (tag.Contains("enemy") || tag.Contains("orda"))
-                DieStat1();
-            Die();
+                string tag = other.gameObject.tag;
+            if (tag.Contains("enemy") || tag.Contains("orda") || other.gameObject.tag == "Boss" )
+            {
+                if (Vault_data.singleton.StartGetPac())
+                {
+                    MonstaersDie.DieMonster(other.gameObject, "Rocket_effect_die", "click");
+                }
+                else
+                {
+                    if (!DevUndie)
+                    {
+                        Die();
+                        DieStat1();
+                    }
+                }
+            }
+            else
+            {
+                if (!DevUndie)
+                {
+                    Die();
+                }
+            }
         }
     }
-
-
-
 
 }

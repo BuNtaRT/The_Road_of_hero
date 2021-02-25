@@ -43,7 +43,7 @@ static class MonstaersDie
 
         // тут можно в логику если надо !!
         //{
-
+        Money_maneger.Plus_monster(Random.Range(3,13));
         //}
     }
 

@@ -29,17 +29,21 @@ public class TransformObj : MonoBehaviour
         {
             for (float time = 0; time < Speed * 3; time += Time.deltaTime)
             {
-                float progress = Mathf.PingPong(time, Speed) / (Speed);
+                float progress = time / Speed;
                 transformLepr(StartPos, EndPos, progress);
                 yield return null;
             }
-            for (float time = 0; time < Speed * 3; time += Time.deltaTime)
+            if (repeat)
             {
-                float progress = Mathf.PingPong(time, Speed) / (Speed);
-                transformLepr(EndPos, StartPos, progress);
-                yield return null;
+                for (float time = 0; time < Speed * 3; time += Time.deltaTime)
+                {
+                    float progress = time / Speed;
+                    transformLepr(EndPos, StartPos, progress);
+                    yield return null;
+                }
             }
         } while (repeat);
+
     }
 
     void TransfPosition(Vector3 start, Vector3 end, float progress)

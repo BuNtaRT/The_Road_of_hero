@@ -95,7 +95,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.00082598627, y: 0.11999999}
+  m_Offset: {x: -0.40212977, y: 0.119999304}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -106,7 +106,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.75753236, y: 0.41449395}
+  m_Size: {x: 1.5634441, y: 0.45865354}
   m_EdgeRadius: 0
 --- !u!1 &6282926691063217314
 GameObject:
@@ -264,7 +264,7 @@ GameObject:
   - component: {fileID: 4407564205106560242}
   m_Layer: 0
   m_Name: Bomb
-  m_TagString: Untagged
+  m_TagString: prep
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

@@ -56,7 +56,7 @@ public class bomb_controller : MonoBehaviour
             gameObject.GetComponent<BoxCollider2D>().enabled = false;
             zone_end.GetComponent<SpriteRenderer>().color = new Color(0, 0, 0, 0);
             CoreAudio.Create_audio_eff("expl");
-            CoreEffect.Create_effect("explosion_enemy", 0, -1.16f, gameObject.transform.parent, true);
+            CoreEffect.Create_effect("explosion_enemy", 0, -1.66f, gameObject.transform.parent, true);
             Destroy(gameObject.transform.parent.gameObject);
         }
 

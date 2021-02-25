@@ -22,6 +22,8 @@ TagManager:
   - particle
   - Scripts
   - EnergySphere
+  - prep
+  - Boss
   layers:
   - Default
   - TransparentFX

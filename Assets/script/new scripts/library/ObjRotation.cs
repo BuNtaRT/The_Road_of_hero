@@ -9,14 +9,28 @@ public class ObjRotation : MonoBehaviour
     public float Speed = 0.5f;
     Coroutine cor;
 
+    public void SetParametr(bool Repeate, float x, float y, float z, float Speed)
+    {
+        this.Repeate = Repeate;
+        this.x = x;
+        this.y = y;
+        this.z = z;
+        this.Speed = Speed;
+    }
+
     void Start()
     {
         gameObject.AddComponent<TransformObj>();
         cor = gameObject.GetComponent<TransformObj>().TransformLocalRotation(gameObject.transform.localEulerAngles, new Vector3(x, y, z), Speed, Repeate);
+        if (!Repeate)
+        {
+            Destroy(this, Speed + 0.5f);
+        }
     }
 
     private void OnDestroy()
     {
-        StopCoroutine(cor);
+        if(Repeate)
+            StopCoroutine(cor);
     }
 }

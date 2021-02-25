@@ -12,6 +12,26 @@ public class Vault_data : MonoBehaviour
     public static Vault_data singleton { get; private set; }
 
 
+    #region PacBonus
+    public delegate void pacBonus(bool val);
+    public event pacBonus Onpac;
+    bool pac = false;
+    void OnpacChange(bool val)
+    {
+        Debug.Log("changePac " + val);
+        pac = val;
+        Onpac?.Invoke(val);
+    }
+
+    public void PacOnSet(bool val) 
+    {
+        OnpacChange(val);
+    }
+    public bool StartGetPac()
+    {
+        return pac;
+    }
+    #endregion
 
     void Awake()
     {
@@ -77,8 +97,8 @@ public class Vault_data : MonoBehaviour
         //int rand = UnityEngine.Random.Range(0, PlayerPrefs.GetInt("Car_index"));
         //return Tuple.Create(Weapon[rand],TimeWeapon[rand]);
 
-        //int rand = UnityEngine.Random.Range(0, 11);
-        //return Tuple.Create(Weapon[rand],TimeWeapon[rand]);
+        int rand = UnityEngine.Random.Range(0, 19);
+        return Tuple.Create(Weapon[rand], TimeWeapon[rand]);
 
         //TrealerI++;
         //switch (TrealerI) 
@@ -117,9 +137,10 @@ public class Vault_data : MonoBehaviour
         { 4, 11, 7 },
         { 5, 1, 12 },
         { 6, 9, 4 },
-        { 7, 13, 5 },       //три карты недоделаны !! убрать
-        { 8, 13, 5 },
-        { 9, 13, 5 }
+        { 7, 3, 2 },
+        { 8, 6, 7 },
+        { 9, 4, 13 },
+        { 10, 15, 9 }
     };
 
     List<int> monsters = new List<int>();
