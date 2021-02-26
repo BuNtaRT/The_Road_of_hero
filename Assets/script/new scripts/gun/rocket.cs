@@ -39,15 +39,23 @@ public class rocket : MonoBehaviour
     {
         if (TagMonster.Monsters.Contains(collision.tag)) 
         {
-            DeactivR();
-            MonstaersDie.DieMonster(collision.gameObject, effectDie,SoundDie);
-            StopAllCoroutines();
-            Destroy(gameObject,1f);
+            if (collision.GetComponent<enemy_controll>() == null || (collision.GetComponent<enemy_controll>() != null && !collision.GetComponent<enemy_controll>().undestroy))
+            {
+                DeactivR();
+                MonstaersDie.DieMonster(collision.gameObject, effectDie, SoundDie);
+                StopAllCoroutines();
+                Destroy(gameObject, 1f);
+            }
+            else if (collision.GetComponent<FakeShadow>() != null) 
+            {
+                Destroy(collision.gameObject);
+            }
         }
         else if (collision.gameObject.tag == "Boss")
         {
             DeactivR();
-            collision.gameObject.transform.parent.GetComponent<Bee>().minusHP();
+            if (collision.gameObject.transform.parent.GetComponent<BossDamage>() != null)
+                collision.gameObject.transform.parent.GetComponent<BossDamage>().Damage();
             StopAllCoroutines();
             Destroy(gameObject, 1f);
         }

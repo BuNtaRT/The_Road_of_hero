@@ -7,8 +7,7 @@ public class enemy_controll : MonoBehaviour
 {
 
     private bool paused = false;
-
-
+    public bool undestroy = false;
 
     private void Start()
     {
@@ -21,13 +20,16 @@ public class enemy_controll : MonoBehaviour
     private bool Pac;
     private void onPac(bool val)
     {
-        if (val)
+        if (!undestroy)
         {
-            switchColor(new Color(0.382031f, 0.4601866f, 0.9528302f));
-        }
-        else
-        {
-            switchColor(new Color(1,1,1));
+            if (val)
+            {
+                switchColor(new Color(0.382031f, 0.4601866f, 0.9528302f));
+            }
+            else
+            {
+                switchColor(new Color(1, 1, 1));
+            }
         }
     }
 

@@ -17,9 +17,12 @@ public class BossChoise : MonoBehaviour
         }
         else if (bossNum == 2) 
         {
+            CoreGenerate.GenerateObj("Boss/ShadowCar", 14, 0, 10, Camera.main.transform);
+
         }
         else if (bossNum == 3)
         {
+
         }
     }
 

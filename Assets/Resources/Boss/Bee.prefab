@@ -47,17 +47,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c1e7830910a1da41a8b50f2f7af808b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  carP: {fileID: 0}
+  car: {fileID: 0}
+  PosYEnemy: 
+  PosYBoss: 
+  namemonster: 
+  BossColider: {fileID: 0}
+  bossShow: {fileID: 0}
+  tempHp: 0
+  hp: 0
+  hpSteap: 0
+  curLine: 1
   beeAnimator: {fileID: 4407662160281712176}
-  Atack: 0
-  fly: 0
-  randomFly: 0
-  die: 0
-  Line0: 0
-  Line1: 0
   AttackParticle: {fileID: 4407662160229797796}
   BossAttackColider: {fileID: 4407662160549166008}
   Shadow: {fileID: 4407662161115288840}
-  BossCollider: {fileID: 4407662160739433885}
 --- !u!1 &4407662159877548073
 GameObject:
   m_ObjectHideFlags: 0
@@ -14538,7 +14542,7 @@ BoxCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4407662160739433887}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 1

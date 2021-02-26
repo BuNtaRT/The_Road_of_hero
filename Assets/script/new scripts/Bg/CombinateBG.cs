@@ -24,7 +24,7 @@ public class CombinateBG : MonoBehaviour
     {
         mus=  GameObject.FindGameObjectWithTag("Scripts").GetComponent<Music>();
         NextCall = Random.Range(350, 600);
-        NextCall = 0; // УБРАТЬ
+        //NextCall = 0; // УБРАТЬ
         car = GameObject.Find("Car").transform;
         if (PlayerPrefs.GetFloat("Cur_map_lvl") > 1.1f)
         {
@@ -133,7 +133,7 @@ public class CombinateBG : MonoBehaviour
         if (!bbbb)
         {
             bbbb = true;
-            boss = 2;
+            boss = 1;
             return true;
         }
         if (Random.Range(0, 201) >= 150)

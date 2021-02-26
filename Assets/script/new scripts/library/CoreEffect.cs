@@ -28,7 +28,6 @@ public static class CoreEffect
 
     private static float Create(string path, float x, float y, Transform parent, bool world)
     {
-        Debug.Log("LOad effect " + path);
         GameObject temp = CoreGenerate.GenerateObj("effect/"+path, x, y, parent, world);
             
         temp.name = path;

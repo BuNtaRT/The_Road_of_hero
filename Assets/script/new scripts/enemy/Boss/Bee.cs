@@ -2,45 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bee : MonoBehaviour
+public class Bee : CoreBoss, IBossCore
 {
+
+    // for the following - special boss logics 
+
     public Animator beeAnimator;
-    public bool Atack = false, fly = false,randomFly = false,die= false;
-    public bool Line0 = false, Line1 = false;
     public ParticleSystem AttackParticle;
     public BoxCollider2D BossAttackColider;
     public GameObject Shadow;
-
-    int hp = 1;
-
-    private void Update()
-    {
-        if (Atack) 
-        {
-            StartCoroutine(AnimaAttack0());
-            Atack = false;
-        }
-        if (die) 
-        {
-            StartCoroutine(AnimDie());
-            die = false;
-        }
-        if (Line0) 
-        {
-            Line0 = false;
-            StartCoroutine(AnimaAttack1());
-        }
-        if (Line1)
-        {
-            Line1 = false;
-            StartCoroutine(AnimaAttack2());
-        }
-
-    }
-
-
-
-
 
     IEnumerator AnimaAttack1() 
     {
@@ -60,7 +30,6 @@ public class Bee : MonoBehaviour
         BossAttackColider.enabled = false;
         beeAnimator.SetBool("Line1", false);
     }
-
     IEnumerator AnimaAttack0() 
     {
         beeAnimator.SetBool("Attack", true);
@@ -78,79 +47,6 @@ public class Bee : MonoBehaviour
 
         beeAnimator.SetBool("EndAttack", false);
     }
-
-    IEnumerator AnimDie() 
-    {
-        GameObject.FindGameObjectWithTag("Scripts").GetComponent<BossChoise>().BossDIE();
-        BossUIHP.Hide();
-        beeAnimator.SetBool("Die", true);
-        BossAttackColider.enabled = false;
-        Shadow.SetActive(false);
-        yield return new WaitForSeconds(1);
-        Destroy(gameObject);
-
-    }
-
-    ControllCar car;
-    Transform carP;
-    BossShow BossUIHP;
-
-    private void Start()
-    {
-        carP = GameObject.FindGameObjectWithTag("CarP").transform;
-
-        BossUIHP = GameObject.Find("BossCanvas").GetComponent<BossShow>();
-        BossUIHP.allhp = hp;
-        BossUIHP.SetColor(new Color(0.735849f, 0.7041574f, 0.3713955f),  new Color(0.990566f, 0.8839075f, 0.2196066f));
-        temphp = 1;
-        car =  GameObject.FindGameObjectWithTag("Scripts").GetComponent<ControllCar>();
-        ObjPosition Objpos = gameObject.AddComponent<ObjPosition>();
-        Objpos.SetParametr(false, -14.5f, 0,0, 0.5f);
-        StartCoroutine(Behavor());
-    }
-
-
-    public BoxCollider2D BossCollider;
-    void undie(bool val) 
-    {
-        if (val)
-            BossCollider.enabled = false;
-        else
-            BossCollider.enabled = true;
-    }
-
-    public void minusHP() 
-    {
-        Debug.Log("minusHp");
-
-        CoreEffect.Create_effect("bossHit", -0.3500004f, -0.51f, beeAnimator.gameObject.transform);
-        CoreEffect.Create_effect("bossHit", -1.51f, 0.66f, beeAnimator.gameObject.transform);
-        CoreEffect.Create_effect("bossHit", -1.52f, 2.1f, beeAnimator.gameObject.transform);
-        CoreEffect.Create_effect("bossHit", 0.3f, 1.03f, beeAnimator.gameObject.transform);
-
-        temphp--;
-        if (temphp == 2)
-            undie(true);
-        BossUIHP.MInusHp();
-        if (temphp == 0) 
-        {
-            if (hp - 4 < 0)
-            {
-                undie(true);
-                StartCoroutine(AnimDie());
-
-            }
-            else
-            {
-                temphp += 4;
-                hp -= 4;
-                undie(true);
-            }
-        }
-    }
-
-    int temphp = 0;
-
     IEnumerator Behavor() 
     {
         while (true)
@@ -164,9 +60,6 @@ public class Bee : MonoBehaviour
             undie(false);
             for (int i = 0; i <= rand; i++)
             {
-                if (hp == 0)
-                    StartCoroutine(AnimDie());
-
                 int randLine = 0;
                 do
                 {
@@ -174,10 +67,8 @@ public class Bee : MonoBehaviour
                 } while (randLine == curLine);
 
                 SwitchLine(randLine);
-                yield return new WaitForSecondsRealtime(1.5f);
+                yield return new WaitForSeconds(1.5f);
             }
-            if (hp == 0)
-                StartCoroutine(AnimDie());
 
 
 
@@ -186,19 +77,18 @@ public class Bee : MonoBehaviour
 
             //// после пчела встает на линию на которой игрок и проводит атаку
             SwitchLine(car.GetLine());
-            yield return new WaitForSecondsRealtime(1f);
+            yield return new WaitForSeconds(1f);
             rand = Random.Range(0, 3);
 
-            Coroutine coranim;
             if (rand == 0)
-                coranim = StartCoroutine(AnimaAttack0());
+                StartCoroutine(AnimaAttack0());
             if (rand == 1)
-                coranim = StartCoroutine(AnimaAttack1());
+                StartCoroutine(AnimaAttack1());
             if (rand == 2)
-                coranim = StartCoroutine(AnimaAttack2());
-            yield return new WaitForSecondsRealtime(4f);
+                StartCoroutine(AnimaAttack2());
+            yield return new WaitForSeconds(4f);
 
-            if (temphp == 4)
+            if (tempHp == hpSteap)
             {
                 Shadow.SetActive(false);
 
@@ -212,68 +102,94 @@ public class Bee : MonoBehaviour
                 for (int i = 0; i <= rand; i++)
                 {
                     int line = car.GetLine();
-                    SpawnMonster();
-                    yield return new WaitForSecondsRealtime(2f);
+                    SpawnMonster(car.GetLine());
+                    yield return new WaitForSeconds(2f);
                 }
 
-                yield return new WaitForSecondsRealtime(2f);
+                yield return new WaitForSeconds(2f);
                 beeAnimator.SetInteger("Sleep", 1);
-                yield return new WaitForSecondsRealtime(0.5f);
+                yield return new WaitForSeconds(0.5f);
                 beeAnimator.SetInteger("Sleep", -1);
             }
         }
     }
-
-    void SpawnMonster() 
+    private void Start()
     {
-        int layout = 0;
-        float y = 0;
-        if (car.GetLine() == 2)
-        {
-            layout = 10;
-            y = -2.77f;
-        }
-        else if (car.GetLine() == 1)
-        {
-            layout = 12;
-            y = -3.464f;
-        }
-        else if (car.GetLine() == 0) 
-        {
-            layout = 15;
-            y = -4.15f;
-        }
-        CoreGenerate.GenerateObj("Boss/enemy/BeeEnemy", carP.position.x + 30, y, layout);
-    }
 
-    int curLine = 1;
-    void SwitchLine(int line) 
-    {
-        Debug.Log("SW LINE = " + line);
-        curLine = line;
+        ObjPosition Objpos = gameObject.AddComponent<ObjPosition>();
+        Objpos.SetParametr(false, -14.5f, 0,0, 0.5f);
 
-        if (line == 0)
-            StartCoroutine(GoLine(-0.65f));
-        else if (line == 1)
-            StartCoroutine(GoLine(0));
-        else if (line == 2)
-            StartCoroutine(GoLine(0.6f));
-    }
+        gameObject.GetComponent<BossDamage>().OnDamage += minusHP;
 
-    IEnumerator GoLine(float posY)
-    {
-        float Speed = 0.25f;
-        Vector3 StartPos, EndPos;
-        StartPos = transform.localPosition;
-        EndPos = new Vector3(StartPos.x, posY, StartPos.z);
 
-        for (float time = 0; time < Speed; time += Time.deltaTime)
-        {
-            float progress = time / Speed;
-            gameObject.transform.localPosition = Vector3.Lerp(StartPos, EndPos, progress);
-            yield return null;
-        }
+        // init for bossCore
+        init(
+            GameObject.FindGameObjectWithTag("CarP").transform,
+            GameObject.FindGameObjectWithTag("Scripts").GetComponent<ControllCar>(),
+            new float[] { -4.155f, -3.448f, -2.807f },
+            new float[] { -0.69f, 0f, 0.63f },
+            "BeeEnemy",
+            transform.Find("Colider").GetComponent<BoxCollider2D>(),
+            GameObject.Find("BossCanvas").GetComponent<BossShow>()
+            );
+
+        //init Hp
+        initHP(4, 12, 4);
+
+        //hp and color for HPBar
+        bossShow.allhp = hp;
+        bossShow.SetColor(new Color(0.735849f, 0.7041574f, 0.3713955f), new Color(0.990566f, 0.8839075f, 0.2196066f));
+
+
+        StartCoroutine(Behavor());
     }
 
 
+
+
+
+    // for the following - init Iboss
+    public IEnumerator AnimDie() 
+    {
+
+        GameObject.FindGameObjectWithTag("Scripts").GetComponent<BossChoise>().BossDIE();
+        bossShow.Hide();
+        beeAnimator.SetBool("Die", true);
+        BossAttackColider.enabled = false;
+        Shadow.SetActive(false);
+        yield return new WaitForSeconds(1);
+        Destroy(gameObject);
+
+    }
+    public void minusHP() 
+    {
+        // тут что то случается 
+        CoreEffect.Create_effect("bossHit", -0.3500004f, -0.51f, beeAnimator.gameObject.transform);
+        CoreEffect.Create_effect("bossHit", -1.51f, 0.66f, beeAnimator.gameObject.transform);
+        CoreEffect.Create_effect("bossHit", -1.52f, 2.1f, beeAnimator.gameObject.transform);
+        CoreEffect.Create_effect("bossHit", 0.3f, 1.03f, beeAnimator.gameObject.transform);
+
+        // тут проверяется на хп
+        if (CHminusHP()) 
+        {
+            StartCoroutine(AnimDie());
+        }
+    }
+    public void init(Transform carP, ControllCar car, float[] PosYEnemy, float[] PosYBoss, string namemonster, BoxCollider2D BossColider, BossShow bossShow)
+    {
+        this.PosYEnemy = PosYEnemy;
+        this.carP = carP;
+        this.car = car;
+        this.namemonster = namemonster;
+        this.PosYBoss = PosYBoss;
+        this.BossColider = BossColider;
+        this.bossShow = bossShow;
+    }
+
+    public void initHP(int tempHp, int hp, int hpSteap)
+    {
+        this.tempHp = tempHp;
+        this.hp = hp;
+        this.hpSteap = hpSteap;
+    }
 }

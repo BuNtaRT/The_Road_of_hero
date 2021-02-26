@@ -163,6 +163,7 @@ public class UI : MonoBehaviour
                 yield return null;
             }
         }
+       
     }
 
     #endregion
@@ -175,9 +176,16 @@ public class UI : MonoBehaviour
     public void B_Pause(bool pause)
     {
         if (pause)
-            CoreAudio.Create_audio_eff("unpause");
-        else
+        {
+            Time.timeScale = 0;
             CoreAudio.Create_audio_eff("pause");
+        }
+        else
+        {
+            Time.timeScale = 1;
+
+            CoreAudio.Create_audio_eff("unpause");
+        }
         SetPause(pause);
     }
 

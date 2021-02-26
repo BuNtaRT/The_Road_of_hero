@@ -31,7 +31,16 @@ public class lazer : MonoBehaviour
     {
         if (TagMonster.Monsters.Contains(collision.gameObject.tag))
         {
-            MonstaersDie.DieMonster(collision.gameObject, effectDie, soundDie);
+            if (collision.GetComponent<enemy_controll>() != null)
+            {
+                if (!collision.GetComponent<enemy_controll>().undestroy)
+                    MonstaersDie.DieMonster(collision.gameObject, effectDie, soundDie);
+                else if (collision.GetComponent<FakeShadow>() != null)
+                    Destroy(collision.gameObject);
+            }
+            else {
+                MonstaersDie.DieMonster(collision.gameObject, effectDie, soundDie);
+            }
         }
         else if (collision.gameObject.tag == "Boss") 
         {
@@ -42,7 +51,9 @@ public class lazer : MonoBehaviour
                     temp.gameObject.SetActive(false);
                 }
             }
-            collision.gameObject.transform.parent.GetComponent<Bee>().minusHP();
+            if (collision.gameObject.transform.parent.GetComponent<BossDamage>() != null)
+                collision.gameObject.transform.parent.GetComponent<BossDamage>().Damage();
+            
         }
     }
 

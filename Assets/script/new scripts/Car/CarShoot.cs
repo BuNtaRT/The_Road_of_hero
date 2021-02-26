@@ -59,7 +59,7 @@ public class CarShoot : MonoBehaviour
 
     IEnumerator Wait(float wait, GameObject createt_weapon)        // wait cooldown
     {
-        yield return new WaitForSecondsRealtime(wait);
+        yield return new WaitForSeconds(wait);
         locked = false;
         Destroy(createt_weapon,5f);
     }

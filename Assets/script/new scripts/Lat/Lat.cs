@@ -11,7 +11,7 @@ public class Lat : MonoBehaviour
     {
         this.pause = pause;
         if (pause == false)
-            NextGen = transform.position.x + steap_spawn - 1;
+            NextGen = transform.position.x + steap_spawn + 1;
     }
 
     bool eventMap = false;
@@ -40,10 +40,11 @@ public class Lat : MonoBehaviour
 
 
     float NextGen = 30f;        // следующая генерация
-    private void FixedUpdate()
+    private void Update()
     {
         if (NextGen <= transform.position.x+steap_spawn) 
         {
+            Debug.Log("to Spawn ("+NextGen+"<="+ transform.position.x + steap_spawn+")");
             SpawnWhat();
         }
     }
@@ -82,7 +83,7 @@ public class Lat : MonoBehaviour
                 steap_spawn-=0.1f;
 
             NextGen += UnityEngine.Random.Range(steap_spawn-2,steap_spawn+3);
-            Debug.Log(steap_spawn + " chance = " + chance);
+            Debug.Log("NextGen  = "+ NextGen +"steap = " + steap_spawn + " chance = " + chance);
         }
     }
 
