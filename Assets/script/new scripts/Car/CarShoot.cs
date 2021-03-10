@@ -40,7 +40,8 @@ public class CarShoot : MonoBehaviour
 
 
     public void GoShot() {
-        if (ammo >= 1 && !locked) {
+        if (ammo >= 1 && !locked) 
+        {
             ammo--;
             OnAmmo?.Invoke(ammo);
             Shot();

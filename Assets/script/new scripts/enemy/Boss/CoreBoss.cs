@@ -27,25 +27,23 @@ public class CoreBoss : MonoBehaviour
     // check minus hp car and controll for tempHp
     protected bool CHminusHP()
     {
-        Debug.Log("minusHp");
+        Debug.Log("minusHp hp = " + hp);
 
         tempHp--;
-        if (tempHp == 2)
-            undie(true);
+
         bossShow.MInusHp();
-        if (tempHp == 0)
+        if (tempHp <= 0)
         {
+            undie(true);
             if (hp - hpSteap < 0)
             {
-                undie(true);
+                Debug.Log("Die");
                 return true;
-
             }
             else
             {
                 tempHp += hpSteap;
                 hp -= hpSteap;
-                undie(true);
                 return false;
             }
         }

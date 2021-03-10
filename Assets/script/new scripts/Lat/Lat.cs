@@ -22,8 +22,12 @@ public class Lat : MonoBehaviour
     }
 
     #endregion
+
+    ControllCar PlayerCar;
+
     private void Start()
     {
+        PlayerCar = GameObject.FindGameObjectWithTag("Scripts").GetComponent<ControllCar>();
         singleMetods.Add(Spawn_monster);
         singleMetods.Add(Spawn_pit);
         singleMetods.Add(Spawn_bomb);
@@ -36,6 +40,7 @@ public class Lat : MonoBehaviour
         steap_spawn = steap_spawn - PlayerPrefs.GetInt("Car_index") >= 12 ? steap_spawn - PlayerPrefs.GetInt("Car_index") : 12;
         chance = chance - PlayerPrefs.GetInt("Car_index") >= 15 ? chance - PlayerPrefs.GetInt("Car_index") : 15;
         BonusGen = gameObject.GetComponent<bonus_generate>();
+        lineCar = PlayerCar.GetLine();
     }
 
 
@@ -44,7 +49,6 @@ public class Lat : MonoBehaviour
     {
         if (NextGen <= transform.position.x+steap_spawn) 
         {
-            Debug.Log("to Spawn ("+NextGen+"<="+ transform.position.x + steap_spawn+")");
             SpawnWhat();
         }
     }
@@ -53,10 +57,13 @@ public class Lat : MonoBehaviour
     float steap_spawn = 30;
     bonus_generate BonusGen;
 
+    int lineCar;
     void SpawnWhat()                    // что спавним ??
     {
         if (!pause && !eventMap)
         {
+            lineCar = PlayerCar.GetLine();
+            roadBox = false;
             MultiTrue = false;
             chance = chance - 3 >= 10 ? chance - 3 : 10; // а так же шанс коректируем
 
@@ -66,16 +73,20 @@ public class Lat : MonoBehaviour
             }
             else                            // или же мы хоть что то заспавним
             {
+                
+                if (UnityEngine.Random.Range(0, 101) >= 50)         //если рандом то спавним не туда где магшина
+                    lineCar = UnityEngine.Random.Range(0, 3);
+
                 BonusGen.MaybeBonus(NextGen);
                 if (CarShoot.singleton.ammo >= 1)
                 {
                     Methods temp = GetSpanwMethodMulti();
-                    temp(UnityEngine.Random.Range(0, 3));
+                    temp(lineCar);
                 }
                 else
                 {
                     Methods temp = GetSpanwMethodsingle();
-                    temp(UnityEngine.Random.Range(0, 3));
+                    temp(lineCar);
                 }
             }
 
@@ -83,7 +94,6 @@ public class Lat : MonoBehaviour
                 steap_spawn-=0.1f;
 
             NextGen += UnityEngine.Random.Range(steap_spawn-2,steap_spawn+3);
-            Debug.Log("NextGen  = "+ NextGen +"steap = " + steap_spawn + " chance = " + chance);
         }
     }
 
@@ -92,11 +102,16 @@ public class Lat : MonoBehaviour
     int ExitPitBombAndTD = 0;       // линия куда не будут спавнится неуничтожаемые препятствия 
     void SpawnLineCount()                   // на скольки линиях надо спавнить и гворит на какой именно
     {
-        ExitPitBombAndTD = UnityEngine.Random.Range(0, 3);      // назначение линии куда не будут спанится яма и пит и тд
+
+        do 
+        {
+            ExitPitBombAndTD = UnityEngine.Random.Range(0, 3);
+        } while (ExitPitBombAndTD == lineCar);      // назначение линии куда не будут спанится яма и пит и тд
+
         int dontSpawnLine = -1;
         if (CarShoot.singleton.ammo == 0)   // если припасов 0 то 
         {
-            dontSpawnLine = UnityEngine.Random.Range(0, 3);     // то выбираем линию куда спавнится ничего не будет
+            dontSpawnLine = ExitPitBombAndTD;     // то выбираем линию куда спавнится ничего не будет
             BonusGen.generateLine("bonus/BonusR", dontSpawnLine,NextGen);
         }
         else 
@@ -112,7 +127,7 @@ public class Lat : MonoBehaviour
                 if (MultiTrue)                                      // если есть штука занимающая всю дорогу 
                     plus = UnityEngine.Random.Range(3, 7);          // то след спавн будет смещен
 
-                if (UnityEngine.Random.Range(0, 101) >= chance)
+                if (UnityEngine.Random.Range(0, 101) >= chance || i == lineCar)     // упаваем на шанс или точно спавним если на этой линии авто игрока
                 {
                     if (CarShoot.singleton.ammo >= 1 && MultiTrue == false)
                     {
@@ -127,6 +142,21 @@ public class Lat : MonoBehaviour
                 }
             }
         }
+
+
+        if (UnityEngine.Random.Range(0, 101) >= 50  && !MultiTrue)
+        {
+            Spawn_RoadBox(ExitPitBombAndTD);
+
+            for (int i = 0; i <= 2; i++)
+            {
+                if (i != ExitPitBombAndTD) 
+                {
+                    Spawn_RoadBox(i);
+                }
+            }
+        }
+
     }
 
 
@@ -149,6 +179,34 @@ public class Lat : MonoBehaviour
 
 
     #region Spawn
+    bool roadBox = false; // спавнили мы уже дорожный ящик ??
+    void Spawn_RoadBox(int line_now) 
+    {
+        Color colorBox;
+        string tagB = "";
+        if (!roadBox)
+        {
+            colorBox = new Color(0.4603121f, 0.5f, 0.4504717f);
+            roadBox = true;
+            tagB = "BoxAccept";
+        }
+        else 
+        {
+            colorBox = new Color(0.3867925f, 0.3484781f, 0.3571604f);
+            tagB = "BoxFail";
+
+        }
+        GameObject box;
+        if (line_now == 0)
+            box = generate("lat/road_box", NextGen + plus-6, -3.073f, 9);
+        else if (line_now == 1)
+            box = generate("lat/road_box", NextGen + plus-6, -3.724f, 11);
+        else
+            box = generate("lat/road_box", NextGen + plus-6, -4.429f, 13);
+        box.GetComponent<SpriteRenderer>().color = colorBox;
+        box.tag = tagB;
+    }
+
     void Spawn_pit(int line_now)
     {
         if (ExitPitBombAndTD != line_now)       // если щес линия куда нельзя спавнить такие штуки

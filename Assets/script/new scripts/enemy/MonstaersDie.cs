@@ -10,27 +10,32 @@ static class MonstaersDie
 
         if (effect != "lazerToSmal_effect_die")
         {
-
-            if (Monster.transform.parent.gameObject.GetComponent<SpriteRenderer>() != null)
+            try
             {
-                Monster.transform.parent.gameObject.AddComponent<die>();
-            }
-            else if (Monster.tag == "orda")
-            {
-                foreach (Transform temp in Monster.transform.parent)
+                if (Monster.transform.parent.gameObject.GetComponent<SpriteRenderer>() != null)
                 {
-                    if (temp.tag != "orda")
+                    Monster.transform.parent.gameObject.AddComponent<die>();
+                }
+                else if (Monster.tag == "orda")
+                {
+                    foreach (Transform temp in Monster.transform.parent)
                     {
-                        temp.gameObject.AddComponent<die>();
+                        if (temp.tag != "orda")
+                        {
+                            temp.gameObject.AddComponent<die>();
+                        }
                     }
                 }
             }
+            catch { }
         }
 
-
-        if (Monster.transform.parent.GetComponent<enemy_controll>() != null)
-            Monster.transform.parent.GetComponent<enemy_controll>().DisableMove();
-
+        try
+        {
+            if (Monster.transform.parent.GetComponent<enemy_controll>() != null)
+                Monster.transform.parent.GetComponent<enemy_controll>().DisableMove();
+        }
+        catch { }
 
 
         Transform EffectDie = CoreEffect.Effect_die(Monster.transform.parent, sound, effect).transform;             //создаем эффект и запихиваем обьект в него

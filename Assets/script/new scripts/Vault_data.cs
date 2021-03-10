@@ -68,8 +68,8 @@ public class Vault_data : MonoBehaviour
     };     // открытое орудие 
     List<float> TimeWeapon = new List<float>() 
     {
+       0f,
        2f,
-       0,
        2f,
        0,
        0,

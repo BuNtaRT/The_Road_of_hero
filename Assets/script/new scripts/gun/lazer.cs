@@ -36,6 +36,7 @@ public class lazer : MonoBehaviour
                 if (!collision.GetComponent<enemy_controll>().undestroy)
                     MonstaersDie.DieMonster(collision.gameObject, effectDie, soundDie);
                 else if (collision.GetComponent<FakeShadow>() != null)
+                    //MonstaersDie.DieMonster(collision.gameObject, effectDie, soundDie);
                     Destroy(collision.gameObject);
             }
             else {

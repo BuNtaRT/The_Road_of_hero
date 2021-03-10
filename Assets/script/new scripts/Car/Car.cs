@@ -85,6 +85,17 @@ public class Car : MonoBehaviour
                 }
             }
         }
+        if (other.gameObject.tag == "BoxAccept")
+        {
+            other.gameObject.GetComponent<BoxCollider2D>().enabled = false;
+            GameObject temp = CoreEffect.Effect_die(other.gameObject.transform, "fix_fail", "saw_effect_die");
+            other.gameObject.transform.SetParent(temp.transform.Find("Interact"));
+        }
+        else if (other.gameObject.tag == "BoxFail")
+        {
+            Die();
+            DieStat1();
+        }
     }
 
 }

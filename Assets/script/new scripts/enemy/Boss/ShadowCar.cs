@@ -4,29 +4,35 @@ using UnityEngine;
 
 public class ShadowCar : CoreBoss, IBossCore
 {
-    public Animator ShadowAnimator;
     public BoxCollider2D BossAttackColider;
     public ParticleSystem TrailP;
+    public ParticleSystem DamageP;
     SpriteRenderer shadoCarSP;
 
     //dev
     public bool die = false;
     public bool Line0 = false;
+    public bool Line1 = false;
 
-    void Update() 
-    {
-        if (die) 
-        {
-            die = false;
-            StopAllCoroutines();
-            StartCoroutine(AnimDie());
-        }
-        if (Line0) 
-        {
-            Line0 = false;
-            StartCoroutine(AttackLine0());
-        }
-    }
+    //void Update() 
+    //{
+    //    if (die) 
+    //    {
+    //        die = false;
+    //        StopAllCoroutines();
+    //        StartCoroutine(AnimDie());
+    //    }
+    //    if (Line0) 
+    //    {
+    //        Line0 = false;
+    //        StartCoroutine(AttackLine0());
+    //    }
+    //    if (Line1)
+    //    {
+    //        Line1 = false;
+    //        StartCoroutine(AttackLine1());
+    //    }
+    //}
 
 
     IEnumerator AttackLine0() 
@@ -59,25 +65,89 @@ public class ShadowCar : CoreBoss, IBossCore
 
     }
 
+    IEnumerator AttackLine1() 
+    {
+        bool en = true;
+        for (int i = 0; i < 5; i++)
+        {
+            en = !en;
+            shadoCarSP.enabled = en;
+            yield return new WaitForSeconds(0.2f);
+        }
+        shadoCarSP.enabled = true;
+        TrailP.Stop();
+
+
+        Vector3 StartV = shadoCarSP.transform.localPosition, EndV = new Vector3(StartV.x-22,StartV.y,StartV.z);
+        float Speed = 1f;
+        for (float time = 0; time < Speed; time += Time.deltaTime)
+        {
+            float progress = time / Speed;
+            if(progress >= 0.6f)
+                BossAttackColider.enabled = true;
+            shadoCarSP.transform.localPosition = Vector3.Lerp(StartV, EndV, progress);
+            yield return null;
+        }
+        BossAttackColider.enabled = false;
+
+        yield return new WaitForSeconds(0.5f);
+
+        shadoCarSP.transform.localPosition = StartV;
+        TrailP.Play();
+        yield return new WaitForSeconds(0.2f);
+
+    }
+
     IEnumerator Behavor() 
     {
         while (true) 
         {
             yield return new WaitForSeconds(1);
 
+            //делаем свитч по линиям 
+            int rand = Random.Range(2, 5);
+            undie(false);
+            for (int i = 0; i <= rand; i++)
+            {
+                int randLine = 0;
+                do
+                {
+                    randLine = Random.Range(0, 3);
+                } while (randLine == curLine);
+
+                SwitchLine(randLine);
+                yield return new WaitForSeconds(1.2f);
+            }
+
+            undie(true);
+
+            SwitchLine(car.GetLine());
+
+            yield return new WaitForSeconds(0.5f);
+            rand = Random.Range(0, 2);
+
+            if (rand == 0)
+                StartCoroutine(AttackLine0());
+            if (rand == 1)
+                StartCoroutine(AttackLine1());
+
+            yield return new WaitForSeconds(4.5f);
+
         }
-        yield return new WaitForSeconds(0);
     }
 
 
     private void Start()
     {
         ObjPosition Objpos = gameObject.AddComponent<ObjPosition>();
-        Objpos.SetParametr(false, 0/*-14f*/, 0, 0, 0.5f);
+        Objpos.SetParametr(false, -14f, 0, 0, 0.5f);
 
         shadoCarSP = transform.Find("Sprite").GetComponent<SpriteRenderer>();
 
         var main = TrailP.main;
+        main.customSimulationSpace = Camera.main.transform;
+
+        main = DamageP.main;
         main.customSimulationSpace = Camera.main.transform;
 
         gameObject.GetComponent<BossDamage>().OnDamage += minusHP;
@@ -93,7 +163,7 @@ public class ShadowCar : CoreBoss, IBossCore
             GameObject.Find("BossCanvas").GetComponent<BossShow>()
             );
         //init Hp
-        initHP(3,9,3);
+        initHP(0,6,1);
 
 
         //hp and color for HPBar
@@ -107,10 +177,22 @@ public class ShadowCar : CoreBoss, IBossCore
     public IEnumerator AnimDie()
     {
         TrailP.Stop();
+        GameObject.FindGameObjectWithTag("Scripts").GetComponent<BossChoise>().BossDIE();
         CoreEffect.Create_effect("DieShadow", 6.48f, -3.838f, transform);
         //GameObject.FindGameObjectWithTag("Scripts").GetComponent<BossChoise>().BossDIE();
         bossShow.Hide();
         BossAttackColider.enabled = false;
+
+
+        Color StartC = new Color(0, 0, 0, 0.5f);
+        Color EndPos = new Color(0, 0, 0, 0f);
+        float Speed = 0.5f;
+        for (float time = 0; time < Speed; time += Time.deltaTime)
+        {
+            float progress = time / Speed;
+            shadoCarSP.color = Color.Lerp(StartC, EndPos, progress);
+            yield return null;
+        }
 
         yield return new WaitForSeconds(0.6f);
         shadoCarSP.enabled = false;
@@ -142,10 +224,7 @@ public class ShadowCar : CoreBoss, IBossCore
     public void minusHP()
     {
         // тут что то случается 
-        //CoreEffect.Create_effect("bossHit", -0.3500004f, -0.51f, beeAnimator.gameObject.transform);
-        //CoreEffect.Create_effect("bossHit", -1.51f, 0.66f, beeAnimator.gameObject.transform);
-        //CoreEffect.Create_effect("bossHit", -1.52f, 2.1f, beeAnimator.gameObject.transform);
-        //CoreEffect.Create_effect("bossHit", 0.3f, 1.03f, beeAnimator.gameObject.transform);
+        DamageP.Play();
 
         // тут проверяется на хп
         if (CHminusHP())

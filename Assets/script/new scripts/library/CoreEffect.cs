@@ -48,7 +48,6 @@ public static class CoreEffect
 
     public static GameObject Effect_die(Transform obj, string sound,string effect) 
     {
-
         CoreAudio.Create_audio_eff(sound);
         return UnityEngine.Object.Instantiate(Resources.Load<GameObject>("effect/Die/" + effect), obj.position, new Quaternion());
     }

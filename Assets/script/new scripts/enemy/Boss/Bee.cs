@@ -119,6 +119,7 @@ public class Bee : CoreBoss, IBossCore
         ObjPosition Objpos = gameObject.AddComponent<ObjPosition>();
         Objpos.SetParametr(false, -14.5f, 0,0, 0.5f);
 
+
         gameObject.GetComponent<BossDamage>().OnDamage += minusHP;
 
 
@@ -134,7 +135,7 @@ public class Bee : CoreBoss, IBossCore
             );
 
         //init Hp
-        initHP(4, 12, 4);
+        initHP(0, 12, 4);
 
         //hp and color for HPBar
         bossShow.allhp = hp;
@@ -172,6 +173,7 @@ public class Bee : CoreBoss, IBossCore
         // тут проверяется на хп
         if (CHminusHP()) 
         {
+            StopAllCoroutines();
             StartCoroutine(AnimDie());
         }
     }
