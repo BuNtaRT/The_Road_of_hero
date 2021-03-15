@@ -14,10 +14,10 @@ public static class StartAndDieEffForGun
         {"Napalm_gun","fire_effect_die","FlameDie"},
         {"BugTostar","bugtoStar_effect_die","FlameDie"},        //смерть
         {"GoToStar","GoToStar_effect_die","FlameDie"},          //смерть
-        {"saw_gun","saw_effect_die","FlameDie"},                   //смерть 
+        {"saw_gun","saw_effect_die","fail"},                   
         {"unicorn_gun","unicorn_effect_die","unicorn_die"},
-        {"whell_gun","wheel_effect_die","unicorn_die"},             //смерть
-        {"fireball","fireball_effect_die","unicorn_die"},             //смерть
+        {"whell_gun","wheel_effect_die","fireball"},             
+        {"fireball","fireball_effect_die","fireball"},             
         {"FreezLazer","frezee_effect_die","frezeeDie"},
         {"ShadowCarGun","Shadow_effect_die","ShadowCarGun_die"},
         {"lazerTobig","LazerToBig_effect_die","lazerTobig_die"},   
@@ -28,6 +28,12 @@ public static class StartAndDieEffForGun
         {"EnergySphereGun","SphereEnergy_effect_die","EnergySphereDie"},   
         {"VoronkaGun","Voronka_effect_die","EnergySphereDie"},   
         {"SpaceReqestGun","SpaceReqest_effect_die","SpaceReqestGun_die"},
+        {"SirenaGun","Sirena_effect_die","fail"},
+        {"GuitarBus","Bus_effect_die","GuitarBusDie"},
+        {"HzRocket","frezee_effect_die","frezeeDie"},                
+        {"FireCarGun","FireCar_effect_die","DieWhater"},
+        {"HotDogCar","HotDogCar_effect_die","HotdogDie"},
+        {"PoliceCar","Sirena_effect_die","HotdogDie"},
     };
     public static Tuple<string,string,string> Get_weap_content(string name)
     {

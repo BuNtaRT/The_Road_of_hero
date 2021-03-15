@@ -65,6 +65,14 @@ public class Vault_data : MonoBehaviour
         16,
         17,
         18,
+        //19
+        19,
+        20,
+        21,
+        22,
+        23,
+        24
+
     };     // открытое орудие 
     List<float> TimeWeapon = new List<float>() 
     {
@@ -87,7 +95,13 @@ public class Vault_data : MonoBehaviour
        3f,
        2.5f,
        2.9f,
-
+       //19
+       0f,
+       2.5f,
+       3.3f,
+       3f,
+       0,
+       2f
     };     // его тайминг cooldown
 
 
@@ -97,8 +111,8 @@ public class Vault_data : MonoBehaviour
         //int rand = UnityEngine.Random.Range(0, PlayerPrefs.GetInt("Car_index"));
         //return Tuple.Create(Weapon[rand],TimeWeapon[rand]);
 
-        int rand = UnityEngine.Random.Range(0, 19);
-        return Tuple.Create(Weapon[rand], TimeWeapon[rand]);
+        //int rand = UnityEngine.Random.Range(0, 19);
+        //return Tuple.Create(Weapon[rand], TimeWeapon[rand]);
 
         //TrealerI++;
         //switch (TrealerI) 
@@ -119,10 +133,50 @@ public class Vault_data : MonoBehaviour
         //        return Tuple.Create(13, 0f);
 
         //}
-        return Tuple.Create(13,0f);
+
+        if (PlayerPrefs.GetInt("PremNow") == 1)             // если премиум машина 
+        {
+            int preobr = 0;
+            if (UnityEngine.Random.Range(0, 101) >= 50)             // то с 50% шансом возвращяем ее оружие
+            {
+                switch (PlayerPrefs.GetInt("Cur_car"))
+                {
+                    case 3:
+                        preobr = 20;
+                        break;
+                    case 4:
+                        preobr = 21;
+                        break;
+                    case 5:
+                        preobr = 22;
+                        break;
+                    case 6:
+                        preobr = 23;
+                        break;
+                    case 7:
+                        preobr = 24;
+                        break;
+
+                }
+                return Tuple.Create(Weapon[preobr], TimeWeapon[preobr]);
+            }
+            else
+            {                                                       // или обычное 
+                int rand = UnityEngine.Random.Range(0, 19);
+                return Tuple.Create(Weapon[rand], TimeWeapon[rand]);
+            }
+
+        }
+        else {
+            int rand = UnityEngine.Random.Range(0, 19);
+            return Tuple.Create(Weapon[rand], TimeWeapon[rand]);
+        }
+
     }
 
     #endregion
+
+
 
 
     #region Monster
@@ -155,6 +209,23 @@ public class Vault_data : MonoBehaviour
 
     public int GetRandomMonster() {
         return monsters[UnityEngine.Random.Range(0, monsters.Count)];
+    }
+
+    #endregion
+
+    #region PremCar
+
+    public void InitPremCar(Transform Scroll_car_content) 
+    {
+        if (PlayerPrefs.GetInt("PremCar") == 1) 
+        {
+            for (int i = 3; i <= 7; i++)
+            {
+                GameObject temp = Instantiate(Resources.Load<GameObject>("cars/car_scrol_content"), Scroll_car_content);
+                temp.GetComponent<Image>().sprite = Resources.Load<Sprite>("cars/Prem/" + i);
+                temp.name = "Premcar" + "-" + i;
+            }
+        }
     }
 
     #endregion
@@ -224,6 +295,7 @@ public class Vault_data : MonoBehaviour
     // считывание из файла и заполенение horizontal group (scroll) уже полученными машинами
     public void Initialized_Car(Transform Scroll_car_content) 
     {
+        InitPremCar(Scroll_car_content);
         Initialized(Scroll_car_content, true, "C", "cars/Sprite/");
         Constr_car();
     }
@@ -239,11 +311,21 @@ public class Vault_data : MonoBehaviour
 
     public void Constr_car()       // собирает машину 
     {
+        
         Transform car = GameObject.FindGameObjectWithTag("Player").transform;
-        car.GetComponent<Car>().lvl = PlayerPrefs.GetFloat("Cur_car_lvl");
+        if (PlayerPrefs.GetInt("PremNow") == 0)
+            car.GetComponent<Car>().lvl = PlayerPrefs.GetFloat("Cur_car_lvl");
+        else
+            car.GetComponent<Car>().lvl = 27;
+
         car.GetComponent<Car>().num_car = PlayerPrefs.GetInt("Cur_car");
+        //car.GetComponent<Car>().num_car = 4;    //убрать
         car.GetComponent<Car>().Reload_animation();
+        GameObject.FindGameObjectWithTag("CarP").GetComponent<CarHelper>().CheckHelp(PlayerPrefs.GetInt("Cur_car"));
+
     }
+
+
 
     public void Buy_car(int skinID) 
     {
@@ -259,8 +341,16 @@ public class Vault_data : MonoBehaviour
     public void Pic_car(string car) 
     {
         int car_skin = Convert.ToInt32(car);
+
+        if (car_skin >= 3 && car_skin <= 7)
+            PlayerPrefs.SetInt("PremNow", 1);
+        else
+            PlayerPrefs.SetInt("PremNow", 0);
+
+
         PlayerPrefs.SetInt("Cur_car", car_skin);
         PlayerPrefs.Save();
+        Debug.Log("Prem  = " + PlayerPrefs.GetInt("PremNow"));
         Constr_car();
         UI.singleton.Set_ico_car();
     }
@@ -294,10 +384,26 @@ public class Vault_data : MonoBehaviour
 
     #region Map
 
+
+
+    public void PremMap(Transform Scroll_map_content) 
+    {
+        GameObject temp = Instantiate(Resources.Load<GameObject>("cars/car_scrol_content"), Scroll_map_content);
+        temp.GetComponent<Image>().sprite = Resources.Load<Sprite>("map/ico/10");
+        temp.transform.localScale = new Vector3(1.3f, 1.3f, 1);
+        temp.name = "map-10";
+        Buyed_map.Add(10);
+    }
+
     List<int> Buyed_map = new List<int>();
 
     public void Initialized_Map(Transform Scroll_map_content)
     {
+        if (PlayerPrefs.GetInt("PremCar") == 1) 
+        {
+            PremMap(Scroll_map_content);
+        }
+
         Initialized(Scroll_map_content, false, "M", "map/ico/");
         Pic_map(PlayerPrefs.GetInt("Cur_map").ToString());
     }
@@ -315,7 +421,7 @@ public class Vault_data : MonoBehaviour
 
     public bool CheckMap() 
     {
-        if (Buyed_map.Count >= 10)               // РАСШИРЕНИЕ если добавлять карту надо прибавить +1
+        if (Buyed_map.Count >= 9)               // РАСШИРЕНИЕ если добавлять карту надо прибавить +1
             return true;
         else
             return false;

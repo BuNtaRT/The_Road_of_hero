@@ -56,7 +56,7 @@ public class bonus_generate : MonoBehaviour
 
         if (line == 0)
         {
-            generateBonus(path, genX + plus, -3.299f,11);
+            generateBonus(path, genX + plus, -3.299f,6);
         }
         else if (line == 1)
         {

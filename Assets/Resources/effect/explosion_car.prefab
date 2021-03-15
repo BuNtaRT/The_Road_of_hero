@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7105474464956221828}
   - component: {fileID: 9214742335427913732}
   - component: {fileID: 3490489990047307396}
+  - component: {fileID: 1493913547898861597}
   m_Layer: 0
   m_Name: explosion_car
   m_TagString: Untagged
@@ -102,3 +103,15 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &1493913547898861597
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5256390607903852083}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 365997b248f25514a8efaff17765a419, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

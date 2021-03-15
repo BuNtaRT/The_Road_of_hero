@@ -20,10 +20,6 @@ public class BossChoise : MonoBehaviour
             CoreGenerate.GenerateObj("Boss/ShadowCar", 14, 0, 10, Camera.main.transform);
 
         }
-        else if (bossNum == 3)
-        {
-
-        }
     }
 
     public void BossDIE() 

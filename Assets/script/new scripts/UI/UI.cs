@@ -34,6 +34,32 @@ public class UI : MonoBehaviour
     public Text Price_car_text, Price_map_text;
     public Text Coin_men;
 
+    public GameObject tutro;
+    public Text ShootTutor, MoveTutro;
+    public IEnumerator ShowTutor() 
+    {
+        yield return new WaitForSeconds(2f);
+        PlayerPrefs.SetInt("First",1);
+        tutro.SetActive(true);
+        if (PlayerPrefs.GetInt("lg") == 1)
+        {
+            ShootTutor.text = "Стрелять";
+            MoveTutro.text = "Двигаться";
+        }
+        else {
+            ShootTutor.text = "Shoot";
+            MoveTutro.text = "Move";
+        }
+        Time.timeScale = 0f;
+    }
+    public void CloseTutor() 
+    {
+        tutro.SetActive(false);
+        Time.timeScale = 1f;
+
+    }
+
+
     private void Start()
     {
         //PlayerPrefs.SetInt("money", 1000000);
@@ -87,6 +113,10 @@ public class UI : MonoBehaviour
     }
 
     public void B_StartGame(GameObject gameObject) {
+        if (PlayerPrefs.GetInt("First") == 0) 
+        {
+            StartCoroutine(ShowTutor());
+        }
         CoreAudio.Create_audio_eff("play");
         SetPause(false);
         GameObject.FindGameObjectWithTag("Player").GetComponent<Car>().OnDie += DieCar;
@@ -255,7 +285,10 @@ public class UI : MonoBehaviour
 
     public void Set_ico_car()
     {
-        Ico_car.sprite = Resources.Load<Sprite>("cars/Sprite/" + PlayerPrefs.GetInt("Cur_car") + "/frame0");
+        if(PlayerPrefs.GetInt("PremNow") == 1)
+            Ico_car.sprite = Resources.Load<Sprite>("cars/Prem/" + PlayerPrefs.GetInt("Cur_car"));
+        else
+            Ico_car.sprite = Resources.Load<Sprite>("cars/Sprite/" + PlayerPrefs.GetInt("Cur_car") + "/frame0");
     }
 
     //////////////////////////////  MAP

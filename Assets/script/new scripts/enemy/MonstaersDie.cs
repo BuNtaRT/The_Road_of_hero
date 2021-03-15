@@ -33,7 +33,11 @@ static class MonstaersDie
         try
         {
             if (Monster.transform.parent.GetComponent<enemy_controll>() != null)
+            {
                 Monster.transform.parent.GetComponent<enemy_controll>().DisableMove();
+                Monster.transform.parent.GetComponent<enemy_controll>().DieEnemy();
+
+            }
         }
         catch { }
 
@@ -48,6 +52,7 @@ static class MonstaersDie
 
         // тут можно в логику если надо !!
         //{
+
         Money_maneger.Plus_monster(Random.Range(3,13));
         //}
     }

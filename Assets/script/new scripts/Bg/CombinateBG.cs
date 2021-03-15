@@ -32,7 +32,7 @@ public class CombinateBG : MonoBehaviour
         }
         PlayerPrefs.SetInt("Boss1", PlayerPrefs.GetInt("Boss1") + 1);
         PlayerPrefs.SetInt("Boss2", PlayerPrefs.GetInt("Boss2") + 1);
-        PlayerPrefs.SetInt("Boss3", PlayerPrefs.GetInt("Boss3") + 1);
+
     }
 
 
@@ -130,12 +130,6 @@ public class CombinateBG : MonoBehaviour
     bool bbbb = false;
     bool Boss() 
     {
-        //if (!bbbb)
-        //{
-        //    bbbb = true;
-        //    boss = 1;
-        //    return true;
-        //}
         if (Random.Range(0, 201) >= 150)
         {
             if (PlayerPrefs.GetInt("Boss1") >= 8)
@@ -146,11 +140,6 @@ public class CombinateBG : MonoBehaviour
             else if (PlayerPrefs.GetInt("Boss2") >= 10)
             {
                 boss = 2;
-                return true;
-            }
-            else if (PlayerPrefs.GetInt("Boss3") >= 13)
-            {
-                boss = 3;
                 return true;
             }
             return false;

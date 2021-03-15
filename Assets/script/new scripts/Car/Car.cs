@@ -36,16 +36,21 @@ public class Car : MonoBehaviour
     public void Reload_animation() 
     {
         gameObject.GetComponent<Animator>().runtimeAnimatorController = Resources.Load<RuntimeAnimatorController>("cars/Player_car" + num_car);
-        //цвет выхлопа
+        gameObject.SetActive(false);
+        gameObject.SetActive(true);
+
+
         foreach (Transform chil in transform)
         {
             if (chil.name.Contains("Exhaust"))
                 chil.GetComponent<ParticleSystem>().startColor = GameObject.Find("Scripts").GetComponent<Colors>().color_exthose_car[num_car];
         }
+
     }
 
 
     void Die() {
+        //Time.timeScale = 0;
         OnDie?.Invoke();
     }
 

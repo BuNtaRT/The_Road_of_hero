@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1477935242784864096}
   - component: {fileID: 9143132380932492321}
   - component: {fileID: 4767960264802061899}
+  - component: {fileID: -2019447095143536977}
   m_Layer: 0
   m_Name: road_box
   m_TagString: Untagged
@@ -108,3 +109,15 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.32024723, y: 0.33561063}
   m_EdgeRadius: 0
+--- !u!114 &-2019447095143536977
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4166820932565907632}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 365997b248f25514a8efaff17765a419, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

@@ -7,30 +7,38 @@ public static class CoreEffect
 
     public static float Create_effect(string path, float x, float y)
     {
-        return Create(path, x, y, null, false);
+        return Create(path, x, y, null, false, 0);
     }
 
     public static float Create_effect(string path, float x, float y, Transform parent)
     {
-        return Create(path, x, y, parent, false);
+        return Create(path, x, y, parent, false, 0);
     }
     public static float Create_effect(string path, float x, float y, Transform parent, bool world)
     {
-        return Create(path, x, y, parent, world);
+        return Create(path, x, y, parent, world, 0);
+    }
+    public static float Create_effect(string path, float x, float y, Transform parent, bool world, int layout)
+    {
+        return Create(path, x, y, parent, world,layout);
     }
 
     public static float Create_effect(string path, float x, float y, Transform parent, bool world,string audioEff)
     {
         CoreAudio.Create_audio_eff(audioEff);
-        return Create(path, x, y, parent, world);
+        return Create(path, x, y, parent, world, 0);
     }
 
 
-    private static float Create(string path, float x, float y, Transform parent, bool world)
+    private static float Create(string path, float x, float y, Transform parent, bool world,int layout)
     {
         GameObject temp = CoreGenerate.GenerateObj("effect/"+path, x, y, parent, world);
             
         temp.name = path;
+        if (layout != 0) 
+        {
+            temp.GetComponent<SpriteRenderer>().sortingOrder = layout;
+        }
 
         if (temp.GetComponent<Animator>())
         {

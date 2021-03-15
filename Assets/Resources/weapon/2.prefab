@@ -5088,7 +5088,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68257c161e18e194e84253e17faf9fc9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  custom: -1
+  custom: -10
   subscribe: 1
   overParticle: 0
   overSprite: 1

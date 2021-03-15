@@ -10,14 +10,25 @@ public class enemy_controll : MonoBehaviour
     public bool undestroy = false;
 
     bool MoveMonsterModern = false;
+    bool DieMonsterModern = false;
+    Transform cameraT = null;
 
     private void Start()
     {
         if (Random.Range(0, 101) >= 0 && gameObject.name.Contains("enemy1"))
         {
-            MoveMonsterModern = true;
-            switchColor(new Color(0.8113208f, 0.4080425f, 0.2717159f));
-            StartCoroutine(moveTimer(Random.Range(2f,4f)));
+            if (Random.Range(0, 101) >= 50)
+            {
+                MoveMonsterModern = true;
+                switchColor(new Color(0.8113208f, 0.4080425f, 0.2717159f));
+                cameraT = Camera.main.transform;
+            }
+            else
+            {
+                DieMonsterModern = true;
+                switchColor(new Color(0.5801887f, 0.7120162f,1f));
+
+            }
         }
         else
         {
@@ -29,39 +40,44 @@ public class enemy_controll : MonoBehaviour
 
     }
 
-    IEnumerator moveTimer(float wait) 
+    IEnumerator moveTimer() 
     {
+        //yield return new WaitForSeconds(Random.Range(0.3f, 1.3f));
+        List<int> AvalibleLine = new List<int>();
         float[,] Ypos = { { -1.91f,10 },
                           {-2.553f,12 },
                           {-3.249f,14 } };
         int line = 0;
-        yield return new WaitForSeconds(wait);
         switch (gameObject.GetComponent<SpriteRenderer>().sortingOrder) 
         {
             case 10:
                 line = 0;
+                AvalibleLine.Add(1);
                 break;
             case 12:
                 line = 1;
+                AvalibleLine.Add(0);
+                AvalibleLine.Add(2);
                 break;
             case 14:
                 line = 2;
+                AvalibleLine.Add(1);
                 break;
         }
-        int newline = -1;
-        do {
-            newline = Random.Range(0, 3);
-        } while (line == newline);
+
+        Debug.Log(AvalibleLine[0]);
+        int newline = AvalibleLine[Random.Range(0,AvalibleLine.Count)];
+
         gameObject.GetComponent<SpriteRenderer>().sortingOrder = (int)Ypos[newline, 1];
 
         float timeStep = 0f;
         float startY = Ypos[line,0], endY = Ypos[newline,0];
         Vector3 StartV, EndV;
+        StartV = new Vector3(transform.localPosition.x, startY, transform.localPosition.z);
+        EndV = new Vector3(transform.localPosition.x, endY, transform.localPosition.z);
         while (timeStep < 1.0f)
         {
-            timeStep += Time.deltaTime / 1f;
-            StartV = new Vector3(transform.localPosition.x, startY, transform.localPosition.z);
-            EndV = new Vector3(transform.localPosition.x, endY, transform.localPosition.z);
+            timeStep += Time.deltaTime / 0.5f;
             gameObject.transform.localPosition = Vector3.Lerp(StartV, EndV, timeStep);
             yield return null;
         }
@@ -108,6 +124,16 @@ public class enemy_controll : MonoBehaviour
         paused = pause;
     }
 
+    public void DieEnemy() 
+    {
+        StopAllCoroutines();
+        if (DieMonsterModern)
+        {
+            GameObject temp = CoreGenerate.GenerateObj("lat/SpiritEnemy", 15, 0, transform, true);
+            temp.GetComponent<spiritcontroll>().GetSkin(gameObject.GetComponent<SpriteRenderer>().sprite, gameObject.GetComponent<SpriteRenderer>().sortingOrder);
+        }
+    }
+
     private void OnDestroy()
     {
         UI.singleton.onPaused -= onPause;
@@ -120,6 +146,14 @@ public class enemy_controll : MonoBehaviour
         {
             Vector3 to = new Vector3(transform.localPosition.x - 0.5f, transform.localPosition.y, transform.localPosition.z);
             transform.localPosition = Vector3.Lerp(transform.localPosition, to, Time.deltaTime);
+        }
+        if (MoveMonsterModern) 
+        {
+            if (cameraT.position.x >= gameObject.transform.position.x - 8) 
+            {
+                StartCoroutine(moveTimer());
+                MoveMonsterModern = false;
+            }
         }
     }
 

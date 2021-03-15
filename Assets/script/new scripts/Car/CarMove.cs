@@ -16,15 +16,22 @@ public class CarMove : MonoBehaviour
     {
         Debug.Log("Index = " + PlayerPrefs.GetInt("Car_index"));
 
+        int carIndex = 24;
+        if (PlayerPrefs.GetInt("PremNow") == 0)
+            carIndex = PlayerPrefs.GetInt("Car_index");
 
         UI.singleton.onPaused += PauseCar;       // singleton - крутая штука что бы не искать обьекты а находить единственный Static-же и обращаться к нему
-        if (PlayerPrefs.GetInt("Car_index") > 2)
+        
+        if (carIndex > 2)
         {
-            car_speed = 0.45f + (PlayerPrefs.GetFloat("Cur_car_lvl")+ PlayerPrefs.GetFloat("Cur_map_lvl")) / 70;
+            if (carIndex == 24)
+                car_speed = 0.45f + (27 + PlayerPrefs.GetFloat("Cur_map_lvl")) / 70;
+            else
+                car_speed = 0.45f + (PlayerPrefs.GetFloat("Cur_car_lvl")+ PlayerPrefs.GetFloat("Cur_map_lvl")) / 70;
         }
         else
         {
-            switch (PlayerPrefs.GetInt("Car_index"))
+            switch (carIndex)
             {
                 case 0:
                     car_speed = 0.9f;
@@ -57,9 +64,13 @@ public class CarMove : MonoBehaviour
     
     private void Speed()
     {
+        int carIndex = 24;
+        if (PlayerPrefs.GetInt("PremNow") == 0)
+            carIndex = PlayerPrefs.GetInt("Car_index");
+
         //car_speed = 1.6f; // Убрать
         car_lvl = transform.GetChild(0).GetComponent<Car>().lvl + PlayerPrefs.GetFloat("Cur_map_lvl");
-        if (PlayerPrefs.GetInt("Car_index") <= 2)
+        if (carIndex <= 2)
         {
             invokeTime = 7f;
         }
@@ -77,7 +88,6 @@ public class CarMove : MonoBehaviour
         if (!pause)
         {
             car_speed = car_speed + 0.08f <= 1.6f ? car_speed + 0.08f : 1.6f;
-            GameObject.Find("In_game_ui/Speedometr").GetComponent<Text>().text = car_speed.ToString();      // Убрать
 
             invokeTime = invokeTime - 0.5f >= 1.5f ? invokeTime - 0.33f : 1.5f;
 

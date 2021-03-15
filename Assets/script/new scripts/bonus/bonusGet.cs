@@ -40,7 +40,7 @@ public class bonusGet : MonoBehaviour
     {
         gameObject.GetComponent<dell_obj>().CancelInvoke();
         gameObject.GetComponent<dell_obj>().enabled = false;
-        if (name.Contains("BonusPac"))
+        if (name.Contains("BonusPac") && !PacBonus)
         {
             StartCoroutine(Pac_bonus());
         }
@@ -83,12 +83,16 @@ public class bonusGet : MonoBehaviour
         Destroy(gameObject, 0.5f);
     }
 
+    bool PacBonus = false;
     IEnumerator Pac_bonus() 
     {
+        PacBonus = true;
         CoreAudio.Create_audio_eff("pac");
         Vault_data.singleton.PacOnSet(true);
         yield return new WaitForSeconds(5f);
+        PacBonus = false;
         Vault_data.singleton.PacOnSet(false);
         Destroy(gameObject, 0.5f);
+
     }
 }

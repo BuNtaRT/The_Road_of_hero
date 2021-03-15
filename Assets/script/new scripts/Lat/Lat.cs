@@ -27,6 +27,9 @@ public class Lat : MonoBehaviour
 
     private void Start()
     {
+        int carIndex = 24;
+        if (PlayerPrefs.GetInt("PremNow") == 0)
+            carIndex = PlayerPrefs.GetInt("Car_index");
         PlayerCar = GameObject.FindGameObjectWithTag("Scripts").GetComponent<ControllCar>();
         singleMetods.Add(Spawn_monster);
         singleMetods.Add(Spawn_pit);
@@ -37,8 +40,8 @@ public class Lat : MonoBehaviour
         UI.singleton.onPaused += PauseCar;
         gameObject.GetComponent<CombinateBG>().OnStopLat += EventChange;       // если происходит событие то отключает спавнер
         Vault_data.singleton.CreateMontersList(Convert.ToInt32(GameObject.FindGameObjectWithTag("Background").name));   // запрашиваем запитсь монстров ответственных за текущую карту 
-        steap_spawn = steap_spawn - PlayerPrefs.GetInt("Car_index") >= 12 ? steap_spawn - PlayerPrefs.GetInt("Car_index") : 12;
-        chance = chance - PlayerPrefs.GetInt("Car_index") >= 15 ? chance - PlayerPrefs.GetInt("Car_index") : 15;
+        steap_spawn = steap_spawn - carIndex >= 12 ? steap_spawn - carIndex : 12;
+        chance = chance - carIndex >= 15 ? chance - carIndex : 15;
         BonusGen = gameObject.GetComponent<bonus_generate>();
         lineCar = PlayerCar.GetLine();
     }
@@ -244,12 +247,25 @@ public class Lat : MonoBehaviour
     {
         if (ExitPitBombAndTD != line_now)
         {
-            if (line_now == 0)
-                generate("lat/Bomb", NextGen + plus, 0.19f, 0);
+            GameObject temp;
+            int lay = 0;
+            if (line_now == 0) {
+                temp = generate("lat/Bomb", NextGen + plus, 0.19f, 0);
+                lay = 10;
+            }
             else if (line_now == 1)
-                generate("lat/Bomb", NextGen + plus, -0.4f, 0);
+            {
+                temp = generate("lat/Bomb", NextGen + plus, -0.4f, 0);
+                lay = 12;
+
+            }
             else
-                generate("lat/Bomb", NextGen + plus, -1.15f, 0);
+            {
+                temp = generate("lat/Bomb", NextGen + plus, -1.15f, 0);
+                lay = 14;
+
+            }
+            temp.transform.Find("bomb").GetComponent<bomb_controller>().SetLay(lay);
         }
     }
 

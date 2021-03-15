@@ -34,7 +34,7 @@ public class CarShoot : MonoBehaviour
 
     private void Start()
     {
-        car = GameObject.Find("Car").transform.Find("Player_car/GunObj").transform;
+        carGunObj = GameObject.Find("Car").transform.Find("Player_car/GunObj").transform;
         OnAmmo?.Invoke(ammo);
     }
 
@@ -48,12 +48,25 @@ public class CarShoot : MonoBehaviour
         }
     }
 
-    Transform car;
+    Transform carGunObj;
     void Shot() {
         locked = true;                                                  // lock fire
         var tuple = Vault_data.singleton.GetRandomGunFromList();         // tuple get
 
-        GameObject gameObject = Instantiate(Resources.Load<GameObject>("weapon/"+ tuple.Item1),car);
+        GameObject gameObject = Instantiate(Resources.Load<GameObject>("weapon/"+ tuple.Item1), carGunObj);
+
+
+        // Logic to prem car
+        if (tuple.Item1 == 20)
+        {
+            GameObject temp =  Instantiate(Resources.Load<GameObject>("weapon/Prem20"), carGunObj.parent);
+            Destroy(temp,3f);
+        }
+        if (tuple.Item1 == 21 || tuple.Item1 == 22)
+        {
+            GameObject temp = Instantiate(Resources.Load<GameObject>("weapon/Prem"+ tuple.Item1), carGunObj);
+            Destroy(temp, 3.8f);
+        }
 
         StartCoroutine(Wait(tuple.Item2,gameObject));
     }
