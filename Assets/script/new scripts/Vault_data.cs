@@ -168,8 +168,8 @@ public class Vault_data : MonoBehaviour
 
         }
         else {
-            int rand = UnityEngine.Random.Range(0, 19);
-            return Tuple.Create(Weapon[rand], TimeWeapon[rand]);
+            int rand = UnityEngine.Random.Range(0, PlayerPrefs.GetInt("Car_index"));
+            return Tuple.Create(Weapon[rand],TimeWeapon[rand]);
         }
 
     }
@@ -277,17 +277,17 @@ public class Vault_data : MonoBehaviour
         3000,
         3500,
         4400,
-        5600,
-        7000,
-        7300,
-        7600,
-        7900,
-        8100,
-        8500,
-        8700,
+        4800,
         9000,
-        9200,
-        10000
+        15000,
+        20000,
+        27000,
+        38000,
+        49000,
+        65000,
+        80000,
+        90000,
+        100000
     };
 
     List<int> Buyed_car = new List<int>();
@@ -319,7 +319,6 @@ public class Vault_data : MonoBehaviour
             car.GetComponent<Car>().lvl = 27;
 
         car.GetComponent<Car>().num_car = PlayerPrefs.GetInt("Cur_car");
-        //car.GetComponent<Car>().num_car = 4;    //убрать
         car.GetComponent<Car>().Reload_animation();
         GameObject.FindGameObjectWithTag("CarP").GetComponent<CarHelper>().CheckHelp(PlayerPrefs.GetInt("Cur_car"));
 
@@ -341,6 +340,7 @@ public class Vault_data : MonoBehaviour
     public void Pic_car(string car) 
     {
         int car_skin = Convert.ToInt32(car);
+
 
         if (car_skin >= 3 && car_skin <= 7)
             PlayerPrefs.SetInt("PremNow", 1);

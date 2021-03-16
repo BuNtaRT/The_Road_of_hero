@@ -40,6 +40,11 @@ public static class Money_maneger
         Plus_money(temp_money * Xcoin);
     }
 
+    public static void VideoAdvert () 
+    {
+        Debug.Log(Vault_data.singleton.GetCarCurPrice() / 8);
+        Plus_money(Vault_data.singleton.GetCarCurPrice() / 8);
+    }
 
     static void Plus_money(int val) 
     {

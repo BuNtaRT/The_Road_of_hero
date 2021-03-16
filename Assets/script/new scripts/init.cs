@@ -24,6 +24,14 @@ public class init : MonoBehaviour
     {
         PlayerPrefs.SetInt("lg", lg);
         PlayerPrefs.SetInt("Open", 1);
+        PlayerPrefs.SetFloat("Cur_map_lvl", 1);
+        PlayerPrefs.SetInt("sound",1);
+        PlayerPrefs.SetInt("music", 1);
+        if(Random.Range(0,101)>=50)
+        PlayerPrefs.SetInt("Boss1", 15);
+        else
+            PlayerPrefs.SetInt("Boss2", 15);
+
         PlayerPrefs.Save();
         SceneManager.LoadScene(1);
     }

@@ -51,6 +51,7 @@ public class Car : MonoBehaviour
 
     void Die() {
         //Time.timeScale = 0;
+        GameObject.Find("Scripts").GetComponent<Donat>().PLyerDie();
         OnDie?.Invoke();
     }
 

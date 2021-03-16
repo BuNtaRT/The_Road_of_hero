@@ -27,12 +27,25 @@ public class UI : MonoBehaviour
         onPaused?.Invoke(pause);    // всем кто в делегате, летит значение pause (?. - если они есть)
     }
     public bool pause;
+
+    void MoneyCh(int val) 
+    {
+        Coin_men.text = val.ToString();
+        Coin_shop.text = val.ToString();
+    }
+
     #endregion
+
+    private void OnDestroy()
+    {
+        Money_maneger.OnMoney -= MoneyCh;
+    }
 
     public Transform CarContent, MapContent;
     public Image Ico_car, Ico_Map;
     public Text Price_car_text, Price_map_text;
     public Text Coin_men;
+    public Text Coin_shop;
 
     public GameObject tutro;
     public Text ShootTutor, MoveTutro;
@@ -65,8 +78,11 @@ public class UI : MonoBehaviour
         //PlayerPrefs.SetInt("money", 1000000);
         //PlayerPrefs.DeleteAll();
 
+        CameraLisner = Camera.main.GetComponent<AudioListener>();
+
         GameObject.Find("Scripts").GetComponent<Music>().On_Off(Convert.ToBoolean(PlayerPrefs.GetInt("Music")));
 
+        Money_maneger.OnMoney += MoneyCh;
 
         Vault_data.singleton.Initialized_Car(CarContent);             // инициализируем машины для меню покупки и вообще 
         Vault_data.singleton.Initialized_Map(MapContent);             // инициализируем карты для меню покупки и вообще 
@@ -93,6 +109,7 @@ public class UI : MonoBehaviour
 
     public GameObject B_SoundOn;
     public GameObject B_SoundOff;
+    AudioListener CameraLisner;
 
     public void B_Audio(bool Audio) {
 
@@ -100,10 +117,12 @@ public class UI : MonoBehaviour
 
         if (Audio)
         {
+            CameraLisner.enabled = true;
             B_SoundOff.SetActive(false);
             B_SoundOn.SetActive(true);
         }
         else {
+            CameraLisner.enabled = false;
             B_SoundOff.SetActive(true);
             B_SoundOn.SetActive(false);
             CoreAudio.DestroyAll();
@@ -113,6 +132,7 @@ public class UI : MonoBehaviour
     }
 
     public void B_StartGame(GameObject gameObject) {
+        Money_maneger.OnMoney -= MoneyCh;
         if (PlayerPrefs.GetInt("First") == 0) 
         {
             StartCoroutine(ShowTutor());

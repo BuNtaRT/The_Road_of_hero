@@ -68,7 +68,6 @@ public class CarMove : MonoBehaviour
         if (PlayerPrefs.GetInt("PremNow") == 0)
             carIndex = PlayerPrefs.GetInt("Car_index");
 
-        //car_speed = 1.6f; // Убрать
         car_lvl = transform.GetChild(0).GetComponent<Car>().lvl + PlayerPrefs.GetFloat("Cur_map_lvl");
         if (carIndex <= 2)
         {

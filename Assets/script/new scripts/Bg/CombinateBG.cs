@@ -24,7 +24,6 @@ public class CombinateBG : MonoBehaviour
     {
         mus=  GameObject.FindGameObjectWithTag("Scripts").GetComponent<Music>();
         NextCall = Random.Range(350, 600);
-        //NextCall = 0; // УБРАТЬ
         car = GameObject.Find("Car").transform;
         if (PlayerPrefs.GetFloat("Cur_map_lvl") > 1.1f)
         {
@@ -85,7 +84,6 @@ public class CombinateBG : MonoBehaviour
         {
             mus.SwitchToBoss(true);
             bossFightOne = true;
-            Debug.Log("BOSS EVENT SUKA num = " + boss);
             SetNewBg(10);
             yield return new WaitForSeconds(0.2f);
             sp.color = new Color(0.574f, 0.574f, 0.574f, 0);
