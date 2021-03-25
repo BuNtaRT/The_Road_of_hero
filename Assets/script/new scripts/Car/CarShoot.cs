@@ -21,11 +21,16 @@ public class CarShoot : MonoBehaviour
     // тут происходит стрельба по нажатию а так же контроль боезапаса 
 
     #region ammo
-    public int ammo = 50;
+    private int ammo = 0;
     public void PlusAmmo() {
         ammo++;
         OnAmmo?.Invoke(ammo);
     }
+    public int GetAmmoCount() 
+    {
+        return ammo;
+    }
+
     #endregion
 
 
@@ -36,6 +41,7 @@ public class CarShoot : MonoBehaviour
     {
         carGunObj = GameObject.Find("Car").transform.Find("Player_car/GunObj").transform;
         OnAmmo?.Invoke(ammo);
+        Debug.Log(ammo);
     }
 
 

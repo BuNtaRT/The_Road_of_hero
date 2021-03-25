@@ -40,7 +40,7 @@ public class Lat : MonoBehaviour
         UI.singleton.onPaused += PauseCar;
         gameObject.GetComponent<CombinateBG>().OnStopLat += EventChange;       // если происходит событие то отключает спавнер
         Vault_data.singleton.CreateMontersList(Convert.ToInt32(GameObject.FindGameObjectWithTag("Background").name));   // запрашиваем запитсь монстров ответственных за текущую карту 
-        steap_spawn = steap_spawn - carIndex >= 12 ? steap_spawn - carIndex : 12;
+        steap_spawn = steap_spawn - carIndex >= 14 ? steap_spawn - carIndex : 14;
         chance = chance - carIndex >= 15 ? chance - carIndex : 15;
         BonusGen = gameObject.GetComponent<bonus_generate>();
         lineCar = PlayerCar.GetLine();
@@ -81,7 +81,7 @@ public class Lat : MonoBehaviour
                     lineCar = UnityEngine.Random.Range(0, 3);
 
                 BonusGen.MaybeBonus(NextGen);
-                if (CarShoot.singleton.ammo >= 1)
+                if (CarShoot.singleton.GetAmmoCount() >= 1)
                 {
                     Methods temp = GetSpanwMethodMulti();
                     temp(lineCar);
@@ -93,7 +93,7 @@ public class Lat : MonoBehaviour
                 }
             }
 
-            if(steap_spawn >=12)
+            if(steap_spawn >=14)
                 steap_spawn-=0.1f;
 
             NextGen += UnityEngine.Random.Range(steap_spawn-2,steap_spawn+3);
@@ -112,7 +112,7 @@ public class Lat : MonoBehaviour
         } while (ExitPitBombAndTD == lineCar);      // назначение линии куда не будут спанится яма и пит и тд
 
         int dontSpawnLine = -1;
-        if (CarShoot.singleton.ammo == 0)   // если припасов 0 то 
+        if (CarShoot.singleton.GetAmmoCount() == 0)   // если припасов 0 то 
         {
             dontSpawnLine = ExitPitBombAndTD;     // то выбираем линию куда спавнится ничего не будет
             BonusGen.generateLine("bonus/BonusR", dontSpawnLine,NextGen);
@@ -132,7 +132,7 @@ public class Lat : MonoBehaviour
 
                 if (UnityEngine.Random.Range(0, 101) >= chance || i == lineCar)     // упаваем на шанс или точно спавним если на этой линии авто игрока
                 {
-                    if (CarShoot.singleton.ammo >= 1 && MultiTrue == false)
+                    if (CarShoot.singleton.GetAmmoCount() >= 1 && MultiTrue == false)
                     {
                         Methods singleTemp = GetSpanwMethodMulti();
                         singleTemp(i);

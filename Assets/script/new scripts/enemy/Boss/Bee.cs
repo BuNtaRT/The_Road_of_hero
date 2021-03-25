@@ -170,6 +170,8 @@ public class Bee : CoreBoss, IBossCore
         CoreEffect.Create_effect("bossHit", -1.52f, 2.1f, beeAnimator.gameObject.transform);
         CoreEffect.Create_effect("bossHit", 0.3f, 1.03f, beeAnimator.gameObject.transform);
 
+        CoreAudio.Create_audio_eff("expl");
+
         // тут проверяется на хп
         if (CHminusHP()) 
         {

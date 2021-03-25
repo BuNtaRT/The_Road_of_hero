@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Advertisements;
+using UnityEngine.Purchasing;
 public class Donat : MonoBehaviour
 {
     public GameObject ButtonReborn, ButtonXcoin;
@@ -18,9 +19,10 @@ public class Donat : MonoBehaviour
 
     private void Start()
     {
-        if (Advertisement.isSupported && !Advertisement.isInitialized)
-            Advertisement.Initialize("4051421",true);
+        if(Advertisement.isSupported)
+            Advertisement.Initialize("4051421",false);
 
+        //PlayerPrefs.SetInt("money", 10000000); // Убрать
 
 
         if (PlayerPrefs.GetInt("PremCar") == 1)
@@ -28,6 +30,11 @@ public class Donat : MonoBehaviour
             CarDonat.SetActive(false);
         }
     }
+
+
+
+
+
 
     public void OpenPlusCoins()
     {
@@ -73,14 +80,26 @@ public class Donat : MonoBehaviour
         }
     }
 
-    public void DonatCarBuy() 
+
+
+    public void OnPurchaseComplite(Product product) 
     {
-
-        PlayerPrefs.SetInt("PremCar", 1);
-        Vault_data.singleton.InitPremCar(CarScroll);
-        Vault_data.singleton.PremMap(MapScroll);
-
+        if(product.definition.id == "car_premium") 
+        {
+            CarDonat.SetActive(false);
+            PlayerPrefs.SetInt("PremCar", 1);
+            Vault_data.singleton.InitPremCar(CarScroll);
+            Vault_data.singleton.PremMap(MapScroll);
+            CloseWin();
+        }
     }
+
+    public void OnPurchaseFailure(Product product,PurchaseFailureReason reason)
+    {
+        Debug.Log("FailPurchase");
+        CloseWin();
+    }
+
 
     public void WatchVideo() 
     {
@@ -97,7 +116,7 @@ public class Donat : MonoBehaviour
 
     public void PLyerDie() 
     {
-        if (PlayerPrefs.GetInt("PremCar") == 1)
+        if (PlayerPrefs.GetInt("PremCar") == 0)
         {
             int dies = PlayerPrefs.GetInt("Dies");
             if (dies >= Random.Range(4, 6) && Advertisement.IsReady())
@@ -127,5 +146,9 @@ public class Donat : MonoBehaviour
     {
         DonatCanvas.SetActive(false);
     }
+
+
+
+
 
 }

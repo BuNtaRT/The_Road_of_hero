@@ -73,6 +73,7 @@ public class Car : MonoBehaviour
                 if (Vault_data.singleton.StartGetPac())
                 {
                     MonstaersDie.DieMonster(other.gameObject, "Rocket_effect_die", "click");
+                    DieStat1();
                 }
                 else
                 {
@@ -88,6 +89,7 @@ public class Car : MonoBehaviour
                 if (!DevUndie)
                 {
                     Die();
+                    DieStat1();
                 }
             }
         }

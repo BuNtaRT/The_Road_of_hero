@@ -128,14 +128,26 @@ public class CombinateBG : MonoBehaviour
     bool bbbb = false;
     bool Boss() 
     {
+        int boss1 = PlayerPrefs.GetInt("Boss1"), boss2 = PlayerPrefs.GetInt("Boss2");
+        if (boss1 >= 228)
+        {
+            boss = 1;
+            return true;
+        }
+        else if (boss2 >= 228) 
+        {
+            boss = 2;
+            return true;
+        }
+
         if (Random.Range(0, 201) >= 150)
         {
-            if (PlayerPrefs.GetInt("Boss1") >= 8)
+            if (boss1 >= 8)
             {
                 boss = 1;
                 return true;
             }
-            else if (PlayerPrefs.GetInt("Boss2") >= 10)
+            else if (boss2 >= 10)
             {
                 boss = 2;
                 return true;

@@ -25,9 +25,9 @@ public class CarMove : MonoBehaviour
         if (carIndex > 2)
         {
             if (carIndex == 24)
-                car_speed = 0.45f + (27 + PlayerPrefs.GetFloat("Cur_map_lvl")) / 70;
+                car_speed = 0.6f + (27 + PlayerPrefs.GetFloat("Cur_map_lvl")) / 70;
             else
-                car_speed = 0.45f + (PlayerPrefs.GetFloat("Cur_car_lvl")+ PlayerPrefs.GetFloat("Cur_map_lvl")) / 70;
+                car_speed = 0.62f + (PlayerPrefs.GetFloat("Cur_car_lvl")+ PlayerPrefs.GetFloat("Cur_map_lvl")) / 70;
         }
         else
         {

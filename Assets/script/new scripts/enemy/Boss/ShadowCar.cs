@@ -224,6 +224,7 @@ public class ShadowCar : CoreBoss, IBossCore
     public void minusHP()
     {
         // тут что то случается 
+        CoreAudio.Create_audio_eff("expl");
         DamageP.Play();
 
         // тут проверяется на хп

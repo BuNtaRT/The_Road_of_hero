@@ -131,12 +131,15 @@ public class UI : MonoBehaviour
         PlayerPrefs.Save();
     }
 
+    public CarMove carMove;
+
     public void B_StartGame(GameObject gameObject) {
         Money_maneger.OnMoney -= MoneyCh;
         if (PlayerPrefs.GetInt("First") == 0) 
         {
             StartCoroutine(ShowTutor());
         }
+        carMove.enabled = true;
         CoreAudio.Create_audio_eff("play");
         SetPause(false);
         GameObject.FindGameObjectWithTag("Player").GetComponent<Car>().OnDie += DieCar;
@@ -242,7 +245,7 @@ public class UI : MonoBehaviour
 
     private void OnAmmo(int ammo)
     {
-        AmmoText.text = ammo.ToString();
+        AmmoText.text = "X"+ammo.ToString();
     }
 
     #endregion
